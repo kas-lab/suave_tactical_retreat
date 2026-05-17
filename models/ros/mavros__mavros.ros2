@@ -1,0 +1,83 @@
+mavros:
+  artifacts:
+    mavros_node:
+      node: /mavros/mavros
+      publishers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'tf':
+          type: 'tf2_msgs/msg/TFMessage'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'tf_static':
+          type: 'tf2_msgs/msg/TFMessage'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: transient_local
+        'uas1/mavlink_sink':
+          type: 'mavros_msgs/msg/Mavlink'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+      subscribers:
+        'uas1/mavlink_source':
+          type: 'mavros_msgs/msg/Mavlink'
+      parameters:
+        'base_link_frame_id':
+          type: String
+          value: "base_link"
+        'component_id':
+          type: Integer
+          value: 191
+        'diagnostic_updater.period':
+          type: Double
+          value: 1.0
+        'diagnostic_updater.use_fqn':
+          type: Boolean
+          value: false
+        'fcu_protocol':
+          type: String
+          value: "v2.0"
+        'map_frame_id':
+          type: String
+          value: "map"
+        'odom_frame_id':
+          type: String
+          value: "odom"
+        'plugin_allowlist':
+          type: Array[String]
+          value: ['command', 'local_position', 'param', 'setpoint_position', 'sys_status', 'sys_time']
+        'plugin_denylist':
+          type: Array[String]
+          value: ['']
+        'system_id':
+          type: Integer
+          value: 1
+        'target_component_id':
+          type: Integer
+          value: 1
+        'target_system_id':
+          type: Integer
+          value: 1
+        'uas_url':
+          type: String
+          value: "/uas1"
+        'use_sim_time':
+          type: Boolean
+          value: false

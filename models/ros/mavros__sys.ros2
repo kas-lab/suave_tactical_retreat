@@ -1,0 +1,92 @@
+mavros:
+  artifacts:
+    mavros_node:
+      node: /mavros/sys
+      publishers:
+        'battery':
+          type: 'sensor_msgs/msg/BatteryState'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'estimator_status':
+          type: 'mavros_msgs/msg/EstimatorStatus'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: transient_local
+        'extended_state':
+          type: 'mavros_msgs/msg/ExtendedState'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: transient_local
+        'state':
+          type: 'mavros_msgs/msg/State'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: transient_local
+        'status_event':
+          type: 'mavros_msgs/msg/StatusEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'statustext/recv':
+          type: 'mavros_msgs/msg/StatusText'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'sys_status':
+          type: 'mavros_msgs/msg/SysStatus'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: transient_local
+      subscribers:
+        'statustext/send':
+          type: 'mavros_msgs/msg/StatusText'
+      serviceservers:
+        'set_message_interval':
+          type: 'mavros_msgs/srv/MessageInterval'
+        'set_mode':
+          type: 'mavros_msgs/srv/SetMode'
+        'set_stream_rate':
+          type: 'mavros_msgs/srv/StreamRate'
+        'vehicle_info_get':
+          type: 'mavros_msgs/srv/VehicleInfoGet'
+      parameters:
+        'conn_timeout':
+          type: Double
+          value: 10.0
+        'disable_diag':
+          type: Boolean
+          value: false
+        'heartbeat_mav_type':
+          type: String
+          value: "ONBOARD_CONTROLLER"
+        'heartbeat_rate':
+          type: Double
+          value: 1.0
+        'min_voltage':
+          type: Array[Double]
+          value: [10.0]
+        'use_sim_time':
+          type: Boolean
+          value: false

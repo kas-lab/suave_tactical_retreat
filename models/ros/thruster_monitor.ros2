@@ -1,0 +1,20 @@
+suave_monitor:
+  artifacts:
+    thruster_monitor:
+      node: /thruster_monitor
+      publishers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      parameters:
+        'thruster_events':
+          type: Array[String]
+          value: ['(1,failure,35)']
+        'use_sim_time':
+          type: Boolean
+          value: false

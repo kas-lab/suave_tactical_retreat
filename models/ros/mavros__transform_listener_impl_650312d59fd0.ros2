@@ -1,0 +1,9 @@
+mavros:
+  artifacts:
+    mavros_node:
+      node: /mavros/transform_listener_impl_650312d59fd0
+      subscribers:
+        'tf':
+          type: 'tf2_msgs/msg/TFMessage'
+        'tf_static':
+          type: 'tf2_msgs/msg/TFMessage'

@@ -1,0 +1,17 @@
+/mavros/mavros:
+  ros__parameters:
+    base_link_frame_id: base_link
+    component_id: 191
+    diagnostic_updater.period: 1.0
+    diagnostic_updater.use_fqn: false
+    fcu_protocol: v2.0
+    map_frame_id: map
+    odom_frame_id: odom
+    plugin_allowlist: [command, local_position, param, setpoint_position, sys_status, sys_time]
+    plugin_denylist: []
+    system_id: 1
+    target_component_id: 1
+    target_system_id: 1
+    uas_url: /uas1
+    use_sim_time: false
+

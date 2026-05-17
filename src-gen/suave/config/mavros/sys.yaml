@@ -1,0 +1,9 @@
+/mavros/sys:
+  ros__parameters:
+    conn_timeout: 10.0
+    disable_diag: false
+    heartbeat_mav_type: ONBOARD_CONTROLLER
+    heartbeat_rate: 1.0
+    min_voltage: [10.0]
+    use_sim_time: false
+

@@ -1,0 +1,34 @@
+suave_monitor:
+  artifacts:
+    battery_monitor:
+      node: /battery_monitor
+      publishers:
+        'battery_monitor/recharge/complete':
+          type: 'std_msgs/msg/Bool'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      serviceservers:
+        'battery_monitor/recharge':
+          type: 'std_srvs/srv/Trigger'
+      parameters:
+        'discharge_time':
+          type: Double
+          value: 200.0
+        'qa_publishing_period':
+          type: Double
+          value: 1.0
+        'use_sim_time':
+          type: Boolean
+          value: false

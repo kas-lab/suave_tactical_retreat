@@ -1,0 +1,68 @@
+suave_runner:
+  artifacts:
+    suave_runner:
+      node: /suave_runner_node
+      parameters:
+        'ardupilot_executable':
+          type: String
+          value: "sim_vehicle.py -L RATBeach -v ArduSub --model=JSON"
+        'experiment_logging':
+          type: Boolean
+          value: false
+        'experiments':
+          type: Array[String]
+          value: ['{"experiment_launch": "ros2 launch suave_bt suave_bt.launch.py", "num_runs": 2, "adaptation_manager": "bt", "mission_name": "suave"}']
+        'gui':
+          type: Boolean
+          value: true
+        'initial_pos_x':
+          type: Double
+          value: -17.0
+        'initial_pos_x_random_interval':
+          type: Array[Double]
+          value: [0.0, 0.0]
+        'initial_pos_y':
+          type: Double
+          value: 2.0
+        'initial_pos_y_random_interval':
+          type: Array[Double]
+          value: [0.0, 0.0]
+        'initial_pos_z':
+          type: Double
+          value: -18.5
+        'initial_pos_z_random_interval':
+          type: Array[Double]
+          value: [0.0, 0.0]
+        'mission_config_file':
+          type: String
+          value: "config/mission_config.yaml"
+        'mission_config_pkg':
+          type: String
+          value: "suave_missions"
+        'random_interval':
+          type: Integer
+          value: 5
+        'result_path':
+          type: String
+          value: "~/suave/results"
+        'run_duration':
+          type: Integer
+          value: 600
+        'suave_simulation':
+          type: String
+          value: "ros2 launch suave simulation.launch.py"
+        'thruster_events':
+          type: Array[String]
+          value: ['']
+        'thruster_events_random_interval':
+          type: Array[Double]
+          value: [0.0, 0.0]
+        'use_sim_time':
+          type: Boolean
+          value: false
+        'water_visibility_sec_shift':
+          type: Double
+          value: 0.0
+        'water_visibility_sec_shift_random_interval':
+          type: Array[Double]
+          value: [0.0, 0.0]

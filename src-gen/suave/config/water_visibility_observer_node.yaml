@@ -1,0 +1,9 @@
+/water_visibility_observer_node:
+  ros__parameters:
+    qa_publishing_period: 1.0
+    use_sim_time: false
+    water_visibility_max: 3.75
+    water_visibility_min: 1.25
+    water_visibility_period: 80
+    water_visibility_sec_shift: 0.0
+

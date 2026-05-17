@@ -1,0 +1,44 @@
+suave:
+  artifacts:
+    follow_pipeline:
+      node: /f_follow_pipeline_node
+      publishers:
+        'f_follow_pipeline_node/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'pipeline/distance_inspected':
+          type: 'std_msgs/msg/Float32'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'pipeline/inspected':
+          type: 'std_msgs/msg/Bool'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      serviceservers:
+        'f_follow_pipeline_node/change_state':
+          type: 'lifecycle_msgs/srv/ChangeState'
+        'f_follow_pipeline_node/get_available_states':
+          type: 'lifecycle_msgs/srv/GetAvailableStates'
+        'f_follow_pipeline_node/get_available_transitions':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'f_follow_pipeline_node/get_state':
+          type: 'lifecycle_msgs/srv/GetState'
+        'f_follow_pipeline_node/get_transition_graph':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+      parameters:
+        'use_sim_time':
+          type: Boolean
+          value: false

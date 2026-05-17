@@ -1,0 +1,5 @@
+/thruster_monitor:
+  ros__parameters:
+    thruster_events: [(1,failure,35)]
+    use_sim_time: false
+

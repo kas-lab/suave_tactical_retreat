@@ -1,0 +1,16 @@
+ros_gz_bridge:
+  artifacts:
+    parameter_bridge:
+      node: /gz_bluerov_pose_bridge
+      publishers:
+        'model/bluerov2/pose':
+          type: 'geometry_msgs/msg/Pose'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'model/bluerov2/pose':
+          type: 'geometry_msgs/msg/Pose'

@@ -1,0 +1,5 @@
+/f_generate_search_path_node:
+  ros__parameters:
+    spiral_altitude: 1.0
+    use_sim_time: false
+

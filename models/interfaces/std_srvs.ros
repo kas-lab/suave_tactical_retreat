@@ -1,0 +1,16 @@
+std_srvs:
+  srvs:
+    Empty
+        request
+        response
+    SetBool
+        request
+            bool data
+        response
+            bool success
+            string message
+    Trigger
+        request
+        response
+            bool success
+            string message

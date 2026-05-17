@@ -1,0 +1,61 @@
+mavros:
+  artifacts:
+    mavros_node:
+      node: /mavros/local_position
+      publishers:
+        'local_position/accel':
+          type: 'geometry_msgs/msg/AccelWithCovarianceStamped'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'local_position/odom':
+          type: 'nav_msgs/msg/Odometry'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'local_position/pose':
+          type: 'geometry_msgs/msg/PoseStamped'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'local_position/pose_cov':
+          type: 'geometry_msgs/msg/PoseWithCovarianceStamped'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'local_position/velocity_body':
+          type: 'geometry_msgs/msg/TwistStamped'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'local_position/velocity_body_cov':
+          type: 'geometry_msgs/msg/TwistWithCovarianceStamped'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile
+        'local_position/velocity_local':
+          type: 'geometry_msgs/msg/TwistStamped'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: best_effort
+            durability: volatile

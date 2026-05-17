@@ -1,0 +1,24 @@
+system_modes_msgs:
+  msgs:
+    Mode
+        message
+            string label
+    ModeEvent
+        message
+            uint64 timestamp
+            "system_modes_msgs/msg/Mode" start_mode
+            "system_modes_msgs/msg/Mode" goal_mode
+  srvs:
+    ChangeMode
+        request
+            string mode_name
+        response
+            bool success
+    GetAvailableModes
+        request
+        response
+            string[] available_modes
+    GetMode
+        request
+        response
+            string current_mode

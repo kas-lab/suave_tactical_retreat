@@ -1,0 +1,1110 @@
+mavros_msgs:
+  msgs:
+    ADSBVehicle
+        message
+            "std_msgs/msg/Header" header
+            uint32 icao_address
+            string callsign
+            float64 latitude
+            float64 longitude
+            float32 altitude
+            float32 heading
+            float32 hor_velocity
+            float32 ver_velocity
+            uint8 altitude_type
+            uint8 emitter_type
+            "builtin_interfaces/msg/Duration" tslc
+            uint16 flags
+            uint16 squawk
+    ActuatorControl
+        message
+            "std_msgs/msg/Header" header
+            uint8 group_mix
+            float32[] controls
+    Altitude
+        message
+            "std_msgs/msg/Header" header
+            float32 monotonic
+            float32 amsl
+            float32 local
+            float32 relative
+            float32 terrain
+            float32 bottom_clearance
+    AttitudeTarget
+        message
+            "std_msgs/msg/Header" header
+            uint8 type_mask
+            "geometry_msgs/msg/Quaternion" orientation
+            "geometry_msgs/msg/Vector3" body_rate
+            float32 thrust
+    CamIMUStamp
+        message
+            "builtin_interfaces/msg/Time" frame_stamp
+            int32 frame_seq_id
+    CameraImageCaptured
+        message
+            "std_msgs/msg/Header" header
+            "geometry_msgs/msg/Quaternion" orientation
+            "geographic_msgs/msg/GeoPoint" geo
+            float32 relative_alt
+            int32 image_index
+            int8 capture_result
+            string file_url
+    CellularStatus
+        message
+            uint8 status
+            uint8 failure_reason
+            uint8 type
+            uint8 quality
+            uint16 mcc
+            uint16 mnc
+            uint16 lac
+    CommandCode
+        message
+    CompanionProcessStatus
+        message
+            "std_msgs/msg/Header" header
+            uint8 state
+            uint8 component
+    DebugValue
+        message
+            "std_msgs/msg/Header" header
+            int32 index
+            int32 array_id
+            string name
+            float32 value_float
+            int32 value_int
+            float32[] data
+            uint8 type
+    ESCInfo
+        message
+            "std_msgs/msg/Header" header
+            uint16 counter
+            uint8 count
+            uint8 connection_type
+            uint8 info
+            "mavros_msgs/msg/ESCInfoItem"[] esc_info
+    ESCInfoItem
+        message
+            "std_msgs/msg/Header" header
+            uint16 failure_flags
+            uint32 error_count
+            int32 temperature
+    ESCStatus
+        message
+            "std_msgs/msg/Header" header
+            "mavros_msgs/msg/ESCStatusItem"[] esc_status
+    ESCStatusItem
+        message
+            "std_msgs/msg/Header" header
+            int32 rpm
+            float32 voltage
+            float32 current
+    ESCTelemetry
+        message
+            "std_msgs/msg/Header" header
+            "mavros_msgs/msg/ESCTelemetryItem"[] esc_telemetry
+    ESCTelemetryItem
+        message
+            "std_msgs/msg/Header" header
+            float32 temperature
+            float32 voltage
+            float32 current
+            float32 totalcurrent
+            int32 rpm
+            uint16 count
+    EstimatorStatus
+        message
+            "std_msgs/msg/Header" header
+            bool attitude_status_flag
+            bool velocity_horiz_status_flag
+            bool velocity_vert_status_flag
+            bool pos_horiz_rel_status_flag
+            bool pos_horiz_abs_status_flag
+            bool pos_vert_abs_status_flag
+            bool pos_vert_agl_status_flag
+            bool const_pos_mode_status_flag
+            bool pred_pos_horiz_rel_status_flag
+            bool pred_pos_horiz_abs_status_flag
+            bool gps_glitch_status_flag
+            bool accel_error_status_flag
+    ExtendedState
+        message
+            "std_msgs/msg/Header" header
+            uint8 vtol_state
+            uint8 landed_state
+    FileEntry
+        message
+            string name
+            uint8 type
+            uint64 size
+    GPSINPUT
+        message
+            "std_msgs/msg/Header" header
+            uint8 fix_type
+            uint8 gps_id
+            uint16 ignore_flags
+            uint32 time_week_ms
+            uint16 time_week
+            int32 lat
+            int32 lon
+            float32 alt
+            float32 hdop
+            float32 vdop
+            float32 vn
+            float32 ve
+            float32 vd
+            float32 speed_accuracy
+            float32 horiz_accuracy
+            float32 vert_accuracy
+            uint8 satellites_visible
+            uint16 yaw
+    GPSRAW
+        message
+            "std_msgs/msg/Header" header
+            uint8 fix_type
+            int32 lat
+            int32 lon
+            int32 alt
+            uint16 eph
+            uint16 epv
+            uint16 vel
+            uint16 cog
+            uint8 satellites_visible
+            int32 alt_ellipsoid
+            uint32 h_acc
+            uint32 v_acc
+            uint32 vel_acc
+            int32 hdg_acc
+            uint16 yaw
+            uint8 dgps_numch
+            uint32 dgps_age
+    GPSRTK
+        message
+            "std_msgs/msg/Header" header
+            uint8 rtk_receiver_id
+            int16 wn
+            uint32 tow
+            uint8 rtk_health
+            uint8 rtk_rate
+            uint8 nsats
+            int32 baseline_a
+            int32 baseline_b
+            int32 baseline_c
+            uint32 accuracy
+            int32 iar_num_hypotheses
+    GimbalDeviceAttitudeStatus
+        message
+            "std_msgs/msg/Header" header
+            uint8 target_system
+            uint8 target_component
+            uint16 flags
+            "geometry_msgs/msg/Quaternion" q
+            float32 angular_velocity_x
+            float32 angular_velocity_y
+            float32 angular_velocity_z
+            uint32 failure_flags
+    GimbalDeviceInformation
+        message
+            "std_msgs/msg/Header" header
+            string vendor_name
+            string model_name
+            string custom_name
+            uint32 firmware_version
+            uint32 hardware_version
+            uint64 uid
+            uint32 cap_flags
+            uint16 custom_cap_flags
+            float32 roll_min
+            float32 roll_max
+            float32 pitch_min
+            float32 pitch_max
+            float32 yaw_min
+            float32 yaw_max
+    GimbalDeviceSetAttitude
+        message
+            uint8 target_system
+            uint8 target_component
+            uint16 flags
+            "geometry_msgs/msg/Quaternion" q
+            float32 angular_velocity_x
+            float32 angular_velocity_y
+            float32 angular_velocity_z
+    GimbalManagerInformation
+        message
+            "std_msgs/msg/Header" header
+            uint32 cap_flags
+            uint8 gimbal_device_id
+            float32 roll_min
+            float32 roll_max
+            float32 pitch_min
+            float32 pitch_max
+            float32 yaw_min
+            float32 yaw_max
+    GimbalManagerSetAttitude
+        message
+            uint8 target_system
+            uint8 target_component
+            uint32 flags
+            uint8 gimbal_device_id
+            "geometry_msgs/msg/Quaternion" q
+            float32 angular_velocity_x
+            float32 angular_velocity_y
+            float32 angular_velocity_z
+    GimbalManagerSetPitchyaw
+        message
+            uint8 target_system
+            uint8 target_component
+            uint32 flags
+            uint8 gimbal_device_id
+            float32 pitch
+            float32 yaw
+            float32 pitch_rate
+            float32 yaw_rate
+    GimbalManagerStatus
+        message
+            "std_msgs/msg/Header" header
+            uint32 flags
+            uint8 gimbal_device_id
+            uint8 sysid_primary
+            uint8 compid_primary
+            uint8 sysid_secondary
+            uint8 compid_secondary
+    GlobalPositionTarget
+        message
+            "std_msgs/msg/Header" header
+            uint8 coordinate_frame
+            uint16 type_mask
+            float64 latitude
+            float64 longitude
+            float32 altitude
+            "geometry_msgs/msg/Vector3" velocity
+            "geometry_msgs/msg/Vector3" acceleration_or_force
+            float32 yaw
+            float32 yaw_rate
+    HilActuatorControls
+        message
+            "std_msgs/msg/Header" header
+            float32[] controls
+            uint8 mode
+            uint64 flags
+    HilControls
+        message
+            "std_msgs/msg/Header" header
+            float32 roll_ailerons
+            float32 pitch_elevator
+            float32 yaw_rudder
+            float32 throttle
+            float32 aux1
+            float32 aux2
+            float32 aux3
+            float32 aux4
+            uint8 mode
+            uint8 nav_mode
+    HilGPS
+        message
+            "std_msgs/msg/Header" header
+            uint8 fix_type
+            "geographic_msgs/msg/GeoPoint" geo
+            uint16 eph
+            uint16 epv
+            uint16 vel
+            int16 vn
+            int16 ve
+            int16 vd
+            uint16 cog
+            uint8 satellites_visible
+    HilSensor
+        message
+            "std_msgs/msg/Header" header
+            "geometry_msgs/msg/Vector3" acc
+            "geometry_msgs/msg/Vector3" gyro
+            "geometry_msgs/msg/Vector3" mag
+            float32 abs_pressure
+            float32 diff_pressure
+            float32 pressure_alt
+            float32 temperature
+            uint32 fields_updated
+    HilStateQuaternion
+        message
+            "std_msgs/msg/Header" header
+            "geometry_msgs/msg/Quaternion" orientation
+            "geometry_msgs/msg/Vector3" angular_velocity
+            "geometry_msgs/msg/Vector3" linear_acceleration
+            "geometry_msgs/msg/Vector3" linear_velocity
+            "geographic_msgs/msg/GeoPoint" geo
+            float32 ind_airspeed
+            float32 true_airspeed
+    HomePosition
+        message
+            "std_msgs/msg/Header" header
+            "geographic_msgs/msg/GeoPoint" geo
+            "geometry_msgs/msg/Point" position
+            "geometry_msgs/msg/Quaternion" orientation
+            "geometry_msgs/msg/Vector3" approach
+    LandingTarget
+        message
+            "std_msgs/msg/Header" header
+            uint8 target_num
+            uint8 frame
+            float32[] angle
+            float32 distance
+            float32[] size
+            "geometry_msgs/msg/Pose" pose
+            uint8 type
+    LogData
+        message
+            "std_msgs/msg/Header" header
+            uint16 id
+            uint32 offset
+            uint8[] data
+    LogEntry
+        message
+            "std_msgs/msg/Header" header
+            uint16 id
+            uint16 num_logs
+            uint16 last_log_num
+            "builtin_interfaces/msg/Time" time_utc
+            uint32 size
+    MagnetometerReporter
+        message
+            "std_msgs/msg/Header" header
+            uint8 report
+            float32 confidence
+            uint8 compass_id
+            uint8 cal_mask
+            uint8 cal_status
+            uint8 autosaved
+            float32 fitness
+            float32 ofs_x
+            float32 ofs_y
+            float32 ofs_z
+            float32 diag_x
+            float32 diag_y
+            float32 diag_z
+            float32 offdiag_x
+            float32 offdiag_y
+            float32 offdiag_z
+            float32 orientation_confidence
+            uint8 old_orientation
+            uint8 new_orientation
+            float32 scale_factor
+    ManualControl
+        message
+            "std_msgs/msg/Header" header
+            float32 x
+            float32 y
+            float32 z
+            float32 r
+            uint16 buttons
+            uint16 buttons2
+            uint8 enabled_extensions
+            float32 s
+            float32 t
+            float32 aux1
+            float32 aux2
+            float32 aux3
+            float32 aux4
+            float32 aux5
+            float32 aux6
+    Mavlink
+        message
+            "std_msgs/msg/Header" header
+            uint8 framing_status
+            uint8 magic
+            uint8 len
+            uint8 incompat_flags
+            uint8 compat_flags
+            uint8 seq
+            uint8 sysid
+            uint8 compid
+            uint32 msgid
+            uint16 checksum
+            uint64[] payload64
+            uint8[] signature
+    MountControl
+        message
+            "std_msgs/msg/Header" header
+            uint8 mode
+            float32 pitch
+            float32 roll
+            float32 yaw
+            float32 altitude
+            float32 latitude
+            float32 longitude
+    NavControllerOutput
+        message
+            "std_msgs/msg/Header" header
+            float32 nav_roll
+            float32 nav_pitch
+            int16 nav_bearing
+            int16 target_bearing
+            uint16 wp_dist
+            float32 alt_error
+            float32 aspd_error
+            float32 xtrack_error
+    ObstacleDistance3D
+        message
+            "std_msgs/msg/Header" header
+            uint8 sensor_type
+            uint8 frame
+            uint16 obstacle_id
+            "geometry_msgs/msg/Point" position
+            float32 min_distance
+            float32 max_distance
+    OnboardComputerStatus
+        message
+            "std_msgs/msg/Header" header
+            uint8 component
+            uint32 uptime
+            uint8 type
+            uint8[] cpu_cores
+            uint8[] cpu_combined
+            uint8[] gpu_cores
+            uint8[] gpu_combined
+            int8 temperature_board
+            int8[] temperature_core
+            int16[] fan_speed
+            uint32 ram_usage
+            uint32 ram_total
+            uint32[] storage_type
+            uint32[] storage_usage
+            uint32[] storage_total
+            uint32[] link_type
+            uint32[] link_tx_rate
+            uint32[] link_rx_rate
+            uint32[] link_tx_max
+            uint32[] link_rx_max
+    OpenDroneIDBasicID
+        message
+            "std_msgs/msg/Header" header
+            string id_or_mac
+            uint8 id_type
+            uint8 ua_type
+            string uas_id
+    OpenDroneIDOperatorID
+        message
+            "std_msgs/msg/Header" header
+            string id_or_mac
+            uint8 operator_id_type
+            string operator_id
+    OpenDroneIDSelfID
+        message
+            "std_msgs/msg/Header" header
+            string id_or_mac
+            uint8 description_type
+            string description
+    OpenDroneIDSystem
+        message
+            "std_msgs/msg/Header" header
+            string id_or_mac
+            uint8 operator_location_type
+            uint8 classification_type
+            int32 operator_latitude
+            int32 operator_longitude
+            uint16 area_count
+            uint16 area_radius
+            float32 area_ceiling
+            float32 area_floor
+            uint8 category_eu
+            uint8 class_eu
+            float32 operator_altitude_geo
+    OpenDroneIDSystemUpdate
+        message
+            "std_msgs/msg/Header" header
+            int32 operator_latitude
+            int32 operator_longitude
+            float32 operator_altitude_geo
+    OpticalFlow
+        message
+            "std_msgs/msg/Header" header
+            "geometry_msgs/msg/Vector3" flow
+            "geometry_msgs/msg/Vector3" flow_comp_m
+            uint8 quality
+            float32 ground_distance
+            "geometry_msgs/msg/Vector3" flow_rate
+    OpticalFlowRad
+        message
+            "std_msgs/msg/Header" header
+            uint32 integration_time_us
+            float32 integrated_x
+            float32 integrated_y
+            float32 integrated_xgyro
+            float32 integrated_ygyro
+            float32 integrated_zgyro
+            int16 temperature
+            uint8 quality
+            uint32 time_delta_distance_us
+            float32 distance
+    OverrideRCIn
+        message
+            uint16[] channels
+    Param
+        message
+            "std_msgs/msg/Header" header
+            string param_id
+            "mavros_msgs/msg/ParamValue" value
+            uint16 param_index
+            uint16 param_count
+    ParamEvent
+        message
+            "std_msgs/msg/Header" header
+            string param_id
+            "rcl_interfaces/msg/ParameterValue" value
+            uint16 param_index
+            uint16 param_count
+    ParamValue
+        message
+            int64 integer
+            float64 real
+    PlayTuneV2
+        message
+            uint8 format
+            string tune
+    PositionTarget
+        message
+            "std_msgs/msg/Header" header
+            uint8 coordinate_frame
+            uint16 type_mask
+            "geometry_msgs/msg/Point" position
+            "geometry_msgs/msg/Vector3" velocity
+            "geometry_msgs/msg/Vector3" acceleration_or_force
+            float32 yaw
+            float32 yaw_rate
+    RCIn
+        message
+            "std_msgs/msg/Header" header
+            uint8 rssi
+            uint16[] channels
+    RCOut
+        message
+            "std_msgs/msg/Header" header
+            uint16[] channels
+    RTCM
+        message
+            "std_msgs/msg/Header" header
+            uint8[] data
+    RTKBaseline
+        message
+            "std_msgs/msg/Header" header
+            uint32 time_last_baseline_ms
+            uint8 rtk_receiver_id
+            uint16 wn
+            uint32 tow
+            uint8 rtk_health
+            uint8 rtk_rate
+            uint8 nsats
+            uint8 baseline_coords_type
+            int32 baseline_a_mm
+            int32 baseline_b_mm
+            int32 baseline_c_mm
+            uint32 accuracy
+            int32 iar_num_hypotheses
+    RadioStatus
+        message
+            "std_msgs/msg/Header" header
+            uint8 rssi
+            uint8 remrssi
+            uint8 txbuf
+            uint8 noise
+            uint8 remnoise
+            uint16 rxerrors
+            uint16 fixed
+            float32 rssi_dbm
+            float32 remrssi_dbm
+    State
+        message
+            "std_msgs/msg/Header" header
+            bool connected
+            bool armed
+            bool guided
+            bool manual_input
+            string mode
+            uint8 system_status
+    StatusEvent
+        message
+            "std_msgs/msg/Header" header
+            uint8 severity
+            uint32 px4_id
+            uint8[] arguments
+            uint16 sequence
+    StatusText
+        message
+            "std_msgs/msg/Header" header
+            uint8 severity
+            string text
+    SysStatus
+        message
+            "std_msgs/msg/Header" header
+            uint32 sensors_present
+            uint32 sensors_enabled
+            uint32 sensors_health
+            uint16 load
+            uint16 voltage_battery
+            int16 current_battery
+            int8 battery_remaining
+            uint16 drop_rate_comm
+            uint16 errors_comm
+            uint16 errors_count1
+            uint16 errors_count2
+            uint16 errors_count3
+            uint16 errors_count4
+    TerrainReport
+        message
+            "std_msgs/msg/Header" header
+            float64 latitude
+            float64 longitude
+            uint16 spacing
+            float32 terrain_height
+            float32 current_height
+            uint16 pending
+            uint16 loaded
+    Thrust
+        message
+            "std_msgs/msg/Header" header
+            float32 thrust
+    TimesyncStatus
+        message
+            "std_msgs/msg/Header" header
+            uint64 remote_timestamp_ns
+            int64 observed_offset_ns
+            int64 estimated_offset_ns
+            float32 round_trip_time_ms
+    Trajectory
+        message
+            "std_msgs/msg/Header" header
+            uint8 type
+            "mavros_msgs/msg/PositionTarget" point_1
+            "mavros_msgs/msg/PositionTarget" point_2
+            "mavros_msgs/msg/PositionTarget" point_3
+            "mavros_msgs/msg/PositionTarget" point_4
+            "mavros_msgs/msg/PositionTarget" point_5
+            uint8[] point_valid
+            uint16[] command
+            float32[] time_horizon
+    Tunnel
+        message
+            uint8 target_system
+            uint8 target_component
+            uint16 payload_type
+            uint8 payload_length
+            uint8[] payload
+    VehicleInfo
+        message
+            "std_msgs/msg/Header" header
+            uint8 available_info
+            uint8 sysid
+            uint8 compid
+            uint8 autopilot
+            uint8 type
+            uint8 system_status
+            uint8 base_mode
+            uint32 custom_mode
+            string mode
+            uint32 mode_id
+            uint64 capabilities
+            uint32 flight_sw_version
+            uint32 middleware_sw_version
+            uint32 os_sw_version
+            uint32 board_version
+            string flight_custom_version
+            uint16 vendor_id
+            uint16 product_id
+            uint64 uid
+    VfrHud
+        message
+            "std_msgs/msg/Header" header
+            float32 airspeed
+            float32 groundspeed
+            int16 heading
+            float32 throttle
+            float32 altitude
+            float32 climb
+    Vibration
+        message
+            "std_msgs/msg/Header" header
+            "geometry_msgs/msg/Vector3" vibration
+            float32[] clipping
+    Waypoint
+        message
+            uint8 frame
+            uint16 command
+            bool is_current
+            bool autocontinue
+            float32 param1
+            float32 param2
+            float32 param3
+            float32 param4
+            float64 x_lat
+            float64 y_long
+            float64 z_alt
+    WaypointList
+        message
+            uint16 current_seq
+            "mavros_msgs/msg/Waypoint"[] waypoints
+    WaypointReached
+        message
+            "std_msgs/msg/Header" header
+            uint16 wp_seq
+    WheelOdomStamped
+        message
+            "std_msgs/msg/Header" header
+            float64[] data
+  srvs:
+    CommandAck
+        request
+            uint16 command
+            uint8 result
+            uint8 progress
+            uint32 result_param2
+        response
+            bool success
+            uint8 result
+    CommandBool
+        request
+            bool value
+        response
+            bool success
+            uint8 result
+    CommandHome
+        request
+            bool current_gps
+            float32 yaw
+            float32 latitude
+            float32 longitude
+            float32 altitude
+        response
+            bool success
+            uint8 result
+    CommandInt
+        request
+            bool broadcast
+            uint8 frame
+            uint16 command
+            uint8 current
+            uint8 autocontinue
+            float32 param1
+            float32 param2
+            float32 param3
+            float32 param4
+            int32 x
+            int32 y
+            float32 z
+        response
+            bool success
+    CommandLong
+        request
+            bool broadcast
+            uint16 command
+            uint8 confirmation
+            float32 param1
+            float32 param2
+            float32 param3
+            float32 param4
+            float32 param5
+            float32 param6
+            float32 param7
+        response
+            bool success
+            uint8 result
+    CommandTOL
+        request
+            float32 min_pitch
+            float32 yaw
+            float32 latitude
+            float32 longitude
+            float32 altitude
+        response
+            bool success
+            uint8 result
+    CommandTOLLocal
+        request
+            float32 min_pitch
+            float32 offset
+            float32 rate
+            float32 yaw
+            "geometry_msgs/msg/Vector3" position
+        response
+            bool success
+            uint8 result
+    CommandTriggerControl
+        request
+            bool trigger_enable
+            bool sequence_reset
+            bool trigger_pause
+        response
+            bool success
+            uint8 result
+    CommandTriggerInterval
+        request
+            float32 cycle_time
+            float32 integration_time
+        response
+            bool success
+            uint8 result
+    CommandVtolTransition
+        request
+            "std_msgs/msg/Header" header
+            uint8 state
+        response
+            bool success
+            uint8 result
+    EndpointAdd
+        request
+            string url
+            uint8 type
+        response
+            bool successful
+            string reason
+            uint32 id
+    EndpointDel
+        request
+            uint32 id
+            string url
+            uint8 type
+        response
+            bool successful
+    FileChecksum
+        request
+            string file_path
+        response
+            uint32 crc32
+            bool success
+            int32 r_errno
+    FileClose
+        request
+            string file_path
+        response
+            bool success
+            int32 r_errno
+    FileList
+        request
+            string dir_path
+        response
+            "mavros_msgs/msg/FileEntry"[] list
+            bool success
+            int32 r_errno
+    FileMakeDir
+        request
+            string dir_path
+        response
+            bool success
+            int32 r_errno
+    FileOpen
+        request
+            string file_path
+            uint8 mode
+        response
+            uint32 size
+            bool success
+            int32 r_errno
+    FileRead
+        request
+            string file_path
+            uint64 offset
+            uint64 size
+        response
+            uint8[] data
+            bool success
+            int32 r_errno
+    FileRemove
+        request
+            string file_path
+        response
+            bool success
+            int32 r_errno
+    FileRemoveDir
+        request
+            string dir_path
+        response
+            bool success
+            int32 r_errno
+    FileRename
+        request
+            string old_path
+            string new_path
+        response
+            bool success
+            int32 r_errno
+    FileTruncate
+        request
+            string file_path
+            uint64 length
+        response
+            bool success
+            int32 r_errno
+    FileWrite
+        request
+            string file_path
+            uint64 offset
+            uint8[] data
+        response
+            bool success
+            int32 r_errno
+    GimbalGetInformation
+        request
+        response
+            bool success
+            uint8 result
+    GimbalManagerCameraTrack
+        request
+            uint8 mode
+            float32 x
+            float32 y
+            float32 radius
+            float32 top_left_x
+            float32 top_left_y
+            float32 bottom_right_x
+            float32 bottom_right_y
+        response
+            bool success
+            uint8 result
+    GimbalManagerConfigure
+        request
+            int16 sysid_primary
+            int16 compid_primary
+            int16 sysid_secondary
+            int16 compid_secondary
+            uint8 gimbal_device_id
+        response
+            bool success
+            uint8 result
+    GimbalManagerPitchyaw
+        request
+            float32 pitch
+            float32 yaw
+            float32 pitch_rate
+            float32 yaw_rate
+            uint32 flags
+            uint8 gimbal_device_id
+        response
+            bool success
+            uint8 result
+    GimbalManagerSetRoi
+        request
+            uint8 mode
+            uint8 gimbal_device_id
+            float32 latitude
+            float32 longitude
+            float32 altitude
+            float32 pitch_offset
+            float32 roll_offset
+            float32 yaw_offset
+            uint8 sysid
+        response
+            bool success
+            uint8 result
+    LogRequestData
+        request
+            uint16 id
+            uint32 offset
+            uint32 count
+        response
+            bool success
+    LogRequestEnd
+        request
+        response
+            bool success
+    LogRequestList
+        request
+            uint16 start
+            uint16 end
+        response
+            bool success
+    MessageInterval
+        request
+            uint32 message_id
+            float32 message_rate
+        response
+            bool success
+    MountConfigure
+        request
+            "std_msgs/msg/Header" header
+            uint8 mode
+            bool stabilize_roll
+            bool stabilize_pitch
+            bool stabilize_yaw
+            uint8 roll_input
+            uint8 pitch_input
+            uint8 yaw_input
+        response
+            bool success
+            uint8 result
+    ParamGet
+        request
+            string param_id
+        response
+            bool success
+            "mavros_msgs/msg/ParamValue" value
+    ParamPull
+        request
+            bool force_pull
+        response
+            bool success
+            uint32 param_received
+    ParamPush
+        request
+        response
+            bool success
+            uint32 param_transfered
+    ParamSet
+        request
+            string param_id
+            "mavros_msgs/msg/ParamValue" value
+        response
+            bool success
+            "mavros_msgs/msg/ParamValue" value
+    ParamSetV2
+        request
+            bool force_set
+            string param_id
+            "rcl_interfaces/msg/ParameterValue" value
+        response
+            bool success
+            "rcl_interfaces/msg/ParameterValue" value
+    SetMavFrame
+        request
+            uint8 mav_frame
+        response
+            bool success
+    SetMode
+        request
+            uint8 base_mode
+            string custom_mode
+        response
+            bool mode_sent
+    StreamRate
+        request
+            uint8 stream_id
+            uint16 message_rate
+            bool on_off
+        response
+    VehicleInfoGet
+        request
+            uint8 sysid
+            uint8 compid
+            bool get_all
+        response
+            bool success
+            "mavros_msgs/msg/VehicleInfo"[] vehicles
+    WaypointClear
+        request
+        response
+            bool success
+    WaypointPull
+        request
+        response
+            bool success
+            uint32 wp_received
+    WaypointPush
+        request
+            uint16 start_index
+            "mavros_msgs/msg/Waypoint"[] waypoints
+        response
+            bool success
+            uint32 wp_transfered
+    WaypointSetCurrent
+        request
+            uint16 wp_seq
+        response
+            bool success

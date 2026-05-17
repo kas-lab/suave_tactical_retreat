@@ -1,0 +1,4 @@
+/f_maintain_motion_node:
+  ros__parameters:
+    use_sim_time: false
+

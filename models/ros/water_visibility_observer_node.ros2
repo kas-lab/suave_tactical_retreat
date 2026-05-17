@@ -1,0 +1,32 @@
+suave_monitor:
+  artifacts:
+    water_visibility_observer:
+      node: /water_visibility_observer_node
+      publishers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      parameters:
+        'qa_publishing_period':
+          type: Double
+          value: 1.0
+        'use_sim_time':
+          type: Boolean
+          value: false
+        'water_visibility_max':
+          type: Double
+          value: 3.75
+        'water_visibility_min':
+          type: Double
+          value: 1.25
+        'water_visibility_period':
+          type: Integer
+          value: 80
+        'water_visibility_sec_shift':
+          type: Double
+          value: 0.0

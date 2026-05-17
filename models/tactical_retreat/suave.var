@@ -1,0 +1,17 @@
+feature_model 
+{
+	name suave_variability
+	root selected Feature PIPELINE_INSPECTION children { 
+		Feature RECOVER_MOTION,
+		Alternative SEARCH_PIPELINE children {
+			Feature LOW_ALTITUDE, Feature MEDIUM_ALTITUDE, Feature HIGH_ALTITUDE
+		},
+		Feature FOLLOW_PIPELINE,
+		Feature RECHARGE
+	}
+	crossTreeConstraints { 
+		BasicConstraint { type EXCLUDES rightFeature SEARCH_PIPELINE leftFeature FOLLOW_PIPELINE}
+		BasicConstraint { type EXCLUDES rightFeature SEARCH_PIPELINE leftFeature RECHARGE}
+		BasicConstraint { type EXCLUDES rightFeature FOLLOW_PIPELINE leftFeature RECHARGE}
+	}
+}

@@ -1,0 +1,25 @@
+suave:
+  artifacts:
+    pipeline_detection_wv:
+      node: /detect_pipeline
+      publishers:
+        'pipeline/detected':
+          type: 'std_msgs/msg/Bool'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+        'model/bluerov2/pose':
+          type: 'geometry_msgs/msg/Pose'
+      serviceservers:
+        'pipeline/get_path':
+          type: 'suave_msgs/srv/GetPath'
+      parameters:
+        'use_sim_time':
+          type: Boolean
+          value: false

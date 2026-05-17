@@ -1,0 +1,36 @@
+suave:
+  artifacts:
+    recover_thrusters:
+      node: /f_maintain_motion_node
+      publishers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+        'f_maintain_motion_node/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      serviceservers:
+        'f_maintain_motion_node/change_state':
+          type: 'lifecycle_msgs/srv/ChangeState'
+        'f_maintain_motion_node/get_available_states':
+          type: 'lifecycle_msgs/srv/GetAvailableStates'
+        'f_maintain_motion_node/get_available_transitions':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+        'f_maintain_motion_node/get_state':
+          type: 'lifecycle_msgs/srv/GetState'
+        'f_maintain_motion_node/get_transition_graph':
+          type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+      parameters:
+        'use_sim_time':
+          type: Boolean
+          value: false

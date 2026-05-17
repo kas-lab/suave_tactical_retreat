@@ -1,0 +1,29 @@
+mavros:
+  artifacts:
+    mavros_node:
+      node: /mavros/mavros_node
+      parameters:
+        'base_link_frame':
+          type: String
+          value: ""
+        'fcu_url':
+          type: String
+          value: "udp://0.0.0.0:14550@14555"
+        'gcs_url':
+          type: String
+          value: ""
+        'map_frame':
+          type: String
+          value: ""
+        'odom_frame':
+          type: String
+          value: ""
+        'tgt_component':
+          type: Integer
+          value: 1
+        'tgt_system':
+          type: Integer
+          value: 1
+        'use_sim_time':
+          type: Boolean
+          value: false

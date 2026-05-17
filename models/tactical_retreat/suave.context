@@ -1,0 +1,65 @@
+import "../system/suave.rossystem";
+
+ContextVariable water_visibility
+{
+source: origin: publisher: /water_visibility_observer_node.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "QA status,water_visibility,float"
+}
+
+ContextVariable battery_level
+{
+source: origin: publisher: /battery_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "QA status,battery_level,float"
+}
+
+ContextVariable c_thruster_1
+{
+source: origin: publisher: /thruster_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "Component status,c_thruster_1,str"
+}
+
+ContextVariable c_thruster_2
+{
+source: origin: publisher: /thruster_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "Component status,c_thruster_2,str"
+}
+
+ContextVariable c_thruster_3
+{
+source: origin: publisher: /thruster_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "Component status,c_thruster_3,str"
+}
+
+ContextVariable c_thruster_4
+{
+source: origin: publisher: /thruster_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "Component status,c_thruster_4,str"
+}
+
+ContextVariable c_thruster_5
+{
+source: origin: publisher: /thruster_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "Component status,c_thruster_5,str"
+}
+
+ContextVariable c_thruster_6
+{
+source: origin: publisher: /thruster_monitor.diagnostics
+cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "Component status,c_thruster_6,str"
+}

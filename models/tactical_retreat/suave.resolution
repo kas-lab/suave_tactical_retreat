@@ -1,0 +1,27 @@
+name suave_resolution;
+import "../system/suave.rossystem";
+import "suave.var";
+
+variability_model suave_variability;
+ros_system suave;
+
+resolutions
+SEARCH_PIPELINE: 
+select: SetLifecycleState(/f_generate_search_path_node, ACTIVE) 
+deselect: SetLifecycleState(/f_generate_search_path_node, INACTIVE)
+
+LOW_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,1.0) deselect:
+MEDIUM_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,2.0) deselect:
+HIGH_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,3.0) deselect:
+
+FOLLOW_PIPELINE: 
+select: SetLifecycleState(/f_follow_pipeline_node, ACTIVE) 
+deselect: SetLifecycleState(/f_follow_pipeline_node, INACTIVE)
+
+RECHARGE: 
+select: SetLifecycleState(/generate_recharge_path_node, ACTIVE)
+deselect: SetLifecycleState(/generate_recharge_path_node, INACTIVE)
+
+RECOVER_MOTION: 
+select: SetLifecycleState(/f_maintain_motion_node, ACTIVE) 
+deselect: SetLifecycleState(/f_maintain_motion_node, INACTIVE)

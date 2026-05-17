@@ -1,0 +1,11 @@
+suave_msgs:
+  srvs:
+    GetPath
+        request
+        response
+            "geometry_msgs/msg/PoseArray" path
+    Task
+        request
+            string task_name
+        response
+            bool success

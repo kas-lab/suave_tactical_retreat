@@ -1,0 +1,22 @@
+mavros:
+  artifacts:
+    mavros_node:
+      node: /mavros/setpoint_position
+      subscribers:
+        'global_position/global':
+          type: 'sensor_msgs/msg/NavSatFix'
+        'local_position/pose':
+          type: 'geometry_msgs/msg/PoseStamped'
+        'setpoint_position/global':
+          type: 'geographic_msgs/msg/GeoPoseStamped'
+        'setpoint_position/global_to_local':
+          type: 'geographic_msgs/msg/GeoPoseStamped'
+        'setpoint_position/local':
+          type: 'geometry_msgs/msg/PoseStamped'
+      parameters:
+        'mav_frame':
+          type: String
+          value: "LOCAL_NED"
+        'use_sim_time':
+          type: Boolean
+          value: false

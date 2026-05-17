@@ -1,0 +1,48 @@
+suave_metrics:
+  artifacts:
+    mission_metrics:
+      node: /mission_metrics
+      subscribers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+        'f_maintain_motion_node/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+        'generate_recharge_path_node/transition_event':
+          type: 'lifecycle_msgs/msg/TransitionEvent'
+        'pipeline/detected':
+          type: 'std_msgs/msg/Bool'
+        'pipeline/distance_inspected':
+          type: 'std_msgs/msg/Float32'
+        'pipeline/inspected':
+          type: 'std_msgs/msg/Bool'
+      serviceservers:
+        'mission_metrics/save':
+          type: 'std_srvs/srv/Empty'
+      parameters:
+        'adaptation_manager':
+          type: String
+          value: "bt"
+        'battery_limit':
+          type: Double
+          value: 0.25
+        'expected_altitude':
+          type: Array[Double]
+          value: [3.0, 2.0, 1.0]
+        'mission_name':
+          type: String
+          value: "suave"
+        'result_filename':
+          type: String
+          value: "bt_suave"
+        'result_path':
+          type: String
+          value: "/home/ubuntu-user/suave/results/2026_05_12_17-42-14"
+        'use_sim_time':
+          type: Boolean
+          value: false
+        'water_visibiity_threshold':
+          type: Array[Double]
+          value: [3.25, 2.25, 1.25]
+        'water_visibility_threshold':
+          type: Array[Double]
+          value: [3.25, 2.25, 1.25]

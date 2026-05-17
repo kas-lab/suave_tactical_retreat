@@ -1,0 +1,20 @@
+suave_missions:
+  artifacts:
+    mission_node:
+      node: /mission_node
+      subscribers:
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+        'mavros/state':
+          type: 'mavros_msgs/msg/State'
+        'pipeline/detected':
+          type: 'std_msgs/msg/Bool'
+        'pipeline/inspected':
+          type: 'std_msgs/msg/Bool'
+      parameters:
+        'time_limit':
+          type: Integer
+          value: 300
+        'use_sim_time':
+          type: Boolean
+          value: false

@@ -1,0 +1,65 @@
+name suave_tactics;
+import "../system/suave.rossystem";
+import "suave.context";
+import "suave.var";
+import "suave.resolution";
+
+rule LOW_ALTITUDE {
+guard {
+	context(water_visibility < 2.25)
+	features(selected(suave_resolution.SEARCH_PIPELINE))
+}
+action {
+	select_variant(suave_resolution.LOW_ALTITUDE)
+}
+};
+
+rule MEDIUM_ALTITUDE {
+	guard {
+		context(water_visibility < 3.25 AND water_visibility >= 2.25)
+		features(selected(suave_resolution.SEARCH_PIPELINE))
+	}
+	action {
+		select_variant(suave_resolution.MEDIUM_ALTITUDE)
+	}
+};
+
+rule HIGH_ALTITUDE {
+	guard {
+		context(water_visibility >= 3.25)
+		features(selected(suave_resolution.SEARCH_PIPELINE))
+	}
+	action {
+		select_variant(suave_resolution.LOW_ALTITUDE)
+	}
+};
+
+rule RECOVER_MOTION {
+	guard {
+		context(c_thruster_1 == "FALSE" OR c_thruster_1 == "FALSE"
+			OR c_thruster_2 == "FALSE" OR c_thruster_2 == "FALSE"
+			OR c_thruster_3 == "FALSE" OR c_thruster_3 == "FALSE"
+			OR c_thruster_4 == "FALSE" OR c_thruster_4 == "FALSE"
+			OR c_thruster_5 == "FALSE" OR c_thruster_5 == "FALSE"
+			OR c_thruster_6 == "FALSE" OR c_thruster_6 == "FALSE")
+		features(!selected(suave_resolution.RECOVER_MOTION))
+	}
+	action {
+		select_variant(suave_resolution.RECOVER_MOTION)
+	}
+};
+
+rule END_RECOVER_MOTION {
+	guard {
+		context((c_thruster_1 == "RECOVERED" OR c_thruster_1 == "OK")
+			AND (c_thruster_2 == "RECOVERED" OR c_thruster_2 == "OK")
+			AND (c_thruster_3 == "RECOVERED" OR c_thruster_3 == "OK")
+			AND (c_thruster_4 == "RECOVERED" OR c_thruster_4 == "OK")
+			AND (c_thruster_5 == "RECOVERED" OR c_thruster_5 == "OK")
+			AND (c_thruster_6 == "RECOVERED" OR c_thruster_6 == "OK"))
+		features(selected(suave_resolution.RECOVER_MOTION))
+	}
+	action {
+		select_variant(suave_resolution.RECOVER_MOTION)
+	}
+};

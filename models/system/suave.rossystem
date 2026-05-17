@@ -1,0 +1,3101 @@
+suave:
+  nodes:
+    "/suave_runner_node":
+      from: "suave_runner./suave_runner_node"
+    "/gz_pipe_pose_bridge":
+      from: "ros_gz_bridge./gz_pipe_pose_bridge"
+      interfaces:
+        - "model/min_pipes_pipeline/pose": pub-> "parameter_bridge::model/min_pipes_pipeline/pose"
+        - "sub_model/min_pipes_pipeline/pose": sub-> "parameter_bridge::model/min_pipes_pipeline/pose"
+    "/gz_bluerov_pose_bridge":
+      from: "ros_gz_bridge./gz_bluerov_pose_bridge"
+      interfaces:
+        - "model/bluerov2/pose": pub-> "parameter_bridge::model/bluerov2/pose"
+        - "sub_model/bluerov2/pose": sub-> "parameter_bridge::model/bluerov2/pose"
+    "/mavros/mavros_node":
+      from: "mavros./mavros/mavros_node"
+      parameters:
+        - "base_link_frame": "mavros_node::base_link_frame"
+          value: ""
+        - "fcu_url": "mavros_node::fcu_url"
+          value: "udp://0.0.0.0:14550@14555"
+        - "gcs_url": "mavros_node::gcs_url"
+          value: ""
+        - "map_frame": "mavros_node::map_frame"
+          value: ""
+        - "odom_frame": "mavros_node::odom_frame"
+          value: ""
+        - "tgt_component": "mavros_node::tgt_component"
+          value: 1
+        - "tgt_system": "mavros_node::tgt_system"
+          value: 1
+        - "use_sim_time": "mavros_node::use_sim_time"
+          value: false
+    "/mavros/mavros_router":
+      from: "mavros./mavros/mavros_router"
+      interfaces:
+        - "diagnostics": pub-> "mavros_node::diagnostics"
+        - "uas1/mavlink_source": pub-> "mavros_node::uas1/mavlink_source"
+        - "uas1/mavlink_sink": sub-> "mavros_node::uas1/mavlink_sink"
+        - "mavros_router/add_endpoint": ss-> "mavros_node::mavros_router/add_endpoint"
+        - "mavros_router/del_endpoint": ss-> "mavros_node::mavros_router/del_endpoint"
+    "/mavros/mavros":
+      from: "mavros./mavros/mavros"
+      interfaces:
+        - "diagnostics": pub-> "mavros_node::diagnostics"
+        - "tf": pub-> "mavros_node::tf"
+        - "tf_static": pub-> "mavros_node::tf_static"
+        - "uas1/mavlink_sink": pub-> "mavros_node::uas1/mavlink_sink"
+        - "uas1/mavlink_source": sub-> "mavros_node::uas1/mavlink_source"
+      parameters:
+        - "base_link_frame_id": "mavros_node::base_link_frame_id"
+          value: "base_link"
+        - "component_id": "mavros_node::component_id"
+          value: 191
+        - "diagnostic_updater.period": "mavros_node::diagnostic_updater.period"
+          value: 1.0
+        - "diagnostic_updater.use_fqn": "mavros_node::diagnostic_updater.use_fqn"
+          value: false
+        - "fcu_protocol": "mavros_node::fcu_protocol"
+          value: "v2.0"
+        - "map_frame_id": "mavros_node::map_frame_id"
+          value: "map"
+        - "odom_frame_id": "mavros_node::odom_frame_id"
+          value: "odom"
+        - "plugin_allowlist": "mavros_node::plugin_allowlist"
+          value: ['command', 'local_position', 'param', 'setpoint_position', 'sys_status', 'sys_time']
+        - "plugin_denylist": "mavros_node::plugin_denylist"
+          value: ['']
+        - "system_id": "mavros_node::system_id"
+          value: 1
+        - "target_component_id": "mavros_node::target_component_id"
+          value: 1
+        - "target_system_id": "mavros_node::target_system_id"
+          value: 1
+        - "uas_url": "mavros_node::uas_url"
+          value: "/uas1"
+        - "use_sim_time": "mavros_node::use_sim_time"
+          value: false
+    "/mavros/cmd":
+      from: "mavros./mavros/cmd"
+      interfaces:
+        - "cmd/arming": ss-> "mavros_node::cmd/arming"
+        - "cmd/command": ss-> "mavros_node::cmd/command"
+        - "cmd/command_int": ss-> "mavros_node::cmd/command_int"
+        - "cmd/land": ss-> "mavros_node::cmd/land"
+        - "cmd/land_local": ss-> "mavros_node::cmd/land_local"
+        - "cmd/set_home": ss-> "mavros_node::cmd/set_home"
+        - "cmd/takeoff": ss-> "mavros_node::cmd/takeoff"
+        - "cmd/takeoff_local": ss-> "mavros_node::cmd/takeoff_local"
+        - "cmd/trigger_control": ss-> "mavros_node::cmd/trigger_control"
+        - "cmd/trigger_interval": ss-> "mavros_node::cmd/trigger_interval"
+        - "cmd/vtol_transition": ss-> "mavros_node::cmd/vtol_transition"
+    "/mavros/local_position":
+      from: "mavros./mavros/local_position"
+      interfaces:
+        - "local_position/accel": pub-> "mavros_node::local_position/accel"
+        - "local_position/odom": pub-> "mavros_node::local_position/odom"
+        - "local_position/pose": pub-> "mavros_node::local_position/pose"
+        - "local_position/pose_cov": pub-> "mavros_node::local_position/pose_cov"
+        - "local_position/velocity_body": pub-> "mavros_node::local_position/velocity_body"
+        - "local_position/velocity_body_cov": pub-> "mavros_node::local_position/velocity_body_cov"
+        - "local_position/velocity_local": pub-> "mavros_node::local_position/velocity_local"
+    "/mavros/param":
+      from: "mavros./mavros/param"
+      interfaces:
+        - "param/event": pub-> "mavros_node::param/event"
+        - "param/pull": ss-> "mavros_node::param/pull"
+        - "param/set": ss-> "mavros_node::param/set"
+      parameters:
+        - "ACRO_BAL_PITCH": "mavros_node::ACRO_BAL_PITCH"
+          value: 1.0
+        - "ACRO_BAL_ROLL": "mavros_node::ACRO_BAL_ROLL"
+          value: 1.0
+        - "ACRO_EXPO": "mavros_node::ACRO_EXPO"
+          value: 0.30000001192092896
+        - "ACRO_RP_P": "mavros_node::ACRO_RP_P"
+          value: 4.5
+        - "ACRO_TRAINER": "mavros_node::ACRO_TRAINER"
+          value: 2
+        - "ACRO_YAW_P": "mavros_node::ACRO_YAW_P"
+          value: 3.375
+        - "ACTUATOR1_INC": "mavros_node::ACTUATOR1_INC"
+          value: 0.009999999776482582
+        - "ACTUATOR2_INC": "mavros_node::ACTUATOR2_INC"
+          value: 0.009999999776482582
+        - "ACTUATOR3_INC": "mavros_node::ACTUATOR3_INC"
+          value: 0.009999999776482582
+        - "ACTUATOR4_INC": "mavros_node::ACTUATOR4_INC"
+          value: 0.009999999776482582
+        - "ACTUATOR5_INC": "mavros_node::ACTUATOR5_INC"
+          value: 0.009999999776482582
+        - "ACTUATOR6_INC": "mavros_node::ACTUATOR6_INC"
+          value: 0.009999999776482582
+        - "AHRS_COMP_BETA": "mavros_node::AHRS_COMP_BETA"
+          value: 0.10000000149011612
+        - "AHRS_EKF_TYPE": "mavros_node::AHRS_EKF_TYPE"
+          value: 10
+        - "AHRS_GPS_GAIN": "mavros_node::AHRS_GPS_GAIN"
+          value: 1.0
+        - "AHRS_GPS_MINSATS": "mavros_node::AHRS_GPS_MINSATS"
+          value: 6
+        - "AHRS_GPS_USE": "mavros_node::AHRS_GPS_USE"
+          value: 1
+        - "AHRS_OPTIONS": "mavros_node::AHRS_OPTIONS"
+          value: 16
+        - "AHRS_ORIENTATION": "mavros_node::AHRS_ORIENTATION"
+          value: 0
+        - "AHRS_ORIGIN_ALT": "mavros_node::AHRS_ORIGIN_ALT"
+          value: 0.0
+        - "AHRS_ORIGIN_LAT": "mavros_node::AHRS_ORIGIN_LAT"
+          value: 0.0
+        - "AHRS_ORIGIN_LON": "mavros_node::AHRS_ORIGIN_LON"
+          value: 0.0
+        - "AHRS_RP_P": "mavros_node::AHRS_RP_P"
+          value: 0.20000000298023224
+        - "AHRS_TRIM_X": "mavros_node::AHRS_TRIM_X"
+          value: 0.0
+        - "AHRS_TRIM_Y": "mavros_node::AHRS_TRIM_Y"
+          value: 0.0
+        - "AHRS_TRIM_Z": "mavros_node::AHRS_TRIM_Z"
+          value: 0.0
+        - "AHRS_WIND_MAX": "mavros_node::AHRS_WIND_MAX"
+          value: 0
+        - "AHRS_YAW_P": "mavros_node::AHRS_YAW_P"
+          value: 0.20000000298023224
+        - "ARMING_ACCTHRESH": "mavros_node::ARMING_ACCTHRESH"
+          value: 0.75
+        - "ARMING_MAGTHRESH": "mavros_node::ARMING_MAGTHRESH"
+          value: 100
+        - "ARMING_MIS_ITEMS": "mavros_node::ARMING_MIS_ITEMS"
+          value: 0
+        - "ARMING_OPTIONS": "mavros_node::ARMING_OPTIONS"
+          value: 0
+        - "ARMING_SKIPCHK": "mavros_node::ARMING_SKIPCHK"
+          value: 16776767
+        - "ARSPD_ENABLE": "mavros_node::ARSPD_ENABLE"
+          value: 0
+        - "ATC_ACC_P_MAX": "mavros_node::ATC_ACC_P_MAX"
+          value: 1100.0
+        - "ATC_ACC_R_MAX": "mavros_node::ATC_ACC_R_MAX"
+          value: 1100.0
+        - "ATC_ACC_Y_MAX": "mavros_node::ATC_ACC_Y_MAX"
+          value: 1100.0
+        - "ATC_ANGLE_BOOST": "mavros_node::ATC_ANGLE_BOOST"
+          value: 1
+        - "ATC_ANGLE_MAX": "mavros_node::ATC_ANGLE_MAX"
+          value: 30.0
+        - "ATC_ANG_LIM_TC": "mavros_node::ATC_ANG_LIM_TC"
+          value: 1.0
+        - "ATC_ANG_PIT_P": "mavros_node::ATC_ANG_PIT_P"
+          value: 6.0
+        - "ATC_ANG_RLL_P": "mavros_node::ATC_ANG_RLL_P"
+          value: 6.0
+        - "ATC_ANG_YAW_P": "mavros_node::ATC_ANG_YAW_P"
+          value: 6.0
+        - "ATC_INPUT_TC": "mavros_node::ATC_INPUT_TC"
+          value: 0.10000000149011612
+        - "ATC_LAND_P_MULT": "mavros_node::ATC_LAND_P_MULT"
+          value: 1.0
+        - "ATC_LAND_R_MULT": "mavros_node::ATC_LAND_R_MULT"
+          value: 1.0
+        - "ATC_LAND_Y_MULT": "mavros_node::ATC_LAND_Y_MULT"
+          value: 1.0
+        - "ATC_RATE_FF_ENAB": "mavros_node::ATC_RATE_FF_ENAB"
+          value: 1
+        - "ATC_RATE_P_MAX": "mavros_node::ATC_RATE_P_MAX"
+          value: 0.0
+        - "ATC_RATE_R_MAX": "mavros_node::ATC_RATE_R_MAX"
+          value: 0.0
+        - "ATC_RATE_WPY_MAX": "mavros_node::ATC_RATE_WPY_MAX"
+          value: 60.0
+        - "ATC_RATE_Y_MAX": "mavros_node::ATC_RATE_Y_MAX"
+          value: 180.0
+        - "ATC_RAT_PIT_D": "mavros_node::ATC_RAT_PIT_D"
+          value: 0.003599999938160181
+        - "ATC_RAT_PIT_D_FF": "mavros_node::ATC_RAT_PIT_D_FF"
+          value: 0.0
+        - "ATC_RAT_PIT_FF": "mavros_node::ATC_RAT_PIT_FF"
+          value: 0.0
+        - "ATC_RAT_PIT_FLTD": "mavros_node::ATC_RAT_PIT_FLTD"
+          value: 30.0
+        - "ATC_RAT_PIT_FLTE": "mavros_node::ATC_RAT_PIT_FLTE"
+          value: 0.0
+        - "ATC_RAT_PIT_FLTT": "mavros_node::ATC_RAT_PIT_FLTT"
+          value: 30.0
+        - "ATC_RAT_PIT_I": "mavros_node::ATC_RAT_PIT_I"
+          value: 0.09000000357627869
+        - "ATC_RAT_PIT_IMAX": "mavros_node::ATC_RAT_PIT_IMAX"
+          value: 0.4440000057220459
+        - "ATC_RAT_PIT_NEF": "mavros_node::ATC_RAT_PIT_NEF"
+          value: 0
+        - "ATC_RAT_PIT_NTF": "mavros_node::ATC_RAT_PIT_NTF"
+          value: 0
+        - "ATC_RAT_PIT_P": "mavros_node::ATC_RAT_PIT_P"
+          value: 0.13500000536441803
+        - "ATC_RAT_PIT_PDMX": "mavros_node::ATC_RAT_PIT_PDMX"
+          value: 0.0
+        - "ATC_RAT_PIT_SMAX": "mavros_node::ATC_RAT_PIT_SMAX"
+          value: 0.0
+        - "ATC_RAT_RLL_D": "mavros_node::ATC_RAT_RLL_D"
+          value: 0.003599999938160181
+        - "ATC_RAT_RLL_D_FF": "mavros_node::ATC_RAT_RLL_D_FF"
+          value: 0.0
+        - "ATC_RAT_RLL_FF": "mavros_node::ATC_RAT_RLL_FF"
+          value: 0.0
+        - "ATC_RAT_RLL_FLTD": "mavros_node::ATC_RAT_RLL_FLTD"
+          value: 30.0
+        - "ATC_RAT_RLL_FLTE": "mavros_node::ATC_RAT_RLL_FLTE"
+          value: 0.0
+        - "ATC_RAT_RLL_FLTT": "mavros_node::ATC_RAT_RLL_FLTT"
+          value: 30.0
+        - "ATC_RAT_RLL_I": "mavros_node::ATC_RAT_RLL_I"
+          value: 0.09000000357627869
+        - "ATC_RAT_RLL_IMAX": "mavros_node::ATC_RAT_RLL_IMAX"
+          value: 0.4440000057220459
+        - "ATC_RAT_RLL_NEF": "mavros_node::ATC_RAT_RLL_NEF"
+          value: 0
+        - "ATC_RAT_RLL_NTF": "mavros_node::ATC_RAT_RLL_NTF"
+          value: 0
+        - "ATC_RAT_RLL_P": "mavros_node::ATC_RAT_RLL_P"
+          value: 0.13500000536441803
+        - "ATC_RAT_RLL_PDMX": "mavros_node::ATC_RAT_RLL_PDMX"
+          value: 0.0
+        - "ATC_RAT_RLL_SMAX": "mavros_node::ATC_RAT_RLL_SMAX"
+          value: 0.0
+        - "ATC_RAT_YAW_D": "mavros_node::ATC_RAT_YAW_D"
+          value: 0.0
+        - "ATC_RAT_YAW_D_FF": "mavros_node::ATC_RAT_YAW_D_FF"
+          value: 0.0
+        - "ATC_RAT_YAW_FF": "mavros_node::ATC_RAT_YAW_FF"
+          value: 0.0
+        - "ATC_RAT_YAW_FLTD": "mavros_node::ATC_RAT_YAW_FLTD"
+          value: 5.0
+        - "ATC_RAT_YAW_FLTE": "mavros_node::ATC_RAT_YAW_FLTE"
+          value: 0.0
+        - "ATC_RAT_YAW_FLTT": "mavros_node::ATC_RAT_YAW_FLTT"
+          value: 5.0
+        - "ATC_RAT_YAW_I": "mavros_node::ATC_RAT_YAW_I"
+          value: 0.017999999225139618
+        - "ATC_RAT_YAW_IMAX": "mavros_node::ATC_RAT_YAW_IMAX"
+          value: 0.22200000286102295
+        - "ATC_RAT_YAW_NEF": "mavros_node::ATC_RAT_YAW_NEF"
+          value: 0
+        - "ATC_RAT_YAW_NTF": "mavros_node::ATC_RAT_YAW_NTF"
+          value: 0
+        - "ATC_RAT_YAW_P": "mavros_node::ATC_RAT_YAW_P"
+          value: 0.18000000715255737
+        - "ATC_RAT_YAW_PDMX": "mavros_node::ATC_RAT_YAW_PDMX"
+          value: 0.0
+        - "ATC_RAT_YAW_SMAX": "mavros_node::ATC_RAT_YAW_SMAX"
+          value: 0.0
+        - "ATC_THR_MIX_MAN": "mavros_node::ATC_THR_MIX_MAN"
+          value: 0.10000000149011612
+        - "ATC_THR_MIX_MAX": "mavros_node::ATC_THR_MIX_MAX"
+          value: 0.5
+        - "ATC_THR_MIX_MIN": "mavros_node::ATC_THR_MIX_MIN"
+          value: 0.10000000149011612
+        - "BARO1_DEVID": "mavros_node::BARO1_DEVID"
+          value: 65540
+        - "BARO1_GND_PRESS": "mavros_node::BARO1_GND_PRESS"
+          value: 275120.5
+        - "BARO1_WCF_ENABLE": "mavros_node::BARO1_WCF_ENABLE"
+          value: 0
+        - "BARO2_DEVID": "mavros_node::BARO2_DEVID"
+          value: 65796
+        - "BARO2_GND_PRESS": "mavros_node::BARO2_GND_PRESS"
+          value: 275502.09375
+        - "BARO2_WCF_ENABLE": "mavros_node::BARO2_WCF_ENABLE"
+          value: 0
+        - "BARO3_DEVID": "mavros_node::BARO3_DEVID"
+          value: 0
+        - "BARO3_GND_PRESS": "mavros_node::BARO3_GND_PRESS"
+          value: 0.0
+        - "BARO3_WCF_ENABLE": "mavros_node::BARO3_WCF_ENABLE"
+          value: 0
+        - "BARO_ALT_OFFSET": "mavros_node::BARO_ALT_OFFSET"
+          value: 0.0
+        - "BARO_EXT_BUS": "mavros_node::BARO_EXT_BUS"
+          value: 1
+        - "BARO_FLTR_RNG": "mavros_node::BARO_FLTR_RNG"
+          value: 0
+        - "BARO_GND_TEMP": "mavros_node::BARO_GND_TEMP"
+          value: 0.0
+        - "BARO_PRIMARY": "mavros_node::BARO_PRIMARY"
+          value: 0
+        - "BARO_PROBE_EXT": "mavros_node::BARO_PROBE_EXT"
+          value: 768
+        - "BARO_SPEC_GRAV": "mavros_node::BARO_SPEC_GRAV"
+          value: 1.0
+        - "BATT2_MONITOR": "mavros_node::BATT2_MONITOR"
+          value: 0
+        - "BATT3_MONITOR": "mavros_node::BATT3_MONITOR"
+          value: 0
+        - "BATT4_MONITOR": "mavros_node::BATT4_MONITOR"
+          value: 0
+        - "BATT5_MONITOR": "mavros_node::BATT5_MONITOR"
+          value: 0
+        - "BATT6_MONITOR": "mavros_node::BATT6_MONITOR"
+          value: 0
+        - "BATT7_MONITOR": "mavros_node::BATT7_MONITOR"
+          value: 0
+        - "BATT8_MONITOR": "mavros_node::BATT8_MONITOR"
+          value: 0
+        - "BATT9_MONITOR": "mavros_node::BATT9_MONITOR"
+          value: 0
+        - "BATT_AMP_OFFSET": "mavros_node::BATT_AMP_OFFSET"
+          value: 0.0
+        - "BATT_AMP_PERVLT": "mavros_node::BATT_AMP_PERVLT"
+          value: 17.0
+        - "BATT_ARM_MAH": "mavros_node::BATT_ARM_MAH"
+          value: 0
+        - "BATT_ARM_VOLT": "mavros_node::BATT_ARM_VOLT"
+          value: 0.0
+        - "BATT_CAPACITY": "mavros_node::BATT_CAPACITY"
+          value: 3300
+        - "BATT_CRT_MAH": "mavros_node::BATT_CRT_MAH"
+          value: 0.0
+        - "BATT_CRT_VOLT": "mavros_node::BATT_CRT_VOLT"
+          value: 0.0
+        - "BATT_CURR_PIN": "mavros_node::BATT_CURR_PIN"
+          value: 12
+        - "BATT_FS_CRT_ACT": "mavros_node::BATT_FS_CRT_ACT"
+          value: 0
+        - "BATT_FS_LOW_ACT": "mavros_node::BATT_FS_LOW_ACT"
+          value: 0
+        - "BATT_FS_VOLTSRC": "mavros_node::BATT_FS_VOLTSRC"
+          value: 0
+        - "BATT_LOW_MAH": "mavros_node::BATT_LOW_MAH"
+          value: 0.0
+        - "BATT_LOW_TIMER": "mavros_node::BATT_LOW_TIMER"
+          value: 10
+        - "BATT_LOW_VOLT": "mavros_node::BATT_LOW_VOLT"
+          value: 0.0
+        - "BATT_MONITOR": "mavros_node::BATT_MONITOR"
+          value: 4
+        - "BATT_OPTIONS": "mavros_node::BATT_OPTIONS"
+          value: 0
+        - "BATT_SERIAL_NUM": "mavros_node::BATT_SERIAL_NUM"
+          value: -1
+        - "BATT_VLT_OFFSET": "mavros_node::BATT_VLT_OFFSET"
+          value: 0.0
+        - "BATT_VOLT_MULT": "mavros_node::BATT_VOLT_MULT"
+          value: 10.100000381469727
+        - "BATT_VOLT_PIN": "mavros_node::BATT_VOLT_PIN"
+          value: 13
+        - "BRD_BOOT_DELAY": "mavros_node::BRD_BOOT_DELAY"
+          value: 0
+        - "BRD_OPTIONS": "mavros_node::BRD_OPTIONS"
+          value: 0
+        - "BRD_RTC_TYPES": "mavros_node::BRD_RTC_TYPES"
+          value: 1
+        - "BRD_RTC_TZ_MIN": "mavros_node::BRD_RTC_TZ_MIN"
+          value: 0
+        - "BRD_SAFETYOPTION": "mavros_node::BRD_SAFETYOPTION"
+          value: 3
+        - "BRD_SAFETY_DEFLT": "mavros_node::BRD_SAFETY_DEFLT"
+          value: 0
+        - "BRD_SAFETY_MASK": "mavros_node::BRD_SAFETY_MASK"
+          value: 0
+        - "BRD_SD_FENCE": "mavros_node::BRD_SD_FENCE"
+          value: 0
+        - "BRD_SD_MISSION": "mavros_node::BRD_SD_MISSION"
+          value: 0
+        - "BRD_SERIAL_NUM": "mavros_node::BRD_SERIAL_NUM"
+          value: 0
+        - "BRD_VBUS_MIN": "mavros_node::BRD_VBUS_MIN"
+          value: 4.300000190734863
+        - "BRD_VSERVO_MIN": "mavros_node::BRD_VSERVO_MIN"
+          value: 0.0
+        - "BTN0_FUNCTION": "mavros_node::BTN0_FUNCTION"
+          value: 0
+        - "BTN0_SFUNCTION": "mavros_node::BTN0_SFUNCTION"
+          value: 0
+        - "BTN10_FUNCTION": "mavros_node::BTN10_FUNCTION"
+          value: 22
+        - "BTN10_SFUNCTION": "mavros_node::BTN10_SFUNCTION"
+          value: 0
+        - "BTN11_FUNCTION": "mavros_node::BTN11_FUNCTION"
+          value: 42
+        - "BTN11_SFUNCTION": "mavros_node::BTN11_SFUNCTION"
+          value: 47
+        - "BTN12_FUNCTION": "mavros_node::BTN12_FUNCTION"
+          value: 43
+        - "BTN12_SFUNCTION": "mavros_node::BTN12_SFUNCTION"
+          value: 46
+        - "BTN13_FUNCTION": "mavros_node::BTN13_FUNCTION"
+          value: 33
+        - "BTN13_SFUNCTION": "mavros_node::BTN13_SFUNCTION"
+          value: 45
+        - "BTN14_FUNCTION": "mavros_node::BTN14_FUNCTION"
+          value: 32
+        - "BTN14_SFUNCTION": "mavros_node::BTN14_SFUNCTION"
+          value: 44
+        - "BTN15_FUNCTION": "mavros_node::BTN15_FUNCTION"
+          value: 0
+        - "BTN15_SFUNCTION": "mavros_node::BTN15_SFUNCTION"
+          value: 0
+        - "BTN16_FUNCTION": "mavros_node::BTN16_FUNCTION"
+          value: 0
+        - "BTN16_SFUNCTION": "mavros_node::BTN16_SFUNCTION"
+          value: 0
+        - "BTN17_FUNCTION": "mavros_node::BTN17_FUNCTION"
+          value: 0
+        - "BTN17_SFUNCTION": "mavros_node::BTN17_SFUNCTION"
+          value: 0
+        - "BTN18_FUNCTION": "mavros_node::BTN18_FUNCTION"
+          value: 0
+        - "BTN18_SFUNCTION": "mavros_node::BTN18_SFUNCTION"
+          value: 0
+        - "BTN19_FUNCTION": "mavros_node::BTN19_FUNCTION"
+          value: 0
+        - "BTN19_SFUNCTION": "mavros_node::BTN19_SFUNCTION"
+          value: 0
+        - "BTN1_FUNCTION": "mavros_node::BTN1_FUNCTION"
+          value: 6
+        - "BTN1_SFUNCTION": "mavros_node::BTN1_SFUNCTION"
+          value: 0
+        - "BTN20_FUNCTION": "mavros_node::BTN20_FUNCTION"
+          value: 0
+        - "BTN20_SFUNCTION": "mavros_node::BTN20_SFUNCTION"
+          value: 0
+        - "BTN21_FUNCTION": "mavros_node::BTN21_FUNCTION"
+          value: 0
+        - "BTN21_SFUNCTION": "mavros_node::BTN21_SFUNCTION"
+          value: 0
+        - "BTN22_FUNCTION": "mavros_node::BTN22_FUNCTION"
+          value: 0
+        - "BTN22_SFUNCTION": "mavros_node::BTN22_SFUNCTION"
+          value: 0
+        - "BTN23_FUNCTION": "mavros_node::BTN23_FUNCTION"
+          value: 0
+        - "BTN23_SFUNCTION": "mavros_node::BTN23_SFUNCTION"
+          value: 0
+        - "BTN24_FUNCTION": "mavros_node::BTN24_FUNCTION"
+          value: 0
+        - "BTN24_SFUNCTION": "mavros_node::BTN24_SFUNCTION"
+          value: 0
+        - "BTN25_FUNCTION": "mavros_node::BTN25_FUNCTION"
+          value: 0
+        - "BTN25_SFUNCTION": "mavros_node::BTN25_SFUNCTION"
+          value: 0
+        - "BTN26_FUNCTION": "mavros_node::BTN26_FUNCTION"
+          value: 0
+        - "BTN26_SFUNCTION": "mavros_node::BTN26_SFUNCTION"
+          value: 0
+        - "BTN27_FUNCTION": "mavros_node::BTN27_FUNCTION"
+          value: 0
+        - "BTN27_SFUNCTION": "mavros_node::BTN27_SFUNCTION"
+          value: 0
+        - "BTN28_FUNCTION": "mavros_node::BTN28_FUNCTION"
+          value: 0
+        - "BTN28_SFUNCTION": "mavros_node::BTN28_SFUNCTION"
+          value: 0
+        - "BTN29_FUNCTION": "mavros_node::BTN29_FUNCTION"
+          value: 0
+        - "BTN29_SFUNCTION": "mavros_node::BTN29_SFUNCTION"
+          value: 0
+        - "BTN2_FUNCTION": "mavros_node::BTN2_FUNCTION"
+          value: 8
+        - "BTN2_SFUNCTION": "mavros_node::BTN2_SFUNCTION"
+          value: 0
+        - "BTN30_FUNCTION": "mavros_node::BTN30_FUNCTION"
+          value: 0
+        - "BTN30_SFUNCTION": "mavros_node::BTN30_SFUNCTION"
+          value: 0
+        - "BTN31_FUNCTION": "mavros_node::BTN31_FUNCTION"
+          value: 0
+        - "BTN31_SFUNCTION": "mavros_node::BTN31_SFUNCTION"
+          value: 0
+        - "BTN3_FUNCTION": "mavros_node::BTN3_FUNCTION"
+          value: 7
+        - "BTN3_SFUNCTION": "mavros_node::BTN3_SFUNCTION"
+          value: 0
+        - "BTN4_FUNCTION": "mavros_node::BTN4_FUNCTION"
+          value: 4
+        - "BTN4_SFUNCTION": "mavros_node::BTN4_SFUNCTION"
+          value: 0
+        - "BTN5_FUNCTION": "mavros_node::BTN5_FUNCTION"
+          value: 1
+        - "BTN5_SFUNCTION": "mavros_node::BTN5_SFUNCTION"
+          value: 0
+        - "BTN6_FUNCTION": "mavros_node::BTN6_FUNCTION"
+          value: 3
+        - "BTN6_SFUNCTION": "mavros_node::BTN6_SFUNCTION"
+          value: 0
+        - "BTN7_FUNCTION": "mavros_node::BTN7_FUNCTION"
+          value: 21
+        - "BTN7_SFUNCTION": "mavros_node::BTN7_SFUNCTION"
+          value: 0
+        - "BTN8_FUNCTION": "mavros_node::BTN8_FUNCTION"
+          value: 48
+        - "BTN8_SFUNCTION": "mavros_node::BTN8_SFUNCTION"
+          value: 0
+        - "BTN9_FUNCTION": "mavros_node::BTN9_FUNCTION"
+          value: 23
+        - "BTN9_SFUNCTION": "mavros_node::BTN9_SFUNCTION"
+          value: 0
+        - "CAM1_TYPE": "mavros_node::CAM1_TYPE"
+          value: 0
+        - "CAM2_TYPE": "mavros_node::CAM2_TYPE"
+          value: 0
+        - "CAM_AUTO_ONLY": "mavros_node::CAM_AUTO_ONLY"
+          value: 0
+        - "CAM_MAX_ROLL": "mavros_node::CAM_MAX_ROLL"
+          value: 0
+        - "CAN_D1_PROTOCOL": "mavros_node::CAN_D1_PROTOCOL"
+          value: 1
+        - "CAN_D1_PROTOCOL2": "mavros_node::CAN_D1_PROTOCOL2"
+          value: 0
+        - "CAN_D2_PROTOCOL": "mavros_node::CAN_D2_PROTOCOL"
+          value: 1
+        - "CAN_D2_PROTOCOL2": "mavros_node::CAN_D2_PROTOCOL2"
+          value: 0
+        - "CAN_LOGLEVEL": "mavros_node::CAN_LOGLEVEL"
+          value: 0
+        - "CAN_P1_DRIVER": "mavros_node::CAN_P1_DRIVER"
+          value: 0
+        - "CAN_P2_DRIVER": "mavros_node::CAN_P2_DRIVER"
+          value: 0
+        - "CIRCLE_OPTIONS": "mavros_node::CIRCLE_OPTIONS"
+          value: 1
+        - "CIRCLE_RADIUS_M": "mavros_node::CIRCLE_RADIUS_M"
+          value: 10.0
+        - "CIRCLE_RATE": "mavros_node::CIRCLE_RATE"
+          value: 2.0
+        - "COMPASS_AUTODEC": "mavros_node::COMPASS_AUTODEC"
+          value: 1
+        - "COMPASS_AUTO_ROT": "mavros_node::COMPASS_AUTO_ROT"
+          value: 2
+        - "COMPASS_CAL_FIT": "mavros_node::COMPASS_CAL_FIT"
+          value: 16.0
+        - "COMPASS_DEC": "mavros_node::COMPASS_DEC"
+          value: 0.20046550035476685
+        - "COMPASS_DEV_ID": "mavros_node::COMPASS_DEV_ID"
+          value: 97539
+        - "COMPASS_DEV_ID2": "mavros_node::COMPASS_DEV_ID2"
+          value: 131874
+        - "COMPASS_DEV_ID3": "mavros_node::COMPASS_DEV_ID3"
+          value: 263178
+        - "COMPASS_DEV_ID4": "mavros_node::COMPASS_DEV_ID4"
+          value: 97283
+        - "COMPASS_DEV_ID5": "mavros_node::COMPASS_DEV_ID5"
+          value: 97795
+        - "COMPASS_DEV_ID6": "mavros_node::COMPASS_DEV_ID6"
+          value: 98051
+        - "COMPASS_DEV_ID7": "mavros_node::COMPASS_DEV_ID7"
+          value: 0
+        - "COMPASS_DEV_ID8": "mavros_node::COMPASS_DEV_ID8"
+          value: 0
+        - "COMPASS_DIA2_X": "mavros_node::COMPASS_DIA2_X"
+          value: 1.0
+        - "COMPASS_DIA2_Y": "mavros_node::COMPASS_DIA2_Y"
+          value: 1.0
+        - "COMPASS_DIA2_Z": "mavros_node::COMPASS_DIA2_Z"
+          value: 1.0
+        - "COMPASS_DIA3_X": "mavros_node::COMPASS_DIA3_X"
+          value: 1.0
+        - "COMPASS_DIA3_Y": "mavros_node::COMPASS_DIA3_Y"
+          value: 1.0
+        - "COMPASS_DIA3_Z": "mavros_node::COMPASS_DIA3_Z"
+          value: 1.0
+        - "COMPASS_DIA_X": "mavros_node::COMPASS_DIA_X"
+          value: 1.0
+        - "COMPASS_DIA_Y": "mavros_node::COMPASS_DIA_Y"
+          value: 1.0
+        - "COMPASS_DIA_Z": "mavros_node::COMPASS_DIA_Z"
+          value: 1.0
+        - "COMPASS_DISBLMSK": "mavros_node::COMPASS_DISBLMSK"
+          value: 0
+        - "COMPASS_ENABLE": "mavros_node::COMPASS_ENABLE"
+          value: 1
+        - "COMPASS_EXTERN2": "mavros_node::COMPASS_EXTERN2"
+          value: 0
+        - "COMPASS_EXTERN3": "mavros_node::COMPASS_EXTERN3"
+          value: 0
+        - "COMPASS_EXTERNAL": "mavros_node::COMPASS_EXTERNAL"
+          value: 1
+        - "COMPASS_FLTR_RNG": "mavros_node::COMPASS_FLTR_RNG"
+          value: 0
+        - "COMPASS_LEARN": "mavros_node::COMPASS_LEARN"
+          value: 0
+        - "COMPASS_MOT2_X": "mavros_node::COMPASS_MOT2_X"
+          value: 0.0
+        - "COMPASS_MOT2_Y": "mavros_node::COMPASS_MOT2_Y"
+          value: 0.0
+        - "COMPASS_MOT2_Z": "mavros_node::COMPASS_MOT2_Z"
+          value: 0.0
+        - "COMPASS_MOT3_X": "mavros_node::COMPASS_MOT3_X"
+          value: 0.0
+        - "COMPASS_MOT3_Y": "mavros_node::COMPASS_MOT3_Y"
+          value: 0.0
+        - "COMPASS_MOT3_Z": "mavros_node::COMPASS_MOT3_Z"
+          value: 0.0
+        - "COMPASS_MOTCT": "mavros_node::COMPASS_MOTCT"
+          value: 0
+        - "COMPASS_MOT_X": "mavros_node::COMPASS_MOT_X"
+          value: 0.0
+        - "COMPASS_MOT_Y": "mavros_node::COMPASS_MOT_Y"
+          value: 0.0
+        - "COMPASS_MOT_Z": "mavros_node::COMPASS_MOT_Z"
+          value: 0.0
+        - "COMPASS_ODI2_X": "mavros_node::COMPASS_ODI2_X"
+          value: 0.0
+        - "COMPASS_ODI2_Y": "mavros_node::COMPASS_ODI2_Y"
+          value: 0.0
+        - "COMPASS_ODI2_Z": "mavros_node::COMPASS_ODI2_Z"
+          value: 0.0
+        - "COMPASS_ODI3_X": "mavros_node::COMPASS_ODI3_X"
+          value: 0.0
+        - "COMPASS_ODI3_Y": "mavros_node::COMPASS_ODI3_Y"
+          value: 0.0
+        - "COMPASS_ODI3_Z": "mavros_node::COMPASS_ODI3_Z"
+          value: 0.0
+        - "COMPASS_ODI_X": "mavros_node::COMPASS_ODI_X"
+          value: 0.0
+        - "COMPASS_ODI_Y": "mavros_node::COMPASS_ODI_Y"
+          value: 0.0
+        - "COMPASS_ODI_Z": "mavros_node::COMPASS_ODI_Z"
+          value: 0.0
+        - "COMPASS_OFFS_MAX": "mavros_node::COMPASS_OFFS_MAX"
+          value: 1000
+        - "COMPASS_OFS2_X": "mavros_node::COMPASS_OFS2_X"
+          value: 5.0
+        - "COMPASS_OFS2_Y": "mavros_node::COMPASS_OFS2_Y"
+          value: 13.0
+        - "COMPASS_OFS2_Z": "mavros_node::COMPASS_OFS2_Z"
+          value: -18.0
+        - "COMPASS_OFS3_X": "mavros_node::COMPASS_OFS3_X"
+          value: 5.0
+        - "COMPASS_OFS3_Y": "mavros_node::COMPASS_OFS3_Y"
+          value: 13.0
+        - "COMPASS_OFS3_Z": "mavros_node::COMPASS_OFS3_Z"
+          value: -18.0
+        - "COMPASS_OFS_X": "mavros_node::COMPASS_OFS_X"
+          value: 5.0
+        - "COMPASS_OFS_Y": "mavros_node::COMPASS_OFS_Y"
+          value: 13.0
+        - "COMPASS_OFS_Z": "mavros_node::COMPASS_OFS_Z"
+          value: -18.0
+        - "COMPASS_OPTIONS": "mavros_node::COMPASS_OPTIONS"
+          value: 0
+        - "COMPASS_ORIENT": "mavros_node::COMPASS_ORIENT"
+          value: 0
+        - "COMPASS_ORIENT2": "mavros_node::COMPASS_ORIENT2"
+          value: 0
+        - "COMPASS_ORIENT3": "mavros_node::COMPASS_ORIENT3"
+          value: 0
+        - "COMPASS_PMOT_EN": "mavros_node::COMPASS_PMOT_EN"
+          value: 0
+        - "COMPASS_PRIO1_ID": "mavros_node::COMPASS_PRIO1_ID"
+          value: 97539
+        - "COMPASS_PRIO2_ID": "mavros_node::COMPASS_PRIO2_ID"
+          value: 131874
+        - "COMPASS_PRIO3_ID": "mavros_node::COMPASS_PRIO3_ID"
+          value: 263178
+        - "COMPASS_SCALE": "mavros_node::COMPASS_SCALE"
+          value: 1.0
+        - "COMPASS_SCALE2": "mavros_node::COMPASS_SCALE2"
+          value: 1.0
+        - "COMPASS_SCALE3": "mavros_node::COMPASS_SCALE3"
+          value: 1.0
+        - "COMPASS_USE": "mavros_node::COMPASS_USE"
+          value: 1
+        - "COMPASS_USE2": "mavros_node::COMPASS_USE2"
+          value: 1
+        - "COMPASS_USE3": "mavros_node::COMPASS_USE3"
+          value: 1
+        - "CUST_ROT_ENABLE": "mavros_node::CUST_ROT_ENABLE"
+          value: 0
+        - "DID_ENABLE": "mavros_node::DID_ENABLE"
+          value: 0
+        - "EAHRS_TYPE": "mavros_node::EAHRS_TYPE"
+          value: 0
+        - "EFI_TYPE": "mavros_node::EFI_TYPE"
+          value: 0
+        - "EK2_ENABLE": "mavros_node::EK2_ENABLE"
+          value: 0
+        - "EK3_ABIAS_P_NSE": "mavros_node::EK3_ABIAS_P_NSE"
+          value: 0.019999999552965164
+        - "EK3_ACC_BIAS_LIM": "mavros_node::EK3_ACC_BIAS_LIM"
+          value: 1.0
+        - "EK3_ACC_P_NSE": "mavros_node::EK3_ACC_P_NSE"
+          value: 0.3499999940395355
+        - "EK3_AFFINITY": "mavros_node::EK3_AFFINITY"
+          value: 0
+        - "EK3_ALT_M_NSE": "mavros_node::EK3_ALT_M_NSE"
+          value: 0.10000000149011612
+        - "EK3_BCN_DELAY": "mavros_node::EK3_BCN_DELAY"
+          value: 50
+        - "EK3_BCN_I_GTE": "mavros_node::EK3_BCN_I_GTE"
+          value: 500
+        - "EK3_BCN_M_NSE": "mavros_node::EK3_BCN_M_NSE"
+          value: 1.0
+        - "EK3_BETA_MASK": "mavros_node::EK3_BETA_MASK"
+          value: 0
+        - "EK3_CHECK_SCALE": "mavros_node::EK3_CHECK_SCALE"
+          value: 100
+        - "EK3_DRAG_BCOEF_X": "mavros_node::EK3_DRAG_BCOEF_X"
+          value: 0.0
+        - "EK3_DRAG_BCOEF_Y": "mavros_node::EK3_DRAG_BCOEF_Y"
+          value: 0.0
+        - "EK3_DRAG_MCOEF": "mavros_node::EK3_DRAG_MCOEF"
+          value: 0.0
+        - "EK3_DRAG_M_NSE": "mavros_node::EK3_DRAG_M_NSE"
+          value: 0.5
+        - "EK3_EAS_I_GATE": "mavros_node::EK3_EAS_I_GATE"
+          value: 400
+        - "EK3_EAS_M_NSE": "mavros_node::EK3_EAS_M_NSE"
+          value: 1.399999976158142
+        - "EK3_ENABLE": "mavros_node::EK3_ENABLE"
+          value: 1
+        - "EK3_ERR_THRESH": "mavros_node::EK3_ERR_THRESH"
+          value: 0.20000000298023224
+        - "EK3_FLOW_DELAY": "mavros_node::EK3_FLOW_DELAY"
+          value: 10
+        - "EK3_FLOW_I_GATE": "mavros_node::EK3_FLOW_I_GATE"
+          value: 300
+        - "EK3_FLOW_MAX": "mavros_node::EK3_FLOW_MAX"
+          value: 2.5
+        - "EK3_FLOW_M_NSE": "mavros_node::EK3_FLOW_M_NSE"
+          value: 0.25
+        - "EK3_FLOW_USE": "mavros_node::EK3_FLOW_USE"
+          value: 1
+        - "EK3_GBIAS_P_NSE": "mavros_node::EK3_GBIAS_P_NSE"
+          value: 0.0010000000474974513
+        - "EK3_GLITCH_RAD": "mavros_node::EK3_GLITCH_RAD"
+          value: 25
+        - "EK3_GND_EFF_DZ": "mavros_node::EK3_GND_EFF_DZ"
+          value: 4.0
+        - "EK3_GPS_CHECK": "mavros_node::EK3_GPS_CHECK"
+          value: 31
+        - "EK3_GPS_VACC_MAX": "mavros_node::EK3_GPS_VACC_MAX"
+          value: 0.0
+        - "EK3_GSF_RST_MAX": "mavros_node::EK3_GSF_RST_MAX"
+          value: 2
+        - "EK3_GSF_RUN_MASK": "mavros_node::EK3_GSF_RUN_MASK"
+          value: 3
+        - "EK3_GSF_USE_MASK": "mavros_node::EK3_GSF_USE_MASK"
+          value: 3
+        - "EK3_GYRO_P_NSE": "mavros_node::EK3_GYRO_P_NSE"
+          value: 0.014999999664723873
+        - "EK3_HGT_DELAY": "mavros_node::EK3_HGT_DELAY"
+          value: 60
+        - "EK3_HGT_I_GATE": "mavros_node::EK3_HGT_I_GATE"
+          value: 500
+        - "EK3_HRT_FILT": "mavros_node::EK3_HRT_FILT"
+          value: 2.0
+        - "EK3_IMU_MASK": "mavros_node::EK3_IMU_MASK"
+          value: 3
+        - "EK3_LOG_LEVEL": "mavros_node::EK3_LOG_LEVEL"
+          value: 0
+        - "EK3_MAGB_P_NSE": "mavros_node::EK3_MAGB_P_NSE"
+          value: 9.999999747378752e-05
+        - "EK3_MAGE_P_NSE": "mavros_node::EK3_MAGE_P_NSE"
+          value: 0.0010000000474974513
+        - "EK3_MAG_CAL": "mavros_node::EK3_MAG_CAL"
+          value: 3
+        - "EK3_MAG_EF_LIM": "mavros_node::EK3_MAG_EF_LIM"
+          value: 50
+        - "EK3_MAG_I_GATE": "mavros_node::EK3_MAG_I_GATE"
+          value: 300
+        - "EK3_MAG_MASK": "mavros_node::EK3_MAG_MASK"
+          value: 0
+        - "EK3_MAG_M_NSE": "mavros_node::EK3_MAG_M_NSE"
+          value: 0.05000000074505806
+        - "EK3_NOAID_M_NSE": "mavros_node::EK3_NOAID_M_NSE"
+          value: 10.0
+        - "EK3_OGNM_TEST_SF": "mavros_node::EK3_OGNM_TEST_SF"
+          value: 2.0
+        - "EK3_OGN_HGT_MASK": "mavros_node::EK3_OGN_HGT_MASK"
+          value: 0
+        - "EK3_OPTIONS": "mavros_node::EK3_OPTIONS"
+          value: 0
+        - "EK3_POSNE_M_NSE": "mavros_node::EK3_POSNE_M_NSE"
+          value: 0.5
+        - "EK3_POS_I_GATE": "mavros_node::EK3_POS_I_GATE"
+          value: 500
+        - "EK3_PRIMARY": "mavros_node::EK3_PRIMARY"
+          value: 0
+        - "EK3_RNG_I_GATE": "mavros_node::EK3_RNG_I_GATE"
+          value: 500
+        - "EK3_RNG_M_NSE": "mavros_node::EK3_RNG_M_NSE"
+          value: 0.5
+        - "EK3_RNG_USE_HGT": "mavros_node::EK3_RNG_USE_HGT"
+          value: -1
+        - "EK3_RNG_USE_SPD": "mavros_node::EK3_RNG_USE_SPD"
+          value: 2.0
+        - "EK3_SRC1_POSXY": "mavros_node::EK3_SRC1_POSXY"
+          value: 3
+        - "EK3_SRC1_POSZ": "mavros_node::EK3_SRC1_POSZ"
+          value: 1
+        - "EK3_SRC1_VELXY": "mavros_node::EK3_SRC1_VELXY"
+          value: 3
+        - "EK3_SRC1_VELZ": "mavros_node::EK3_SRC1_VELZ"
+          value: 0
+        - "EK3_SRC1_YAW": "mavros_node::EK3_SRC1_YAW"
+          value: 1
+        - "EK3_SRC2_POSXY": "mavros_node::EK3_SRC2_POSXY"
+          value: 0
+        - "EK3_SRC2_POSZ": "mavros_node::EK3_SRC2_POSZ"
+          value: 1
+        - "EK3_SRC2_VELXY": "mavros_node::EK3_SRC2_VELXY"
+          value: 0
+        - "EK3_SRC2_VELZ": "mavros_node::EK3_SRC2_VELZ"
+          value: 0
+        - "EK3_SRC2_YAW": "mavros_node::EK3_SRC2_YAW"
+          value: 0
+        - "EK3_SRC3_POSXY": "mavros_node::EK3_SRC3_POSXY"
+          value: 0
+        - "EK3_SRC3_POSZ": "mavros_node::EK3_SRC3_POSZ"
+          value: 1
+        - "EK3_SRC3_VELXY": "mavros_node::EK3_SRC3_VELXY"
+          value: 0
+        - "EK3_SRC3_VELZ": "mavros_node::EK3_SRC3_VELZ"
+          value: 0
+        - "EK3_SRC3_YAW": "mavros_node::EK3_SRC3_YAW"
+          value: 0
+        - "EK3_SRC_OPTIONS": "mavros_node::EK3_SRC_OPTIONS"
+          value: 0
+        - "EK3_TAU_OUTPUT": "mavros_node::EK3_TAU_OUTPUT"
+          value: 25
+        - "EK3_TERR_GRAD": "mavros_node::EK3_TERR_GRAD"
+          value: 0.10000000149011612
+        - "EK3_VELD_M_NSE": "mavros_node::EK3_VELD_M_NSE"
+          value: 0.699999988079071
+        - "EK3_VELNE_M_NSE": "mavros_node::EK3_VELNE_M_NSE"
+          value: 0.5
+        - "EK3_VEL_I_GATE": "mavros_node::EK3_VEL_I_GATE"
+          value: 500
+        - "EK3_VIS_VERR_MAX": "mavros_node::EK3_VIS_VERR_MAX"
+          value: 0.8999999761581421
+        - "EK3_VIS_VERR_MIN": "mavros_node::EK3_VIS_VERR_MIN"
+          value: 0.10000000149011612
+        - "EK3_WENC_VERR": "mavros_node::EK3_WENC_VERR"
+          value: 0.10000000149011612
+        - "EK3_WIND_PSCALE": "mavros_node::EK3_WIND_PSCALE"
+          value: 1.0
+        - "EK3_WIND_P_NSE": "mavros_node::EK3_WIND_P_NSE"
+          value: 0.10000000149011612
+        - "EK3_YAW_I_GATE": "mavros_node::EK3_YAW_I_GATE"
+          value: 300
+        - "EK3_YAW_M_NSE": "mavros_node::EK3_YAW_M_NSE"
+          value: 0.5
+        - "ESC_TLM_MAV_OFS": "mavros_node::ESC_TLM_MAV_OFS"
+          value: 0
+        - "FENCE_ACTION": "mavros_node::FENCE_ACTION"
+          value: 1
+        - "FENCE_ALT_MAX": "mavros_node::FENCE_ALT_MAX"
+          value: 100.0
+        - "FENCE_ALT_MAX_TP": "mavros_node::FENCE_ALT_MAX_TP"
+          value: 1
+        - "FENCE_ALT_MIN": "mavros_node::FENCE_ALT_MIN"
+          value: -10.0
+        - "FENCE_ALT_MIN_TP": "mavros_node::FENCE_ALT_MIN_TP"
+          value: 1
+        - "FENCE_ENABLE": "mavros_node::FENCE_ENABLE"
+          value: 0
+        - "FENCE_MARGIN": "mavros_node::FENCE_MARGIN"
+          value: 2.0
+        - "FENCE_MARGIN_XY": "mavros_node::FENCE_MARGIN_XY"
+          value: 0.0
+        - "FENCE_NTF_FREQ": "mavros_node::FENCE_NTF_FREQ"
+          value: 1.0
+        - "FENCE_OPTIONS": "mavros_node::FENCE_OPTIONS"
+          value: 0
+        - "FENCE_RADIUS": "mavros_node::FENCE_RADIUS"
+          value: 300.0
+        - "FENCE_TOTAL": "mavros_node::FENCE_TOTAL"
+          value: 0
+        - "FENCE_TYPE": "mavros_node::FENCE_TYPE"
+          value: 7
+        - "FFT_ENABLE": "mavros_node::FFT_ENABLE"
+          value: 0
+        - "FILT1_TYPE": "mavros_node::FILT1_TYPE"
+          value: 0
+        - "FILT2_TYPE": "mavros_node::FILT2_TYPE"
+          value: 0
+        - "FILT3_TYPE": "mavros_node::FILT3_TYPE"
+          value: 0
+        - "FILT4_TYPE": "mavros_node::FILT4_TYPE"
+          value: 0
+        - "FILT5_TYPE": "mavros_node::FILT5_TYPE"
+          value: 0
+        - "FILT6_TYPE": "mavros_node::FILT6_TYPE"
+          value: 0
+        - "FILT7_TYPE": "mavros_node::FILT7_TYPE"
+          value: 0
+        - "FILT8_TYPE": "mavros_node::FILT8_TYPE"
+          value: 0
+        - "FLOW_TYPE": "mavros_node::FLOW_TYPE"
+          value: 0
+        - "FLTMODE1": "mavros_node::FLTMODE1"
+          value: 19
+        - "FLTMODE2": "mavros_node::FLTMODE2"
+          value: 19
+        - "FLTMODE3": "mavros_node::FLTMODE3"
+          value: 0
+        - "FLTMODE4": "mavros_node::FLTMODE4"
+          value: 0
+        - "FLTMODE5": "mavros_node::FLTMODE5"
+          value: 9
+        - "FLTMODE6": "mavros_node::FLTMODE6"
+          value: 9
+        - "FLTMODE_CH": "mavros_node::FLTMODE_CH"
+          value: 0
+        - "FORMAT_VERSION": "mavros_node::FORMAT_VERSION"
+          value: 1
+        - "FRAME_CONFIG": "mavros_node::FRAME_CONFIG"
+          value: 1
+        - "FRSKY_DNLINK1_ID": "mavros_node::FRSKY_DNLINK1_ID"
+          value: 20
+        - "FRSKY_DNLINK2_ID": "mavros_node::FRSKY_DNLINK2_ID"
+          value: 7
+        - "FRSKY_DNLINK_ID": "mavros_node::FRSKY_DNLINK_ID"
+          value: 27
+        - "FRSKY_OPTIONS": "mavros_node::FRSKY_OPTIONS"
+          value: 0
+        - "FRSKY_UPLINK_ID": "mavros_node::FRSKY_UPLINK_ID"
+          value: 13
+        - "FS_CRASH_CHECK": "mavros_node::FS_CRASH_CHECK"
+          value: 0
+        - "FS_EKF_ACTION": "mavros_node::FS_EKF_ACTION"
+          value: 0
+        - "FS_EKF_THRESH": "mavros_node::FS_EKF_THRESH"
+          value: 0.800000011920929
+        - "FS_GCS_ENABLE": "mavros_node::FS_GCS_ENABLE"
+          value: 2
+        - "FS_GCS_TIMEOUT": "mavros_node::FS_GCS_TIMEOUT"
+          value: 5.0
+        - "FS_LEAK_ENABLE": "mavros_node::FS_LEAK_ENABLE"
+          value: 1
+        - "FS_PILOT_INPUT": "mavros_node::FS_PILOT_INPUT"
+          value: 2
+        - "FS_PILOT_TIMEOUT": "mavros_node::FS_PILOT_TIMEOUT"
+          value: 3.0
+        - "FS_PRESS_ENABLE": "mavros_node::FS_PRESS_ENABLE"
+          value: 0
+        - "FS_PRESS_MAX": "mavros_node::FS_PRESS_MAX"
+          value: 105000
+        - "FS_TEMP_ENABLE": "mavros_node::FS_TEMP_ENABLE"
+          value: 0
+        - "FS_TEMP_MAX": "mavros_node::FS_TEMP_MAX"
+          value: 62
+        - "FS_TERRAIN_ENAB": "mavros_node::FS_TERRAIN_ENAB"
+          value: 0
+        - "FS_THR_ENABLE": "mavros_node::FS_THR_ENABLE"
+          value: 0
+        - "FS_THR_VALUE": "mavros_node::FS_THR_VALUE"
+          value: 975
+        - "GCS_PID_MASK": "mavros_node::GCS_PID_MASK"
+          value: 0
+        - "GEN_TYPE": "mavros_node::GEN_TYPE"
+          value: 0
+        - "GPS1_CAN_NODEID": "mavros_node::GPS1_CAN_NODEID"
+          value: 0
+        - "GPS1_CAN_OVRIDE": "mavros_node::GPS1_CAN_OVRIDE"
+          value: 0
+        - "GPS1_COM_PORT": "mavros_node::GPS1_COM_PORT"
+          value: 1
+        - "GPS1_DELAY_MS": "mavros_node::GPS1_DELAY_MS"
+          value: 0
+        - "GPS1_GNSS_MODE": "mavros_node::GPS1_GNSS_MODE"
+          value: 0
+        - "GPS1_MB_TYPE": "mavros_node::GPS1_MB_TYPE"
+          value: 0
+        - "GPS1_POS_X": "mavros_node::GPS1_POS_X"
+          value: 0.0
+        - "GPS1_POS_Y": "mavros_node::GPS1_POS_Y"
+          value: 0.0
+        - "GPS1_POS_Z": "mavros_node::GPS1_POS_Z"
+          value: 0.0
+        - "GPS1_RATE_MS": "mavros_node::GPS1_RATE_MS"
+          value: 200
+        - "GPS1_TYPE": "mavros_node::GPS1_TYPE"
+          value: 1
+        - "GPS2_TYPE": "mavros_node::GPS2_TYPE"
+          value: 0
+        - "GPS_AUTO_CONFIG": "mavros_node::GPS_AUTO_CONFIG"
+          value: 1
+        - "GPS_AUTO_SWITCH": "mavros_node::GPS_AUTO_SWITCH"
+          value: 1
+        - "GPS_BLEND_MASK": "mavros_node::GPS_BLEND_MASK"
+          value: 5
+        - "GPS_DRV_OPTIONS": "mavros_node::GPS_DRV_OPTIONS"
+          value: 0
+        - "GPS_INJECT_TO": "mavros_node::GPS_INJECT_TO"
+          value: 127
+        - "GPS_MIN_ELEV": "mavros_node::GPS_MIN_ELEV"
+          value: -100
+        - "GPS_NAVFILTER": "mavros_node::GPS_NAVFILTER"
+          value: 8
+        - "GPS_PRIMARY": "mavros_node::GPS_PRIMARY"
+          value: 0
+        - "GPS_RAW_DATA": "mavros_node::GPS_RAW_DATA"
+          value: 0
+        - "GPS_SAVE_CFG": "mavros_node::GPS_SAVE_CFG"
+          value: 2
+        - "GPS_SBAS_MODE": "mavros_node::GPS_SBAS_MODE"
+          value: 2
+        - "GPS_SBP_LOGMASK": "mavros_node::GPS_SBP_LOGMASK"
+          value: -256
+        - "GRIP_ENABLE": "mavros_node::GRIP_ENABLE"
+          value: 0
+        - "INS_ACC1_CALTEMP": "mavros_node::INS_ACC1_CALTEMP"
+          value: -300.0
+        - "INS_ACC2OFFS_X": "mavros_node::INS_ACC2OFFS_X"
+          value: 0.0010000000474974513
+        - "INS_ACC2OFFS_Y": "mavros_node::INS_ACC2OFFS_Y"
+          value: 0.0010000000474974513
+        - "INS_ACC2OFFS_Z": "mavros_node::INS_ACC2OFFS_Z"
+          value: 0.0010000000474974513
+        - "INS_ACC2SCAL_X": "mavros_node::INS_ACC2SCAL_X"
+          value: 1.0010000467300415
+        - "INS_ACC2SCAL_Y": "mavros_node::INS_ACC2SCAL_Y"
+          value: 1.0010000467300415
+        - "INS_ACC2SCAL_Z": "mavros_node::INS_ACC2SCAL_Z"
+          value: 1.0010000467300415
+        - "INS_ACC2_CALTEMP": "mavros_node::INS_ACC2_CALTEMP"
+          value: -300.0
+        - "INS_ACC2_ID": "mavros_node::INS_ACC2_ID"
+          value: 2753036
+        - "INS_ACC3OFFS_X": "mavros_node::INS_ACC3OFFS_X"
+          value: 0.0
+        - "INS_ACC3OFFS_Y": "mavros_node::INS_ACC3OFFS_Y"
+          value: 0.0
+        - "INS_ACC3OFFS_Z": "mavros_node::INS_ACC3OFFS_Z"
+          value: 0.0
+        - "INS_ACC3SCAL_X": "mavros_node::INS_ACC3SCAL_X"
+          value: 1.0
+        - "INS_ACC3SCAL_Y": "mavros_node::INS_ACC3SCAL_Y"
+          value: 1.0
+        - "INS_ACC3SCAL_Z": "mavros_node::INS_ACC3SCAL_Z"
+          value: 1.0
+        - "INS_ACC3_CALTEMP": "mavros_node::INS_ACC3_CALTEMP"
+          value: -300.0
+        - "INS_ACC3_ID": "mavros_node::INS_ACC3_ID"
+          value: 0
+        - "INS_ACCEL_FILTER": "mavros_node::INS_ACCEL_FILTER"
+          value: 20
+        - "INS_ACCOFFS_X": "mavros_node::INS_ACCOFFS_X"
+          value: 0.0010000000474974513
+        - "INS_ACCOFFS_Y": "mavros_node::INS_ACCOFFS_Y"
+          value: 0.0010000000474974513
+        - "INS_ACCOFFS_Z": "mavros_node::INS_ACCOFFS_Z"
+          value: 0.0010000000474974513
+        - "INS_ACCSCAL_X": "mavros_node::INS_ACCSCAL_X"
+          value: 1.0010000467300415
+        - "INS_ACCSCAL_Y": "mavros_node::INS_ACCSCAL_Y"
+          value: 1.0010000467300415
+        - "INS_ACCSCAL_Z": "mavros_node::INS_ACCSCAL_Z"
+          value: 1.0010000467300415
+        - "INS_ACC_BODYFIX": "mavros_node::INS_ACC_BODYFIX"
+          value: 2
+        - "INS_ACC_ID": "mavros_node::INS_ACC_ID"
+          value: 2753028
+        - "INS_ENABLE_MASK": "mavros_node::INS_ENABLE_MASK"
+          value: 127
+        - "INS_FAST_SAMPLE": "mavros_node::INS_FAST_SAMPLE"
+          value: 1
+        - "INS_GYR1_CALTEMP": "mavros_node::INS_GYR1_CALTEMP"
+          value: -300.0
+        - "INS_GYR2OFFS_X": "mavros_node::INS_GYR2OFFS_X"
+          value: 0.0
+        - "INS_GYR2OFFS_Y": "mavros_node::INS_GYR2OFFS_Y"
+          value: 0.0
+        - "INS_GYR2OFFS_Z": "mavros_node::INS_GYR2OFFS_Z"
+          value: 0.0
+        - "INS_GYR2_CALTEMP": "mavros_node::INS_GYR2_CALTEMP"
+          value: -300.0
+        - "INS_GYR2_ID": "mavros_node::INS_GYR2_ID"
+          value: 2752780
+        - "INS_GYR3OFFS_X": "mavros_node::INS_GYR3OFFS_X"
+          value: 0.0
+        - "INS_GYR3OFFS_Y": "mavros_node::INS_GYR3OFFS_Y"
+          value: 0.0
+        - "INS_GYR3OFFS_Z": "mavros_node::INS_GYR3OFFS_Z"
+          value: 0.0
+        - "INS_GYR3_CALTEMP": "mavros_node::INS_GYR3_CALTEMP"
+          value: -300.0
+        - "INS_GYR3_ID": "mavros_node::INS_GYR3_ID"
+          value: 0
+        - "INS_GYROFFS_X": "mavros_node::INS_GYROFFS_X"
+          value: 0.0
+        - "INS_GYROFFS_Y": "mavros_node::INS_GYROFFS_Y"
+          value: 0.0
+        - "INS_GYROFFS_Z": "mavros_node::INS_GYROFFS_Z"
+          value: 0.0
+        - "INS_GYRO_FILTER": "mavros_node::INS_GYRO_FILTER"
+          value: 20
+        - "INS_GYRO_RATE": "mavros_node::INS_GYRO_RATE"
+          value: 0
+        - "INS_GYR_CAL": "mavros_node::INS_GYR_CAL"
+          value: 0
+        - "INS_GYR_ID": "mavros_node::INS_GYR_ID"
+          value: 2752772
+        - "INS_HNTC2_ENABLE": "mavros_node::INS_HNTC2_ENABLE"
+          value: 0
+        - "INS_HNTC3_ENABLE": "mavros_node::INS_HNTC3_ENABLE"
+          value: 0
+        - "INS_HNTCH_ENABLE": "mavros_node::INS_HNTCH_ENABLE"
+          value: 0
+        - "INS_LOG_BAT_CNT": "mavros_node::INS_LOG_BAT_CNT"
+          value: 1024
+        - "INS_LOG_BAT_LGCT": "mavros_node::INS_LOG_BAT_LGCT"
+          value: 32
+        - "INS_LOG_BAT_LGIN": "mavros_node::INS_LOG_BAT_LGIN"
+          value: 20
+        - "INS_LOG_BAT_MASK": "mavros_node::INS_LOG_BAT_MASK"
+          value: 0
+        - "INS_LOG_BAT_OPT": "mavros_node::INS_LOG_BAT_OPT"
+          value: 0
+        - "INS_POS1_X": "mavros_node::INS_POS1_X"
+          value: 0.0
+        - "INS_POS1_Y": "mavros_node::INS_POS1_Y"
+          value: 0.0
+        - "INS_POS1_Z": "mavros_node::INS_POS1_Z"
+          value: 0.0
+        - "INS_POS2_X": "mavros_node::INS_POS2_X"
+          value: 0.0
+        - "INS_POS2_Y": "mavros_node::INS_POS2_Y"
+          value: 0.0
+        - "INS_POS2_Z": "mavros_node::INS_POS2_Z"
+          value: 0.0
+        - "INS_POS3_X": "mavros_node::INS_POS3_X"
+          value: 0.0
+        - "INS_POS3_Y": "mavros_node::INS_POS3_Y"
+          value: 0.0
+        - "INS_POS3_Z": "mavros_node::INS_POS3_Z"
+          value: 0.0
+        - "INS_RAW_LOG_OPT": "mavros_node::INS_RAW_LOG_OPT"
+          value: 0
+        - "INS_STILL_THRESH": "mavros_node::INS_STILL_THRESH"
+          value: 0.10000000149011612
+        - "INS_TCAL1_ENABLE": "mavros_node::INS_TCAL1_ENABLE"
+          value: 0
+        - "INS_TCAL2_ENABLE": "mavros_node::INS_TCAL2_ENABLE"
+          value: 0
+        - "INS_TCAL3_ENABLE": "mavros_node::INS_TCAL3_ENABLE"
+          value: 0
+        - "INS_TCAL_OPTIONS": "mavros_node::INS_TCAL_OPTIONS"
+          value: 0
+        - "INS_TRIM_OPTION": "mavros_node::INS_TRIM_OPTION"
+          value: 1
+        - "INS_USE": "mavros_node::INS_USE"
+          value: 1
+        - "INS_USE2": "mavros_node::INS_USE2"
+          value: 1
+        - "INS_USE3": "mavros_node::INS_USE3"
+          value: 1
+        - "JS_GAIN_DEFAULT": "mavros_node::JS_GAIN_DEFAULT"
+          value: 0.5
+        - "JS_GAIN_MAX": "mavros_node::JS_GAIN_MAX"
+          value: 1.0
+        - "JS_GAIN_MIN": "mavros_node::JS_GAIN_MIN"
+          value: 0.25
+        - "JS_GAIN_STEPS": "mavros_node::JS_GAIN_STEPS"
+          value: 4
+        - "JS_LIGHTS_STEPS": "mavros_node::JS_LIGHTS_STEPS"
+          value: 8
+        - "JS_THR_GAIN": "mavros_node::JS_THR_GAIN"
+          value: 1.0
+        - "KDE_NPOLE": "mavros_node::KDE_NPOLE"
+          value: 14
+        - "LEAK1_LOGIC": "mavros_node::LEAK1_LOGIC"
+          value: 0
+        - "LEAK1_PIN": "mavros_node::LEAK1_PIN"
+          value: -1
+        - "LEAK2_LOGIC": "mavros_node::LEAK2_LOGIC"
+          value: 0
+        - "LEAK2_PIN": "mavros_node::LEAK2_PIN"
+          value: -1
+        - "LEAK3_LOGIC": "mavros_node::LEAK3_LOGIC"
+          value: 0
+        - "LEAK3_PIN": "mavros_node::LEAK3_PIN"
+          value: -1
+        - "LOG_BACKEND_TYPE": "mavros_node::LOG_BACKEND_TYPE"
+          value: 1
+        - "LOG_BITMASK": "mavros_node::LOG_BITMASK"
+          value: 180222
+        - "LOG_BLK_RATEMAX": "mavros_node::LOG_BLK_RATEMAX"
+          value: 0.0
+        - "LOG_DARM_RATEMAX": "mavros_node::LOG_DARM_RATEMAX"
+          value: 0.0
+        - "LOG_DISARMED": "mavros_node::LOG_DISARMED"
+          value: 0
+        - "LOG_FILE_BUFSIZE": "mavros_node::LOG_FILE_BUFSIZE"
+          value: 200
+        - "LOG_FILE_DSRMROT": "mavros_node::LOG_FILE_DSRMROT"
+          value: 0
+        - "LOG_FILE_MB_FREE": "mavros_node::LOG_FILE_MB_FREE"
+          value: 500
+        - "LOG_FILE_RATEMAX": "mavros_node::LOG_FILE_RATEMAX"
+          value: 0.0
+        - "LOG_FILE_TIMEOUT": "mavros_node::LOG_FILE_TIMEOUT"
+          value: 5
+        - "LOG_MAV_BUFSIZE": "mavros_node::LOG_MAV_BUFSIZE"
+          value: 8
+        - "LOG_MAV_RATEMAX": "mavros_node::LOG_MAV_RATEMAX"
+          value: 0.0
+        - "LOG_MAX_FILES": "mavros_node::LOG_MAX_FILES"
+          value: 500
+        - "LOG_REPLAY": "mavros_node::LOG_REPLAY"
+          value: 0
+        - "LOIT_ACC_MAX_M": "mavros_node::LOIT_ACC_MAX_M"
+          value: 5.0
+        - "LOIT_ANG_MAX": "mavros_node::LOIT_ANG_MAX"
+          value: 0.0
+        - "LOIT_BRK_ACC_M": "mavros_node::LOIT_BRK_ACC_M"
+          value: 2.5
+        - "LOIT_BRK_DELAY": "mavros_node::LOIT_BRK_DELAY"
+          value: 1.0
+        - "LOIT_BRK_JRK_M": "mavros_node::LOIT_BRK_JRK_M"
+          value: 5.0
+        - "LOIT_OPTIONS": "mavros_node::LOIT_OPTIONS"
+          value: 1
+        - "LOIT_SPEED_MS": "mavros_node::LOIT_SPEED_MS"
+          value: 12.5
+        - "MAV1_ADSB": "mavros_node::MAV1_ADSB"
+          value: 4
+        - "MAV1_EXTRA1": "mavros_node::MAV1_EXTRA1"
+          value: 4
+        - "MAV1_EXTRA2": "mavros_node::MAV1_EXTRA2"
+          value: 4
+        - "MAV1_EXTRA3": "mavros_node::MAV1_EXTRA3"
+          value: 4
+        - "MAV1_EXT_STAT": "mavros_node::MAV1_EXT_STAT"
+          value: 4
+        - "MAV1_OPTIONS": "mavros_node::MAV1_OPTIONS"
+          value: 0
+        - "MAV1_PARAMS": "mavros_node::MAV1_PARAMS"
+          value: 0
+        - "MAV1_POSITION": "mavros_node::MAV1_POSITION"
+          value: 4
+        - "MAV1_RAW_CTRL": "mavros_node::MAV1_RAW_CTRL"
+          value: 4
+        - "MAV1_RAW_SENS": "mavros_node::MAV1_RAW_SENS"
+          value: 4
+        - "MAV1_RC_CHAN": "mavros_node::MAV1_RC_CHAN"
+          value: 4
+        - "MAV2_ADSB": "mavros_node::MAV2_ADSB"
+          value: 0
+        - "MAV2_EXTRA1": "mavros_node::MAV2_EXTRA1"
+          value: 10
+        - "MAV2_EXTRA2": "mavros_node::MAV2_EXTRA2"
+          value: 10
+        - "MAV2_EXTRA3": "mavros_node::MAV2_EXTRA3"
+          value: 3
+        - "MAV2_EXT_STAT": "mavros_node::MAV2_EXT_STAT"
+          value: 2
+        - "MAV2_OPTIONS": "mavros_node::MAV2_OPTIONS"
+          value: 0
+        - "MAV2_PARAMS": "mavros_node::MAV2_PARAMS"
+          value: 0
+        - "MAV2_POSITION": "mavros_node::MAV2_POSITION"
+          value: 3
+        - "MAV2_RAW_CTRL": "mavros_node::MAV2_RAW_CTRL"
+          value: 0
+        - "MAV2_RAW_SENS": "mavros_node::MAV2_RAW_SENS"
+          value: 2
+        - "MAV2_RC_CHAN": "mavros_node::MAV2_RC_CHAN"
+          value: 2
+        - "MAV3_ADSB": "mavros_node::MAV3_ADSB"
+          value: 0
+        - "MAV3_EXTRA1": "mavros_node::MAV3_EXTRA1"
+          value: 10
+        - "MAV3_EXTRA2": "mavros_node::MAV3_EXTRA2"
+          value: 10
+        - "MAV3_EXTRA3": "mavros_node::MAV3_EXTRA3"
+          value: 3
+        - "MAV3_EXT_STAT": "mavros_node::MAV3_EXT_STAT"
+          value: 2
+        - "MAV3_OPTIONS": "mavros_node::MAV3_OPTIONS"
+          value: 0
+        - "MAV3_PARAMS": "mavros_node::MAV3_PARAMS"
+          value: 0
+        - "MAV3_POSITION": "mavros_node::MAV3_POSITION"
+          value: 3
+        - "MAV3_RAW_CTRL": "mavros_node::MAV3_RAW_CTRL"
+          value: 0
+        - "MAV3_RAW_SENS": "mavros_node::MAV3_RAW_SENS"
+          value: 2
+        - "MAV3_RC_CHAN": "mavros_node::MAV3_RC_CHAN"
+          value: 2
+        - "MAV_GCS_SYSID": "mavros_node::MAV_GCS_SYSID"
+          value: 255
+        - "MAV_GCS_SYSID_HI": "mavros_node::MAV_GCS_SYSID_HI"
+          value: 0
+        - "MAV_OPTIONS": "mavros_node::MAV_OPTIONS"
+          value: 0
+        - "MAV_SYSID": "mavros_node::MAV_SYSID"
+          value: 1
+        - "MAV_TELEM_DELAY": "mavros_node::MAV_TELEM_DELAY"
+          value: 0
+        - "MIS_OPTIONS": "mavros_node::MIS_OPTIONS"
+          value: 0
+        - "MIS_RESTART": "mavros_node::MIS_RESTART"
+          value: 0
+        - "MIS_TOTAL": "mavros_node::MIS_TOTAL"
+          value: 1
+        - "MNT1_DEFLT_MODE": "mavros_node::MNT1_DEFLT_MODE"
+          value: 3
+        - "MNT1_DEVID": "mavros_node::MNT1_DEVID"
+          value: 0
+        - "MNT1_LEAD_PTCH": "mavros_node::MNT1_LEAD_PTCH"
+          value: 0.0
+        - "MNT1_LEAD_RLL": "mavros_node::MNT1_LEAD_RLL"
+          value: 0.0
+        - "MNT1_NEUTRAL_X": "mavros_node::MNT1_NEUTRAL_X"
+          value: 0.0
+        - "MNT1_NEUTRAL_Y": "mavros_node::MNT1_NEUTRAL_Y"
+          value: 0.0
+        - "MNT1_NEUTRAL_Z": "mavros_node::MNT1_NEUTRAL_Z"
+          value: 0.0
+        - "MNT1_OPTIONS": "mavros_node::MNT1_OPTIONS"
+          value: 0
+        - "MNT1_PITCH_MAX": "mavros_node::MNT1_PITCH_MAX"
+          value: 45
+        - "MNT1_PITCH_MIN": "mavros_node::MNT1_PITCH_MIN"
+          value: -45
+        - "MNT1_RC_RATE": "mavros_node::MNT1_RC_RATE"
+          value: 30
+        - "MNT1_RETRACT_X": "mavros_node::MNT1_RETRACT_X"
+          value: 0.0
+        - "MNT1_RETRACT_Y": "mavros_node::MNT1_RETRACT_Y"
+          value: 0.0
+        - "MNT1_RETRACT_Z": "mavros_node::MNT1_RETRACT_Z"
+          value: 0.0
+        - "MNT1_ROLL_MAX": "mavros_node::MNT1_ROLL_MAX"
+          value: 30
+        - "MNT1_ROLL_MIN": "mavros_node::MNT1_ROLL_MIN"
+          value: -30
+        - "MNT1_SYSID_DFLT": "mavros_node::MNT1_SYSID_DFLT"
+          value: 0
+        - "MNT1_TYPE": "mavros_node::MNT1_TYPE"
+          value: 7
+        - "MNT1_YAW_MAX": "mavros_node::MNT1_YAW_MAX"
+          value: 180
+        - "MNT1_YAW_MIN": "mavros_node::MNT1_YAW_MIN"
+          value: -180
+        - "MNT2_TYPE": "mavros_node::MNT2_TYPE"
+          value: 0
+        - "MOT_10_DIRECTION": "mavros_node::MOT_10_DIRECTION"
+          value: 1
+        - "MOT_11_DIRECTION": "mavros_node::MOT_11_DIRECTION"
+          value: 1
+        - "MOT_12_DIRECTION": "mavros_node::MOT_12_DIRECTION"
+          value: 1
+        - "MOT_1_DIRECTION": "mavros_node::MOT_1_DIRECTION"
+          value: 1
+        - "MOT_2_DIRECTION": "mavros_node::MOT_2_DIRECTION"
+          value: 1
+        - "MOT_3_DIRECTION": "mavros_node::MOT_3_DIRECTION"
+          value: 1
+        - "MOT_4_DIRECTION": "mavros_node::MOT_4_DIRECTION"
+          value: 1
+        - "MOT_5_DIRECTION": "mavros_node::MOT_5_DIRECTION"
+          value: 1
+        - "MOT_6_DIRECTION": "mavros_node::MOT_6_DIRECTION"
+          value: 1
+        - "MOT_7_DIRECTION": "mavros_node::MOT_7_DIRECTION"
+          value: 1
+        - "MOT_8_DIRECTION": "mavros_node::MOT_8_DIRECTION"
+          value: 1
+        - "MOT_9_DIRECTION": "mavros_node::MOT_9_DIRECTION"
+          value: 1
+        - "MOT_BAT_CURR_MAX": "mavros_node::MOT_BAT_CURR_MAX"
+          value: 0.0
+        - "MOT_BAT_CURR_TC": "mavros_node::MOT_BAT_CURR_TC"
+          value: 5.0
+        - "MOT_BAT_IDX": "mavros_node::MOT_BAT_IDX"
+          value: 0
+        - "MOT_BAT_VOLT_MAX": "mavros_node::MOT_BAT_VOLT_MAX"
+          value: 0.0
+        - "MOT_BAT_VOLT_MIN": "mavros_node::MOT_BAT_VOLT_MIN"
+          value: 0.0
+        - "MOT_BOOST_SCALE": "mavros_node::MOT_BOOST_SCALE"
+          value: 0.0
+        - "MOT_FV_CPLNG_K": "mavros_node::MOT_FV_CPLNG_K"
+          value: 1.0
+        - "MOT_HOVER_LEARN": "mavros_node::MOT_HOVER_LEARN"
+          value: 2
+        - "MOT_IDLE_SEC": "mavros_node::MOT_IDLE_SEC"
+          value: 0.0
+        - "MOT_OPTIONS": "mavros_node::MOT_OPTIONS"
+          value: 0
+        - "MOT_PWM_MAX": "mavros_node::MOT_PWM_MAX"
+          value: 1900
+        - "MOT_PWM_MIN": "mavros_node::MOT_PWM_MIN"
+          value: 1100
+        - "MOT_PWM_TYPE": "mavros_node::MOT_PWM_TYPE"
+          value: 0
+        - "MOT_SAFE_DISARM": "mavros_node::MOT_SAFE_DISARM"
+          value: 0
+        - "MOT_SAFE_TIME": "mavros_node::MOT_SAFE_TIME"
+          value: 1.0
+        - "MOT_SLEW_DN_TIME": "mavros_node::MOT_SLEW_DN_TIME"
+          value: 0.0
+        - "MOT_SLEW_UP_TIME": "mavros_node::MOT_SLEW_UP_TIME"
+          value: 0.0
+        - "MOT_SPIN_ARM": "mavros_node::MOT_SPIN_ARM"
+          value: 0.10000000149011612
+        - "MOT_SPIN_MAX": "mavros_node::MOT_SPIN_MAX"
+          value: 0.949999988079071
+        - "MOT_SPIN_MIN": "mavros_node::MOT_SPIN_MIN"
+          value: 0.15000000596046448
+        - "MOT_SPOOL_TIME": "mavros_node::MOT_SPOOL_TIME"
+          value: 0.5
+        - "MOT_SPOOL_TIM_DN": "mavros_node::MOT_SPOOL_TIM_DN"
+          value: 0.0
+        - "MOT_THST_EXPO": "mavros_node::MOT_THST_EXPO"
+          value: 0.6499999761581421
+        - "MOT_THST_HOVER": "mavros_node::MOT_THST_HOVER"
+          value: 0.5
+        - "MOT_YAW_HEADROOM": "mavros_node::MOT_YAW_HEADROOM"
+          value: 200
+        - "MSP_OPTIONS": "mavros_node::MSP_OPTIONS"
+          value: 0
+        - "MSP_OSD_NCELLS": "mavros_node::MSP_OSD_NCELLS"
+          value: 0
+        - "NET_ENABLE": "mavros_node::NET_ENABLE"
+          value: 0
+        - "NET_P1_TYPE": "mavros_node::NET_P1_TYPE"
+          value: 0
+        - "NET_P2_TYPE": "mavros_node::NET_P2_TYPE"
+          value: 0
+        - "NET_P3_TYPE": "mavros_node::NET_P3_TYPE"
+          value: 0
+        - "NET_P4_TYPE": "mavros_node::NET_P4_TYPE"
+          value: 0
+        - "NMEA_MSG_EN": "mavros_node::NMEA_MSG_EN"
+          value: 3
+        - "NMEA_RATE_MS": "mavros_node::NMEA_RATE_MS"
+          value: 100
+        - "NTF_BUZZ_ON_LVL": "mavros_node::NTF_BUZZ_ON_LVL"
+          value: 1
+        - "NTF_BUZZ_PIN": "mavros_node::NTF_BUZZ_PIN"
+          value: -1
+        - "NTF_BUZZ_TYPES": "mavros_node::NTF_BUZZ_TYPES"
+          value: 5
+        - "NTF_BUZZ_VOLUME": "mavros_node::NTF_BUZZ_VOLUME"
+          value: 100
+        - "NTF_DISPLAY_TYPE": "mavros_node::NTF_DISPLAY_TYPE"
+          value: 0
+        - "NTF_LED_BRIGHT": "mavros_node::NTF_LED_BRIGHT"
+          value: 3
+        - "NTF_LED_LEN": "mavros_node::NTF_LED_LEN"
+          value: 1
+        - "NTF_LED_OVERRIDE": "mavros_node::NTF_LED_OVERRIDE"
+          value: 0
+        - "NTF_LED_TYPES": "mavros_node::NTF_LED_TYPES"
+          value: 123079
+        - "OSD_TYPE": "mavros_node::OSD_TYPE"
+          value: 0
+        - "PILOT_ACCEL_Z": "mavros_node::PILOT_ACCEL_Z"
+          value: 200
+        - "PILOT_SPEED": "mavros_node::PILOT_SPEED"
+          value: 200
+        - "PILOT_SPEED_DN": "mavros_node::PILOT_SPEED_DN"
+          value: 0
+        - "PILOT_SPEED_UP": "mavros_node::PILOT_SPEED_UP"
+          value: 200
+        - "PILOT_THR_FILT": "mavros_node::PILOT_THR_FILT"
+          value: 0.0
+        - "PRX1_TYPE": "mavros_node::PRX1_TYPE"
+          value: 0
+        - "PRX2_TYPE": "mavros_node::PRX2_TYPE"
+          value: 0
+        - "PRX3_TYPE": "mavros_node::PRX3_TYPE"
+          value: 0
+        - "PRX4_TYPE": "mavros_node::PRX4_TYPE"
+          value: 0
+        - "PRX5_TYPE": "mavros_node::PRX5_TYPE"
+          value: 0
+        - "PRX_FILT": "mavros_node::PRX_FILT"
+          value: 0.25
+        - "PRX_LOG_RAW": "mavros_node::PRX_LOG_RAW"
+          value: 0
+        - "PSC_ANGLE_MAX": "mavros_node::PSC_ANGLE_MAX"
+          value: 0.0
+        - "PSC_D_ACC_D": "mavros_node::PSC_D_ACC_D"
+          value: 0.0
+        - "PSC_D_ACC_D_FF": "mavros_node::PSC_D_ACC_D_FF"
+          value: 0.0
+        - "PSC_D_ACC_FF": "mavros_node::PSC_D_ACC_FF"
+          value: 0.07500000298023224
+        - "PSC_D_ACC_FLTD": "mavros_node::PSC_D_ACC_FLTD"
+          value: 0.0
+        - "PSC_D_ACC_FLTE": "mavros_node::PSC_D_ACC_FLTE"
+          value: 20.0
+        - "PSC_D_ACC_FLTT": "mavros_node::PSC_D_ACC_FLTT"
+          value: 0.0
+        - "PSC_D_ACC_I": "mavros_node::PSC_D_ACC_I"
+          value: 0.4000000059604645
+        - "PSC_D_ACC_IMAX": "mavros_node::PSC_D_ACC_IMAX"
+          value: 0.5
+        - "PSC_D_ACC_NEF": "mavros_node::PSC_D_ACC_NEF"
+          value: 0
+        - "PSC_D_ACC_NTF": "mavros_node::PSC_D_ACC_NTF"
+          value: 0
+        - "PSC_D_ACC_P": "mavros_node::PSC_D_ACC_P"
+          value: 0.20000000298023224
+        - "PSC_D_ACC_PDMX": "mavros_node::PSC_D_ACC_PDMX"
+          value: 0.0
+        - "PSC_D_ACC_SMAX": "mavros_node::PSC_D_ACC_SMAX"
+          value: 0.0
+        - "PSC_D_POS_P": "mavros_node::PSC_D_POS_P"
+          value: 3.0
+        - "PSC_D_VEL_D": "mavros_node::PSC_D_VEL_D"
+          value: 0.0
+        - "PSC_D_VEL_FF": "mavros_node::PSC_D_VEL_FF"
+          value: 0.0
+        - "PSC_D_VEL_FLTD": "mavros_node::PSC_D_VEL_FLTD"
+          value: 5.0
+        - "PSC_D_VEL_FLTE": "mavros_node::PSC_D_VEL_FLTE"
+          value: 5.0
+        - "PSC_D_VEL_I": "mavros_node::PSC_D_VEL_I"
+          value: 0.0
+        - "PSC_D_VEL_IMAX": "mavros_node::PSC_D_VEL_IMAX"
+          value: 10.0
+        - "PSC_D_VEL_P": "mavros_node::PSC_D_VEL_P"
+          value: 8.0
+        - "PSC_JERK_D": "mavros_node::PSC_JERK_D"
+          value: 8.0
+        - "PSC_JERK_NE": "mavros_node::PSC_JERK_NE"
+          value: 5.0
+        - "PSC_NE_POS_P": "mavros_node::PSC_NE_POS_P"
+          value: 2.5
+        - "PSC_NE_VEL_D": "mavros_node::PSC_NE_VEL_D"
+          value: 0.800000011920929
+        - "PSC_NE_VEL_FF": "mavros_node::PSC_NE_VEL_FF"
+          value: 0.0
+        - "PSC_NE_VEL_FLTD": "mavros_node::PSC_NE_VEL_FLTD"
+          value: 5.0
+        - "PSC_NE_VEL_FLTE": "mavros_node::PSC_NE_VEL_FLTE"
+          value: 5.0
+        - "PSC_NE_VEL_I": "mavros_node::PSC_NE_VEL_I"
+          value: 0.5
+        - "PSC_NE_VEL_IMAX": "mavros_node::PSC_NE_VEL_IMAX"
+          value: 10.0
+        - "PSC_NE_VEL_P": "mavros_node::PSC_NE_VEL_P"
+          value: 5.0
+        - "RALLY_INCL_HOME": "mavros_node::RALLY_INCL_HOME"
+          value: 0
+        - "RALLY_LIMIT_KM": "mavros_node::RALLY_LIMIT_KM"
+          value: 1.0
+        - "RALLY_TOTAL": "mavros_node::RALLY_TOTAL"
+          value: 0
+        - "RC10_DZ": "mavros_node::RC10_DZ"
+          value: 0
+        - "RC10_MAX": "mavros_node::RC10_MAX"
+          value: 1900
+        - "RC10_MIN": "mavros_node::RC10_MIN"
+          value: 1100
+        - "RC10_OPTION": "mavros_node::RC10_OPTION"
+          value: 0
+        - "RC10_REVERSED": "mavros_node::RC10_REVERSED"
+          value: 0
+        - "RC10_TRIM": "mavros_node::RC10_TRIM"
+          value: 1500
+        - "RC11_DZ": "mavros_node::RC11_DZ"
+          value: 0
+        - "RC11_MAX": "mavros_node::RC11_MAX"
+          value: 1900
+        - "RC11_MIN": "mavros_node::RC11_MIN"
+          value: 1100
+        - "RC11_OPTION": "mavros_node::RC11_OPTION"
+          value: 0
+        - "RC11_REVERSED": "mavros_node::RC11_REVERSED"
+          value: 0
+        - "RC11_TRIM": "mavros_node::RC11_TRIM"
+          value: 1500
+        - "RC12_DZ": "mavros_node::RC12_DZ"
+          value: 0
+        - "RC12_MAX": "mavros_node::RC12_MAX"
+          value: 1900
+        - "RC12_MIN": "mavros_node::RC12_MIN"
+          value: 1100
+        - "RC12_OPTION": "mavros_node::RC12_OPTION"
+          value: 0
+        - "RC12_REVERSED": "mavros_node::RC12_REVERSED"
+          value: 0
+        - "RC12_TRIM": "mavros_node::RC12_TRIM"
+          value: 1500
+        - "RC13_DZ": "mavros_node::RC13_DZ"
+          value: 0
+        - "RC13_MAX": "mavros_node::RC13_MAX"
+          value: 1900
+        - "RC13_MIN": "mavros_node::RC13_MIN"
+          value: 1100
+        - "RC13_OPTION": "mavros_node::RC13_OPTION"
+          value: 0
+        - "RC13_REVERSED": "mavros_node::RC13_REVERSED"
+          value: 0
+        - "RC13_TRIM": "mavros_node::RC13_TRIM"
+          value: 1500
+        - "RC14_DZ": "mavros_node::RC14_DZ"
+          value: 0
+        - "RC14_MAX": "mavros_node::RC14_MAX"
+          value: 1900
+        - "RC14_MIN": "mavros_node::RC14_MIN"
+          value: 1100
+        - "RC14_OPTION": "mavros_node::RC14_OPTION"
+          value: 0
+        - "RC14_REVERSED": "mavros_node::RC14_REVERSED"
+          value: 0
+        - "RC14_TRIM": "mavros_node::RC14_TRIM"
+          value: 1500
+        - "RC15_DZ": "mavros_node::RC15_DZ"
+          value: 0
+        - "RC15_MAX": "mavros_node::RC15_MAX"
+          value: 1900
+        - "RC15_MIN": "mavros_node::RC15_MIN"
+          value: 1100
+        - "RC15_OPTION": "mavros_node::RC15_OPTION"
+          value: 0
+        - "RC15_REVERSED": "mavros_node::RC15_REVERSED"
+          value: 0
+        - "RC15_TRIM": "mavros_node::RC15_TRIM"
+          value: 1500
+        - "RC16_DZ": "mavros_node::RC16_DZ"
+          value: 0
+        - "RC16_MAX": "mavros_node::RC16_MAX"
+          value: 1900
+        - "RC16_MIN": "mavros_node::RC16_MIN"
+          value: 1100
+        - "RC16_OPTION": "mavros_node::RC16_OPTION"
+          value: 0
+        - "RC16_REVERSED": "mavros_node::RC16_REVERSED"
+          value: 0
+        - "RC16_TRIM": "mavros_node::RC16_TRIM"
+          value: 1500
+        - "RC1_DZ": "mavros_node::RC1_DZ"
+          value: 30
+        - "RC1_MAX": "mavros_node::RC1_MAX"
+          value: 1900
+        - "RC1_MIN": "mavros_node::RC1_MIN"
+          value: 1100
+        - "RC1_OPTION": "mavros_node::RC1_OPTION"
+          value: 0
+        - "RC1_REVERSED": "mavros_node::RC1_REVERSED"
+          value: 0
+        - "RC1_TRIM": "mavros_node::RC1_TRIM"
+          value: 1500
+        - "RC2_DZ": "mavros_node::RC2_DZ"
+          value: 30
+        - "RC2_MAX": "mavros_node::RC2_MAX"
+          value: 1900
+        - "RC2_MIN": "mavros_node::RC2_MIN"
+          value: 1100
+        - "RC2_OPTION": "mavros_node::RC2_OPTION"
+          value: 0
+        - "RC2_REVERSED": "mavros_node::RC2_REVERSED"
+          value: 0
+        - "RC2_TRIM": "mavros_node::RC2_TRIM"
+          value: 1500
+        - "RC3_DZ": "mavros_node::RC3_DZ"
+          value: 30
+        - "RC3_MAX": "mavros_node::RC3_MAX"
+          value: 1900
+        - "RC3_MIN": "mavros_node::RC3_MIN"
+          value: 1100
+        - "RC3_OPTION": "mavros_node::RC3_OPTION"
+          value: 0
+        - "RC3_REVERSED": "mavros_node::RC3_REVERSED"
+          value: 0
+        - "RC3_TRIM": "mavros_node::RC3_TRIM"
+          value: 1500
+        - "RC4_DZ": "mavros_node::RC4_DZ"
+          value: 40
+        - "RC4_MAX": "mavros_node::RC4_MAX"
+          value: 1900
+        - "RC4_MIN": "mavros_node::RC4_MIN"
+          value: 1100
+        - "RC4_OPTION": "mavros_node::RC4_OPTION"
+          value: 0
+        - "RC4_REVERSED": "mavros_node::RC4_REVERSED"
+          value: 0
+        - "RC4_TRIM": "mavros_node::RC4_TRIM"
+          value: 1500
+        - "RC5_DZ": "mavros_node::RC5_DZ"
+          value: 30
+        - "RC5_MAX": "mavros_node::RC5_MAX"
+          value: 1900
+        - "RC5_MIN": "mavros_node::RC5_MIN"
+          value: 1100
+        - "RC5_OPTION": "mavros_node::RC5_OPTION"
+          value: 0
+        - "RC5_REVERSED": "mavros_node::RC5_REVERSED"
+          value: 0
+        - "RC5_TRIM": "mavros_node::RC5_TRIM"
+          value: 1500
+        - "RC6_DZ": "mavros_node::RC6_DZ"
+          value: 30
+        - "RC6_MAX": "mavros_node::RC6_MAX"
+          value: 1900
+        - "RC6_MIN": "mavros_node::RC6_MIN"
+          value: 1100
+        - "RC6_OPTION": "mavros_node::RC6_OPTION"
+          value: 0
+        - "RC6_REVERSED": "mavros_node::RC6_REVERSED"
+          value: 0
+        - "RC6_TRIM": "mavros_node::RC6_TRIM"
+          value: 1500
+        - "RC7_DZ": "mavros_node::RC7_DZ"
+          value: 0
+        - "RC7_MAX": "mavros_node::RC7_MAX"
+          value: 1900
+        - "RC7_MIN": "mavros_node::RC7_MIN"
+          value: 1100
+        - "RC7_OPTION": "mavros_node::RC7_OPTION"
+          value: 214
+        - "RC7_REVERSED": "mavros_node::RC7_REVERSED"
+          value: 0
+        - "RC7_TRIM": "mavros_node::RC7_TRIM"
+          value: 1500
+        - "RC8_DZ": "mavros_node::RC8_DZ"
+          value: 0
+        - "RC8_MAX": "mavros_node::RC8_MAX"
+          value: 1900
+        - "RC8_MIN": "mavros_node::RC8_MIN"
+          value: 1100
+        - "RC8_OPTION": "mavros_node::RC8_OPTION"
+          value: 213
+        - "RC8_REVERSED": "mavros_node::RC8_REVERSED"
+          value: 0
+        - "RC8_TRIM": "mavros_node::RC8_TRIM"
+          value: 1500
+        - "RC9_DZ": "mavros_node::RC9_DZ"
+          value: 0
+        - "RC9_MAX": "mavros_node::RC9_MAX"
+          value: 1900
+        - "RC9_MIN": "mavros_node::RC9_MIN"
+          value: 1100
+        - "RC9_OPTION": "mavros_node::RC9_OPTION"
+          value: 0
+        - "RC9_REVERSED": "mavros_node::RC9_REVERSED"
+          value: 0
+        - "RC9_TRIM": "mavros_node::RC9_TRIM"
+          value: 1500
+        - "RCMAP_FORWARD": "mavros_node::RCMAP_FORWARD"
+          value: 5
+        - "RCMAP_LATERAL": "mavros_node::RCMAP_LATERAL"
+          value: 6
+        - "RCMAP_PITCH": "mavros_node::RCMAP_PITCH"
+          value: 1
+        - "RCMAP_ROLL": "mavros_node::RCMAP_ROLL"
+          value: 2
+        - "RCMAP_THROTTLE": "mavros_node::RCMAP_THROTTLE"
+          value: 3
+        - "RCMAP_YAW": "mavros_node::RCMAP_YAW"
+          value: 4
+        - "RC_FS_TIMEOUT": "mavros_node::RC_FS_TIMEOUT"
+          value: 1.0
+        - "RC_OPTIONS": "mavros_node::RC_OPTIONS"
+          value: 0
+        - "RC_OVERRIDE_TIME": "mavros_node::RC_OVERRIDE_TIME"
+          value: 3.0
+        - "RC_PROTOCOLS": "mavros_node::RC_PROTOCOLS"
+          value: 1
+        - "RC_SPEED": "mavros_node::RC_SPEED"
+          value: 200
+        - "RELAY1_DEFAULT": "mavros_node::RELAY1_DEFAULT"
+          value: 0
+        - "RELAY1_FUNCTION": "mavros_node::RELAY1_FUNCTION"
+          value: 1
+        - "RELAY1_INVERTED": "mavros_node::RELAY1_INVERTED"
+          value: 0
+        - "RELAY1_PIN": "mavros_node::RELAY1_PIN"
+          value: 13
+        - "RELAY2_FUNCTION": "mavros_node::RELAY2_FUNCTION"
+          value: 0
+        - "RELAY3_FUNCTION": "mavros_node::RELAY3_FUNCTION"
+          value: 0
+        - "RELAY4_FUNCTION": "mavros_node::RELAY4_FUNCTION"
+          value: 0
+        - "RELAY5_FUNCTION": "mavros_node::RELAY5_FUNCTION"
+          value: 0
+        - "RELAY6_FUNCTION": "mavros_node::RELAY6_FUNCTION"
+          value: 0
+        - "RNGFND1_ADDR": "mavros_node::RNGFND1_ADDR"
+          value: 0
+        - "RNGFND1_FUNCTION": "mavros_node::RNGFND1_FUNCTION"
+          value: 0
+        - "RNGFND1_GNDCLR": "mavros_node::RNGFND1_GNDCLR"
+          value: 0.10000000149011612
+        - "RNGFND1_MAX": "mavros_node::RNGFND1_MAX"
+          value: 30.0
+        - "RNGFND1_MIN": "mavros_node::RNGFND1_MIN"
+          value: 0.20000000298023224
+        - "RNGFND1_OFFSET": "mavros_node::RNGFND1_OFFSET"
+          value: 0.0
+        - "RNGFND1_ORIENT": "mavros_node::RNGFND1_ORIENT"
+          value: 25
+        - "RNGFND1_PIN": "mavros_node::RNGFND1_PIN"
+          value: 0
+        - "RNGFND1_POS_X": "mavros_node::RNGFND1_POS_X"
+          value: 0.0
+        - "RNGFND1_POS_Y": "mavros_node::RNGFND1_POS_Y"
+          value: 0.0
+        - "RNGFND1_POS_Z": "mavros_node::RNGFND1_POS_Z"
+          value: 0.0
+        - "RNGFND1_PWRRNG": "mavros_node::RNGFND1_PWRRNG"
+          value: 0
+        - "RNGFND1_RMETRIC": "mavros_node::RNGFND1_RMETRIC"
+          value: 1
+        - "RNGFND1_SCALING": "mavros_node::RNGFND1_SCALING"
+          value: 12.119999885559082
+        - "RNGFND1_STOP_PIN": "mavros_node::RNGFND1_STOP_PIN"
+          value: -1
+        - "RNGFND1_TYPE": "mavros_node::RNGFND1_TYPE"
+          value: 1
+        - "RNGFND2_TYPE": "mavros_node::RNGFND2_TYPE"
+          value: 0
+        - "RNGFND3_TYPE": "mavros_node::RNGFND3_TYPE"
+          value: 0
+        - "RNGFND4_TYPE": "mavros_node::RNGFND4_TYPE"
+          value: 0
+        - "RNGFND5_TYPE": "mavros_node::RNGFND5_TYPE"
+          value: 0
+        - "RNGFND6_TYPE": "mavros_node::RNGFND6_TYPE"
+          value: 0
+        - "RNGFND7_TYPE": "mavros_node::RNGFND7_TYPE"
+          value: 0
+        - "RNGFND8_TYPE": "mavros_node::RNGFND8_TYPE"
+          value: 0
+        - "RNGFND9_TYPE": "mavros_node::RNGFND9_TYPE"
+          value: 0
+        - "RNGFNDA_TYPE": "mavros_node::RNGFNDA_TYPE"
+          value: 0
+        - "RNGFND_SQ_MIN": "mavros_node::RNGFND_SQ_MIN"
+          value: 90
+        - "RPM1_TYPE": "mavros_node::RPM1_TYPE"
+          value: 0
+        - "RPM2_TYPE": "mavros_node::RPM2_TYPE"
+          value: 0
+        - "RSSI_TYPE": "mavros_node::RSSI_TYPE"
+          value: 0
+        - "SCHED_DEBUG": "mavros_node::SCHED_DEBUG"
+          value: 0
+        - "SCHED_LOOP_RATE": "mavros_node::SCHED_LOOP_RATE"
+          value: 400
+        - "SCHED_OPTIONS": "mavros_node::SCHED_OPTIONS"
+          value: 0
+        - "SCR_ENABLE": "mavros_node::SCR_ENABLE"
+          value: 0
+        - "SERIAL0_BAUD": "mavros_node::SERIAL0_BAUD"
+          value: 115
+        - "SERIAL0_PROTOCOL": "mavros_node::SERIAL0_PROTOCOL"
+          value: 2
+        - "SERIAL1_BAUD": "mavros_node::SERIAL1_BAUD"
+          value: 57
+        - "SERIAL1_OPTIONS": "mavros_node::SERIAL1_OPTIONS"
+          value: 0
+        - "SERIAL1_PROTOCOL": "mavros_node::SERIAL1_PROTOCOL"
+          value: 2
+        - "SERIAL2_BAUD": "mavros_node::SERIAL2_BAUD"
+          value: 57
+        - "SERIAL2_OPTIONS": "mavros_node::SERIAL2_OPTIONS"
+          value: 0
+        - "SERIAL2_PROTOCOL": "mavros_node::SERIAL2_PROTOCOL"
+          value: 2
+        - "SERIAL3_BAUD": "mavros_node::SERIAL3_BAUD"
+          value: 230
+        - "SERIAL3_OPTIONS": "mavros_node::SERIAL3_OPTIONS"
+          value: 0
+        - "SERIAL3_PROTOCOL": "mavros_node::SERIAL3_PROTOCOL"
+          value: 5
+        - "SERIAL4_BAUD": "mavros_node::SERIAL4_BAUD"
+          value: 230
+        - "SERIAL4_OPTIONS": "mavros_node::SERIAL4_OPTIONS"
+          value: 0
+        - "SERIAL4_PROTOCOL": "mavros_node::SERIAL4_PROTOCOL"
+          value: 5
+        - "SERIAL5_BAUD": "mavros_node::SERIAL5_BAUD"
+          value: 57
+        - "SERIAL5_OPTIONS": "mavros_node::SERIAL5_OPTIONS"
+          value: 0
+        - "SERIAL5_PROTOCOL": "mavros_node::SERIAL5_PROTOCOL"
+          value: -1
+        - "SERIAL6_BAUD": "mavros_node::SERIAL6_BAUD"
+          value: 57
+        - "SERIAL6_OPTIONS": "mavros_node::SERIAL6_OPTIONS"
+          value: 0
+        - "SERIAL6_PROTOCOL": "mavros_node::SERIAL6_PROTOCOL"
+          value: -1
+        - "SERIAL7_BAUD": "mavros_node::SERIAL7_BAUD"
+          value: 57
+        - "SERIAL7_OPTIONS": "mavros_node::SERIAL7_OPTIONS"
+          value: 0
+        - "SERIAL7_PROTOCOL": "mavros_node::SERIAL7_PROTOCOL"
+          value: -1
+        - "SERIAL_PASS1": "mavros_node::SERIAL_PASS1"
+          value: 0
+        - "SERIAL_PASS2": "mavros_node::SERIAL_PASS2"
+          value: -1
+        - "SERIAL_PASSTIMO": "mavros_node::SERIAL_PASSTIMO"
+          value: 15
+        - "SERVO10_FUNCTION": "mavros_node::SERVO10_FUNCTION"
+          value: 7
+        - "SERVO10_MAX": "mavros_node::SERVO10_MAX"
+          value: 1900
+        - "SERVO10_MIN": "mavros_node::SERVO10_MIN"
+          value: 1100
+        - "SERVO10_REVERSED": "mavros_node::SERVO10_REVERSED"
+          value: 0
+        - "SERVO10_TRIM": "mavros_node::SERVO10_TRIM"
+          value: 1500
+        - "SERVO11_FUNCTION": "mavros_node::SERVO11_FUNCTION"
+          value: 0
+        - "SERVO11_MAX": "mavros_node::SERVO11_MAX"
+          value: 1900
+        - "SERVO11_MIN": "mavros_node::SERVO11_MIN"
+          value: 1100
+        - "SERVO11_REVERSED": "mavros_node::SERVO11_REVERSED"
+          value: 0
+        - "SERVO11_TRIM": "mavros_node::SERVO11_TRIM"
+          value: 1500
+        - "SERVO12_FUNCTION": "mavros_node::SERVO12_FUNCTION"
+          value: 0
+        - "SERVO12_MAX": "mavros_node::SERVO12_MAX"
+          value: 1900
+        - "SERVO12_MIN": "mavros_node::SERVO12_MIN"
+          value: 1100
+        - "SERVO12_REVERSED": "mavros_node::SERVO12_REVERSED"
+          value: 0
+        - "SERVO12_TRIM": "mavros_node::SERVO12_TRIM"
+          value: 1500
+        - "SERVO13_FUNCTION": "mavros_node::SERVO13_FUNCTION"
+          value: 0
+        - "SERVO13_MAX": "mavros_node::SERVO13_MAX"
+          value: 1900
+        - "SERVO13_MIN": "mavros_node::SERVO13_MIN"
+          value: 1100
+        - "SERVO13_REVERSED": "mavros_node::SERVO13_REVERSED"
+          value: 0
+        - "SERVO13_TRIM": "mavros_node::SERVO13_TRIM"
+          value: 1500
+        - "SERVO14_FUNCTION": "mavros_node::SERVO14_FUNCTION"
+          value: 0
+        - "SERVO14_MAX": "mavros_node::SERVO14_MAX"
+          value: 1900
+        - "SERVO14_MIN": "mavros_node::SERVO14_MIN"
+          value: 1100
+        - "SERVO14_REVERSED": "mavros_node::SERVO14_REVERSED"
+          value: 0
+        - "SERVO14_TRIM": "mavros_node::SERVO14_TRIM"
+          value: 1500
+        - "SERVO15_FUNCTION": "mavros_node::SERVO15_FUNCTION"
+          value: 0
+        - "SERVO15_MAX": "mavros_node::SERVO15_MAX"
+          value: 1900
+        - "SERVO15_MIN": "mavros_node::SERVO15_MIN"
+          value: 1100
+        - "SERVO15_REVERSED": "mavros_node::SERVO15_REVERSED"
+          value: 0
+        - "SERVO15_TRIM": "mavros_node::SERVO15_TRIM"
+          value: 1500
+        - "SERVO16_FUNCTION": "mavros_node::SERVO16_FUNCTION"
+          value: 0
+        - "SERVO16_MAX": "mavros_node::SERVO16_MAX"
+          value: 1900
+        - "SERVO16_MIN": "mavros_node::SERVO16_MIN"
+          value: 1100
+        - "SERVO16_REVERSED": "mavros_node::SERVO16_REVERSED"
+          value: 0
+        - "SERVO16_TRIM": "mavros_node::SERVO16_TRIM"
+          value: 1500
+        - "SERVO1_FUNCTION": "mavros_node::SERVO1_FUNCTION"
+          value: 33
+        - "SERVO1_MAX": "mavros_node::SERVO1_MAX"
+          value: 1900
+        - "SERVO1_MIN": "mavros_node::SERVO1_MIN"
+          value: 1100
+        - "SERVO1_REVERSED": "mavros_node::SERVO1_REVERSED"
+          value: 0
+        - "SERVO1_TRIM": "mavros_node::SERVO1_TRIM"
+          value: 1500
+        - "SERVO2_FUNCTION": "mavros_node::SERVO2_FUNCTION"
+          value: 34
+        - "SERVO2_MAX": "mavros_node::SERVO2_MAX"
+          value: 1900
+        - "SERVO2_MIN": "mavros_node::SERVO2_MIN"
+          value: 1100
+        - "SERVO2_REVERSED": "mavros_node::SERVO2_REVERSED"
+          value: 0
+        - "SERVO2_TRIM": "mavros_node::SERVO2_TRIM"
+          value: 1500
+        - "SERVO3_FUNCTION": "mavros_node::SERVO3_FUNCTION"
+          value: 35
+        - "SERVO3_MAX": "mavros_node::SERVO3_MAX"
+          value: 1900
+        - "SERVO3_MIN": "mavros_node::SERVO3_MIN"
+          value: 1100
+        - "SERVO3_REVERSED": "mavros_node::SERVO3_REVERSED"
+          value: 0
+        - "SERVO3_TRIM": "mavros_node::SERVO3_TRIM"
+          value: 1500
+        - "SERVO4_FUNCTION": "mavros_node::SERVO4_FUNCTION"
+          value: 36
+        - "SERVO4_MAX": "mavros_node::SERVO4_MAX"
+          value: 1900
+        - "SERVO4_MIN": "mavros_node::SERVO4_MIN"
+          value: 1100
+        - "SERVO4_REVERSED": "mavros_node::SERVO4_REVERSED"
+          value: 0
+        - "SERVO4_TRIM": "mavros_node::SERVO4_TRIM"
+          value: 1500
+        - "SERVO5_FUNCTION": "mavros_node::SERVO5_FUNCTION"
+          value: 37
+        - "SERVO5_MAX": "mavros_node::SERVO5_MAX"
+          value: 1900
+        - "SERVO5_MIN": "mavros_node::SERVO5_MIN"
+          value: 1100
+        - "SERVO5_REVERSED": "mavros_node::SERVO5_REVERSED"
+          value: 0
+        - "SERVO5_TRIM": "mavros_node::SERVO5_TRIM"
+          value: 1500
+        - "SERVO6_FUNCTION": "mavros_node::SERVO6_FUNCTION"
+          value: 38
+        - "SERVO6_MAX": "mavros_node::SERVO6_MAX"
+          value: 1900
+        - "SERVO6_MIN": "mavros_node::SERVO6_MIN"
+          value: 1100
+        - "SERVO6_REVERSED": "mavros_node::SERVO6_REVERSED"
+          value: 0
+        - "SERVO6_TRIM": "mavros_node::SERVO6_TRIM"
+          value: 1500
+        - "SERVO7_FUNCTION": "mavros_node::SERVO7_FUNCTION"
+          value: 0
+        - "SERVO7_MAX": "mavros_node::SERVO7_MAX"
+          value: 1900
+        - "SERVO7_MIN": "mavros_node::SERVO7_MIN"
+          value: 1100
+        - "SERVO7_REVERSED": "mavros_node::SERVO7_REVERSED"
+          value: 0
+        - "SERVO7_TRIM": "mavros_node::SERVO7_TRIM"
+          value: 1500
+        - "SERVO8_FUNCTION": "mavros_node::SERVO8_FUNCTION"
+          value: 7
+        - "SERVO8_MAX": "mavros_node::SERVO8_MAX"
+          value: 1900
+        - "SERVO8_MIN": "mavros_node::SERVO8_MIN"
+          value: 1100
+        - "SERVO8_REVERSED": "mavros_node::SERVO8_REVERSED"
+          value: 0
+        - "SERVO8_TRIM": "mavros_node::SERVO8_TRIM"
+          value: 1500
+        - "SERVO9_FUNCTION": "mavros_node::SERVO9_FUNCTION"
+          value: 181
+        - "SERVO9_MAX": "mavros_node::SERVO9_MAX"
+          value: 1900
+        - "SERVO9_MIN": "mavros_node::SERVO9_MIN"
+          value: 1100
+        - "SERVO9_REVERSED": "mavros_node::SERVO9_REVERSED"
+          value: 0
+        - "SERVO9_TRIM": "mavros_node::SERVO9_TRIM"
+          value: 1500
+        - "SERVO_32_ENABLE": "mavros_node::SERVO_32_ENABLE"
+          value: 0
+        - "SERVO_DSHOT_ESC": "mavros_node::SERVO_DSHOT_ESC"
+          value: 0
+        - "SERVO_DSHOT_RATE": "mavros_node::SERVO_DSHOT_RATE"
+          value: 0
+        - "SERVO_FTW_MASK": "mavros_node::SERVO_FTW_MASK"
+          value: 0
+        - "SERVO_FTW_POLES": "mavros_node::SERVO_FTW_POLES"
+          value: 14
+        - "SERVO_FTW_RVMASK": "mavros_node::SERVO_FTW_RVMASK"
+          value: 0
+        - "SERVO_GPIO_MASK": "mavros_node::SERVO_GPIO_MASK"
+          value: 0
+        - "SERVO_RATE": "mavros_node::SERVO_RATE"
+          value: 50
+        - "SERVO_RC_FS_MSK": "mavros_node::SERVO_RC_FS_MSK"
+          value: 0
+        - "SERVO_ROB_POSMAX": "mavros_node::SERVO_ROB_POSMAX"
+          value: 4095
+        - "SERVO_ROB_POSMIN": "mavros_node::SERVO_ROB_POSMIN"
+          value: 0
+        - "SERVO_SBUS_RATE": "mavros_node::SERVO_SBUS_RATE"
+          value: 50
+        - "SERVO_VOLZ_MASK": "mavros_node::SERVO_VOLZ_MASK"
+          value: 0
+        - "SERVO_VOLZ_RANGE": "mavros_node::SERVO_VOLZ_RANGE"
+          value: 200
+        - "SFC_NOBARO_THST": "mavros_node::SFC_NOBARO_THST"
+          value: 10.0
+        - "SIM_ACC1_BIAS_X": "mavros_node::SIM_ACC1_BIAS_X"
+          value: 0.0
+        - "SIM_ACC1_BIAS_Y": "mavros_node::SIM_ACC1_BIAS_Y"
+          value: 0.0
+        - "SIM_ACC1_BIAS_Z": "mavros_node::SIM_ACC1_BIAS_Z"
+          value: 0.0
+        - "SIM_ACC1_RND": "mavros_node::SIM_ACC1_RND"
+          value: 0.0
+        - "SIM_ACC1_SCAL_X": "mavros_node::SIM_ACC1_SCAL_X"
+          value: 0.0
+        - "SIM_ACC1_SCAL_Y": "mavros_node::SIM_ACC1_SCAL_Y"
+          value: 0.0
+        - "SIM_ACC1_SCAL_Z": "mavros_node::SIM_ACC1_SCAL_Z"
+          value: 0.0
+        - "SIM_ACC2_BIAS_X": "mavros_node::SIM_ACC2_BIAS_X"
+          value: 0.0
+        - "SIM_ACC2_BIAS_Y": "mavros_node::SIM_ACC2_BIAS_Y"
+          value: 0.0
+        - "SIM_ACC2_BIAS_Z": "mavros_node::SIM_ACC2_BIAS_Z"
+          value: 0.0
+        - "SIM_ACC2_RND": "mavros_node::SIM_ACC2_RND"
+          value: 0.0
+        - "SIM_ACC2_SCAL_X": "mavros_node::SIM_ACC2_SCAL_X"
+          value: 0.0
+        - "SIM_ACC2_SCAL_Y": "mavros_node::SIM_ACC2_SCAL_Y"
+          value: 0.0
+        - "SIM_ACC2_SCAL_Z": "mavros_node::SIM_ACC2_SCAL_Z"
+          value: 0.0
+        - "SIM_ACC3_BIAS_X": "mavros_node::SIM_ACC3_BIAS_X"
+          value: 0.0
+        - "SIM_ACC3_BIAS_Y": "mavros_node::SIM_ACC3_BIAS_Y"
+          value: 0.0
+        - "SIM_ACC3_BIAS_Z": "mavros_node::SIM_ACC3_BIAS_Z"
+          value: 0.0
+        - "SIM_ACC3_RND": "mavros_node::SIM_ACC3_RND"
+          value: 0.0
+        - "SIM_ACC3_SCAL_X": "mavros_node::SIM_ACC3_SCAL_X"
+          value: 0.0
+        - "SIM_ACC3_SCAL_Y": "mavros_node::SIM_ACC3_SCAL_Y"
+          value: 0.0
+        - "SIM_ACC3_SCAL_Z": "mavros_node::SIM_ACC3_SCAL_Z"
+          value: 0.0
+        - "SIM_ACCEL1_FAIL": "mavros_node::SIM_ACCEL1_FAIL"
+          value: 0.0
+        - "SIM_ACCEL2_FAIL": "mavros_node::SIM_ACCEL2_FAIL"
+          value: 0.0
+        - "SIM_ACCEL3_FAIL": "mavros_node::SIM_ACCEL3_FAIL"
+          value: 0.0
+        - "SIM_ACC_FAIL_MSK": "mavros_node::SIM_ACC_FAIL_MSK"
+          value: 0
+        - "SIM_ACC_FILE_RW": "mavros_node::SIM_ACC_FILE_RW"
+          value: 0
+        - "SIM_ACC_TRIM_X": "mavros_node::SIM_ACC_TRIM_X"
+          value: 0.0
+        - "SIM_ACC_TRIM_Y": "mavros_node::SIM_ACC_TRIM_Y"
+          value: 0.0
+        - "SIM_ACC_TRIM_Z": "mavros_node::SIM_ACC_TRIM_Z"
+          value: 0.0
+        - "SIM_ADSB_ALT": "mavros_node::SIM_ADSB_ALT"
+          value: 1000.0
+        - "SIM_ADSB_COUNT": "mavros_node::SIM_ADSB_COUNT"
+          value: -1
+        - "SIM_ADSB_RADIUS": "mavros_node::SIM_ADSB_RADIUS"
+          value: 10000.0
+        - "SIM_ADSB_TX": "mavros_node::SIM_ADSB_TX"
+          value: 0
+        - "SIM_ADSB_TYPES": "mavros_node::SIM_ADSB_TYPES"
+          value: 1
+        - "SIM_ARSPD2_FAIL": "mavros_node::SIM_ARSPD2_FAIL"
+          value: 0.0
+        - "SIM_ARSPD2_FAILP": "mavros_node::SIM_ARSPD2_FAILP"
+          value: 0.0
+        - "SIM_ARSPD2_OFS": "mavros_node::SIM_ARSPD2_OFS"
+          value: 2013.0
+        - "SIM_ARSPD2_PITOT": "mavros_node::SIM_ARSPD2_PITOT"
+          value: 0.0
+        - "SIM_ARSPD2_RATIO": "mavros_node::SIM_ARSPD2_RATIO"
+          value: 1.9900000095367432
+        - "SIM_ARSPD2_RND": "mavros_node::SIM_ARSPD2_RND"
+          value: 2.0
+        - "SIM_ARSPD2_SIGN": "mavros_node::SIM_ARSPD2_SIGN"
+          value: 0
+        - "SIM_ARSPD_FAIL": "mavros_node::SIM_ARSPD_FAIL"
+          value: 0.0
+        - "SIM_ARSPD_FAILP": "mavros_node::SIM_ARSPD_FAILP"
+          value: 0.0
+        - "SIM_ARSPD_OFS": "mavros_node::SIM_ARSPD_OFS"
+          value: 2013.0
+        - "SIM_ARSPD_PITOT": "mavros_node::SIM_ARSPD_PITOT"
+          value: 0.0
+        - "SIM_ARSPD_RATIO": "mavros_node::SIM_ARSPD_RATIO"
+          value: 1.9900000095367432
+        - "SIM_ARSPD_RND": "mavros_node::SIM_ARSPD_RND"
+          value: 2.0
+        - "SIM_ARSPD_SIGN": "mavros_node::SIM_ARSPD_SIGN"
+          value: 0
+        - "SIM_BAR2_DELAY": "mavros_node::SIM_BAR2_DELAY"
+          value: 0
+        - "SIM_BAR2_DISABLE": "mavros_node::SIM_BAR2_DISABLE"
+          value: 0
+        - "SIM_BAR2_DRIFT": "mavros_node::SIM_BAR2_DRIFT"
+          value: 0.0
+        - "SIM_BAR2_FREEZE": "mavros_node::SIM_BAR2_FREEZE"
+          value: 0
+        - "SIM_BAR2_GLITCH": "mavros_node::SIM_BAR2_GLITCH"
+          value: 0.0
+        - "SIM_BAR2_RND": "mavros_node::SIM_BAR2_RND"
+          value: 0.20000000298023224
+        - "SIM_BAR2_WCF_BAK": "mavros_node::SIM_BAR2_WCF_BAK"
+          value: 0.0
+        - "SIM_BAR2_WCF_DN": "mavros_node::SIM_BAR2_WCF_DN"
+          value: 0.0
+        - "SIM_BAR2_WCF_FWD": "mavros_node::SIM_BAR2_WCF_FWD"
+          value: 0.0
+        - "SIM_BAR2_WCF_LFT": "mavros_node::SIM_BAR2_WCF_LFT"
+          value: 0.0
+        - "SIM_BAR2_WCF_RGT": "mavros_node::SIM_BAR2_WCF_RGT"
+          value: 0.0
+        - "SIM_BAR2_WCF_UP": "mavros_node::SIM_BAR2_WCF_UP"
+          value: 0.0
+        - "SIM_BAR3_DELAY": "mavros_node::SIM_BAR3_DELAY"
+          value: 0
+        - "SIM_BAR3_DISABLE": "mavros_node::SIM_BAR3_DISABLE"
+          value: 0
+        - "SIM_BAR3_DRIFT": "mavros_node::SIM_BAR3_DRIFT"
+          value: 0.0
+        - "SIM_BAR3_FREEZE": "mavros_node::SIM_BAR3_FREEZE"
+          value: 0
+        - "SIM_BAR3_GLITCH": "mavros_node::SIM_BAR3_GLITCH"
+          value: 0.0
+        - "SIM_BAR3_RND": "mavros_node::SIM_BAR3_RND"
+          value: 0.20000000298023224
+        - "SIM_BAR3_WCF_BAK": "mavros_node::SIM_BAR3_WCF_BAK"
+          value: 0.0
+        - "SIM_BAR3_WCF_DN": "mavros_node::SIM_BAR3_WCF_DN"
+          value: 0.0
+        - "SIM_BAR3_WCF_FWD": "mavros_node::SIM_BAR3_WCF_FWD"
+          value: 0.0
+        - "SIM_BAR3_WCF_LFT": "mavros_node::SIM_BAR3_WCF_LFT"
+          value: 0.0
+        - "SIM_BAR3_WCF_RGT": "mavros_node::SIM_BAR3_WCF_RGT"
+          value: 0.0
+        - "SIM_BAR3_WCF_UP": "mavros_node::SIM_BAR3_WCF_UP"
+          value: 0.0
+        - "SIM_BARO_COUNT": "mavros_node::SIM_BARO_COUNT"
+          value: 2
+        - "SIM_BARO_DELAY": "mavros_node::SIM_BARO_DELAY"
+          value: 0
+        - "SIM_BARO_DISABLE": "mavros_node::SIM_BARO_DISABLE"
+          value: 0
+        - "SIM_BARO_DRIFT": "mavros_node::SIM_BARO_DRIFT"
+          value: 0.0
+        - "SIM_BARO_FREEZE": "mavros_node::SIM_BARO_FREEZE"
+          value: 0
+        - "SIM_BARO_GLITCH": "mavros_node::SIM_BARO_GLITCH"
+          value: 0.0
+        - "SIM_BARO_RND": "mavros_node::SIM_BARO_RND"
+          value: 0.019999999552965164
+        - "SIM_BARO_WCF_BAK": "mavros_node::SIM_BARO_WCF_BAK"
+          value: 0.0
+        - "SIM_BARO_WCF_DN": "mavros_node::SIM_BARO_WCF_DN"
+          value: 0.0
+        - "SIM_BARO_WCF_FWD": "mavros_node::SIM_BARO_WCF_FWD"
+          value: 0.0
+        - "SIM_BARO_WCF_LFT": "mavros_node::SIM_BARO_WCF_LFT"
+          value: 0.0
+        - "SIM_BARO_WCF_RGT": "mavros_node::SIM_BARO_WCF_RGT"
+          value: 0.0
+        - "SIM_BARO_WCF_UP": "mavros_node::SIM_BARO_WCF_UP"
+          value: 0.0
+        - "SIM_BATT_CAP_AH": "mavros_node::SIM_BATT_CAP_AH"
+          value: 0.0
+        - "SIM_BATT_VOLTAGE": "mavros_node::SIM_BATT_VOLTAGE"
+          value: 12.600000381469727
+        - "SIM_BAUDLIMIT_EN": "mavros_node::SIM_BAUDLIMIT_EN"
+          value: 0
+        - "SIM_BUOYANCY": "mavros_node::SIM_BUOYANCY"
+          value: 1.0
+        - "SIM_CAN_SRV_MSK": "mavros_node::SIM_CAN_SRV_MSK"
+          value: 0
+        - "SIM_CAN_TYPE1": "mavros_node::SIM_CAN_TYPE1"
+          value: 1
+        - "SIM_CAN_TYPE2": "mavros_node::SIM_CAN_TYPE2"
+          value: 1
+        - "SIM_CLAMP_CH": "mavros_node::SIM_CLAMP_CH"
+          value: 0
+        - "SIM_DRIFT_SPEED": "mavros_node::SIM_DRIFT_SPEED"
+          value: 0.05000000074505806
+        - "SIM_DRIFT_TIME": "mavros_node::SIM_DRIFT_TIME"
+          value: 5.0
+        - "SIM_EFI_TYPE": "mavros_node::SIM_EFI_TYPE"
+          value: 0
+        - "SIM_ENGINE_FAIL": "mavros_node::SIM_ENGINE_FAIL"
+          value: 0
+        - "SIM_ENGINE_MUL": "mavros_node::SIM_ENGINE_MUL"
+          value: 0.0
+        - "SIM_ESC_ARM_RPM": "mavros_node::SIM_ESC_ARM_RPM"
+          value: 0.0
+        - "SIM_ESC_TELEM": "mavros_node::SIM_ESC_TELEM"
+          value: 1
+        - "SIM_FLOAT_EXCEPT": "mavros_node::SIM_FLOAT_EXCEPT"
+          value: 1
+        - "SIM_FLOW_DELAY": "mavros_node::SIM_FLOW_DELAY"
+          value: 0
+        - "SIM_FLOW_ENABLE": "mavros_node::SIM_FLOW_ENABLE"
+          value: 0
+        - "SIM_FLOW_POS_X": "mavros_node::SIM_FLOW_POS_X"
+          value: 0.0
+        - "SIM_FLOW_POS_Y": "mavros_node::SIM_FLOW_POS_Y"
+          value: 0.0
+        - "SIM_FLOW_POS_Z": "mavros_node::SIM_FLOW_POS_Z"
+          value: 0.0
+        - "SIM_FLOW_RATE": "mavros_node::SIM_FLOW_RATE"
+          value: 10
+        - "SIM_FLOW_RND": "mavros_node::SIM_FLOW_RND"
+          value: 0.05000000074505806
+        - "SIM_FTOWESC_ENA": "mavros_node::SIM_FTOWESC_ENA"
+          value: 0
+        - "SIM_FTOWESC_POW": "mavros_node::SIM_FTOWESC_POW"
+          value: 4095
+        - "SIM_GND_BEHAV": "mavros_node::SIM_GND_BEHAV"
+          value: -1
+        - "SIM_GPS1_ACC": "mavros_node::SIM_GPS1_ACC"
+          value: 0.30000001192092896
+        - "SIM_GPS1_ALT_OFS": "mavros_node::SIM_GPS1_ALT_OFS"
+          value: 0
+        - "SIM_GPS1_BYTELOS": "mavros_node::SIM_GPS1_BYTELOS"
+          value: 0.0
+        - "SIM_GPS1_DRFTALT": "mavros_node::SIM_GPS1_DRFTALT"
+          value: 0.0
+        - "SIM_GPS1_ENABLE": "mavros_node::SIM_GPS1_ENABLE"
+          value: 1
+        - "SIM_GPS1_GLTCH_X": "mavros_node::SIM_GPS1_GLTCH_X"
+          value: 0.0
+        - "SIM_GPS1_GLTCH_Y": "mavros_node::SIM_GPS1_GLTCH_Y"
+          value: 0.0
+        - "SIM_GPS1_GLTCH_Z": "mavros_node::SIM_GPS1_GLTCH_Z"
+          value: 0.0
+        - "SIM_GPS1_HDG": "mavros_node::SIM_GPS1_HDG"
+          value: 0
+        - "SIM_GPS1_HDG_OFS": "mavros_node::SIM_GPS1_HDG_OFS"
+          value: 0.0
+        - "SIM_GPS1_HZ": "mavros_node::SIM_GPS1_HZ"
+          value: 5
+        - "SIM_GPS1_JAM": "mavros_node::SIM_GPS1_JAM"
+          value: 0
+        - "SIM_GPS1_LAG_MS": "mavros_node::SIM_GPS1_LAG_MS"
+          value: 100
+        - "SIM_GPS1_LCKTIME": "mavros_node::SIM_GPS1_LCKTIME"
+          value: 0
+        - "SIM_GPS1_NOISE": "mavros_node::SIM_GPS1_NOISE"
+          value: 0.0
+        - "SIM_GPS1_NUMSATS": "mavros_node::SIM_GPS1_NUMSATS"
+          value: 10
+        - "SIM_GPS1_OPTIONS": "mavros_node::SIM_GPS1_OPTIONS"
+          value: 0
+        - "SIM_GPS1_POS_X": "mavros_node::SIM_GPS1_POS_X"
+          value: 0.0
+        - "SIM_GPS1_POS_Y": "mavros_node::SIM_GPS1_POS_Y"
+          value: 0.0
+        - "SIM_GPS1_POS_Z": "mavros_node::SIM_GPS1_POS_Z"
+          value: 0.0
+        - "SIM_GPS1_TYPE": "mavros_node::SIM_GPS1_TYPE"
+          value: 1
+        - "SIM_GPS1_VERR_X": "mavros_node::SIM_GPS1_VERR_X"
+          value: 0.0
+        - "SIM_GPS1_VERR_Y": "mavros_node::SIM_GPS1_VERR_Y"
+          value: 0.0
+        - "SIM_GPS1_VERR_Z": "mavros_node::SIM_GPS1_VERR_Z"
+          value: 0.0
+        - "SIM_GPS2_ENABLE": "mavros_node::SIM_GPS2_ENABLE"
+          value: 0
+        - "SIM_GPS3_ENABLE": "mavros_node::SIM_GPS3_ENABLE"
+          value: 0
+        - "SIM_GPS4_ENABLE": "mavros_node::SIM_GPS4_ENABLE"
+          value: 0
+        - "SIM_GPS_LOG_NUM": "mavros_node::SIM_GPS_LOG_NUM"
+          value: 0
+        - "SIM_GRPE_ENABLE": "mavros_node::SIM_GRPE_ENABLE"
+          value: 0
+        - "SIM_GRPE_PIN": "mavros_node::SIM_GRPE_PIN"
+          value: -1
+        - "SIM_GRPS_ENABLE": "mavros_node::SIM_GRPS_ENABLE"
+          value: 0
+        - "SIM_GRPS_GRAB": "mavros_node::SIM_GRPS_GRAB"
+          value: 2000
+        - "SIM_GRPS_PIN": "mavros_node::SIM_GRPS_PIN"
+          value: -1
+        - "SIM_GRPS_RELEASE": "mavros_node::SIM_GRPS_RELEASE"
+          value: 1000
+        - "SIM_GRPS_REVERSE": "mavros_node::SIM_GRPS_REVERSE"
+          value: 0
+        - "SIM_GYR1_BIAS_X": "mavros_node::SIM_GYR1_BIAS_X"
+          value: 0.0
+        - "SIM_GYR1_BIAS_Y": "mavros_node::SIM_GYR1_BIAS_Y"
+          value: 0.0
+        - "SIM_GYR1_BIAS_Z": "mavros_node::SIM_GYR1_BIAS_Z"
+          value: 0.0
+        - "SIM_GYR1_RND": "mavros_node::SIM_GYR1_RND"
+          value: 0.0
+        - "SIM_GYR1_SCALE_X": "mavros_node::SIM_GYR1_SCALE_X"
+          value: 0.0
+        - "SIM_GYR1_SCALE_Y": "mavros_node::SIM_GYR1_SCALE_Y"
+          value: 0.0
+        - "SIM_GYR1_SCALE_Z": "mavros_node::SIM_GYR1_SCALE_Z"
+          value: 0.0
+        - "SIM_GYR2_BIAS_X": "mavros_node::SIM_GYR2_BIAS_X"
+          value: 0.0
+        - "SIM_GYR2_BIAS_Y": "mavros_node::SIM_GYR2_BIAS_Y"
+          value: 0.0
+        - "SIM_GYR2_BIAS_Z": "mavros_node::SIM_GYR2_BIAS_Z"
+          value: 0.0
+        - "SIM_GYR2_RND": "mavros_node::SIM_GYR2_RND"
+          value: 0.0
+        - "SIM_GYR2_SCALE_X": "mavros_node::SIM_GYR2_SCALE_X"
+          value: 0.0
+        - "SIM_GYR2_SCALE_Y": "mavros_node::SIM_GYR2_SCALE_Y"
+          value: 0.0
+        - "SIM_GYR2_SCALE_Z": "mavros_node::SIM_GYR2_SCALE_Z"
+          value: 0.0
+        - "SIM_GYR3_BIAS_X": "mavros_node::SIM_GYR3_BIAS_X"
+          value: 0.0
+        - "SIM_GYR3_BIAS_Y": "mavros_node::SIM_GYR3_BIAS_Y"
+          value: 0.0
+        - "SIM_GYR3_BIAS_Z": "mavros_node::SIM_GYR3_BIAS_Z"
+          value: 0.0
+        - "SIM_GYR3_RND": "mavros_node::SIM_GYR3_RND"
+          value: 0.0
+        - "SIM_GYR3_SCALE_X": "mavros_node::SIM_GYR3_SCALE_X"
+          value: 0.0
+        - "SIM_GYR3_SCALE_Y": "mavros_node::SIM_GYR3_SCALE_Y"
+          value: 0.0
+        - "SIM_GYR3_SCALE_Z": "mavros_node::SIM_GYR3_SCALE_Z"
+          value: 0.0
+        - "SIM_GYR_FAIL_MSK": "mavros_node::SIM_GYR_FAIL_MSK"
+          value: 0
+        - "SIM_GYR_FILE_RW": "mavros_node::SIM_GYR_FILE_RW"
+          value: 0
+        - "SIM_IE24_ENABLE": "mavros_node::SIM_IE24_ENABLE"
+          value: 0
+        - "SIM_IE24_ERROR": "mavros_node::SIM_IE24_ERROR"
+          value: 0
+        - "SIM_IE24_STATE": "mavros_node::SIM_IE24_STATE"
+          value: -1
+        - "SIM_IMUT1_ENABLE": "mavros_node::SIM_IMUT1_ENABLE"
+          value: 0
+        - "SIM_IMUT2_ENABLE": "mavros_node::SIM_IMUT2_ENABLE"
+          value: 0
+        - "SIM_IMUT3_ENABLE": "mavros_node::SIM_IMUT3_ENABLE"
+          value: 0
+        - "SIM_IMUT_END": "mavros_node::SIM_IMUT_END"
+          value: 45.0
+        - "SIM_IMUT_FIXED": "mavros_node::SIM_IMUT_FIXED"
+          value: 0.0
+        - "SIM_IMUT_START": "mavros_node::SIM_IMUT_START"
+          value: 25.0
+        - "SIM_IMUT_TCONST": "mavros_node::SIM_IMUT_TCONST"
+          value: 300.0
+        - "SIM_IMU_COUNT": "mavros_node::SIM_IMU_COUNT"
+          value: 2
+        - "SIM_IMU_ORIENT": "mavros_node::SIM_IMU_ORIENT"
+          value: 0
+        - "SIM_IMU_POS_X": "mavros_node::SIM_IMU_POS_X"
+          value: 0.0
+        - "SIM_IMU_POS_Y": "mavros_node::SIM_IMU_POS_Y"
+          value: 0.0
+        - "SIM_IMU_POS_Z": "mavros_node::SIM_IMU_POS_Z"
+          value: 0.0
+        - "SIM_INIT_ALT_OFS": "mavros_node::SIM_INIT_ALT_OFS"
+          value: 0.0
+        - "SIM_INIT_LAT_OFS": "mavros_node::SIM_INIT_LAT_OFS"
+          value: 0.0
+        - "SIM_INIT_LON_OFS": "mavros_node::SIM_INIT_LON_OFS"
+          value: 0.0
+        - "SIM_INS_THR_MIN": "mavros_node::SIM_INS_THR_MIN"
+          value: 0.10000000149011612
+        - "SIM_JSON_MASTER": "mavros_node::SIM_JSON_MASTER"
+          value: 0
+        - "SIM_LED_LAYOUT": "mavros_node::SIM_LED_LAYOUT"
+          value: 0
+        - "SIM_LOOP_DELAY": "mavros_node::SIM_LOOP_DELAY"
+          value: 0
+        - "SIM_MAG1_DEVID": "mavros_node::SIM_MAG1_DEVID"
+          value: 97539
+        - "SIM_MAG1_DIA_X": "mavros_node::SIM_MAG1_DIA_X"
+          value: 0.0
+        - "SIM_MAG1_DIA_Y": "mavros_node::SIM_MAG1_DIA_Y"
+          value: 0.0
+        - "SIM_MAG1_DIA_Z": "mavros_node::SIM_MAG1_DIA_Z"
+          value: 0.0
+        - "SIM_MAG1_FAIL": "mavros_node::SIM_MAG1_FAIL"
+          value: 0
+        - "SIM_MAG1_ODI_X": "mavros_node::SIM_MAG1_ODI_X"
+          value: 0.0
+        - "SIM_MAG1_ODI_Y": "mavros_node::SIM_MAG1_ODI_Y"
+          value: 0.0
+        - "SIM_MAG1_ODI_Z": "mavros_node::SIM_MAG1_ODI_Z"
+          value: 0.0
+        - "SIM_MAG1_OFS_X": "mavros_node::SIM_MAG1_OFS_X"
+          value: 5.0
+        - "SIM_MAG1_OFS_Y": "mavros_node::SIM_MAG1_OFS_Y"
+          value: 13.0
+        - "SIM_MAG1_OFS_Z": "mavros_node::SIM_MAG1_OFS_Z"
+          value: -18.0
+        - "SIM_MAG1_ORIENT": "mavros_node::SIM_MAG1_ORIENT"
+          value: 0
+        - "SIM_MAG1_SCALING": "mavros_node::SIM_MAG1_SCALING"
+          value: 1.0
+        - "SIM_MAG2_DEVID": "mavros_node::SIM_MAG2_DEVID"
+          value: 131874
+        - "SIM_MAG2_DIA_X": "mavros_node::SIM_MAG2_DIA_X"
+          value: 0.0
+        - "SIM_MAG2_DIA_Y": "mavros_node::SIM_MAG2_DIA_Y"
+          value: 0.0
+        - "SIM_MAG2_DIA_Z": "mavros_node::SIM_MAG2_DIA_Z"
+          value: 0.0
+        - "SIM_MAG2_FAIL": "mavros_node::SIM_MAG2_FAIL"
+          value: 0
+        - "SIM_MAG2_ODI_X": "mavros_node::SIM_MAG2_ODI_X"
+          value: 0.0
+        - "SIM_MAG2_ODI_Y": "mavros_node::SIM_MAG2_ODI_Y"
+          value: 0.0
+        - "SIM_MAG2_ODI_Z": "mavros_node::SIM_MAG2_ODI_Z"
+          value: 0.0
+        - "SIM_MAG2_OFS_X": "mavros_node::SIM_MAG2_OFS_X"
+          value: 5.0
+        - "SIM_MAG2_OFS_Y": "mavros_node::SIM_MAG2_OFS_Y"
+          value: 13.0
+        - "SIM_MAG2_OFS_Z": "mavros_node::SIM_MAG2_OFS_Z"
+          value: -18.0
+        - "SIM_MAG2_ORIENT": "mavros_node::SIM_MAG2_ORIENT"
+          value: 0
+        - "SIM_MAG2_SCALING": "mavros_node::SIM_MAG2_SCALING"
+          value: 1.0
+        - "SIM_MAG3_DEVID": "mavros_node::SIM_MAG3_DEVID"
+          value: 263178
+        - "SIM_MAG3_DIA_X": "mavros_node::SIM_MAG3_DIA_X"
+          value: 0.0
+        - "SIM_MAG3_DIA_Y": "mavros_node::SIM_MAG3_DIA_Y"
+          value: 0.0
+        - "SIM_MAG3_DIA_Z": "mavros_node::SIM_MAG3_DIA_Z"
+          value: 0.0
+        - "SIM_MAG3_FAIL": "mavros_node::SIM_MAG3_FAIL"
+          value: 0
+        - "SIM_MAG3_ODI_X": "mavros_node::SIM_MAG3_ODI_X"
+          value: 0.0
+        - "SIM_MAG3_ODI_Y": "mavros_node::SIM_MAG3_ODI_Y"
+          value: 0.0
+        - "SIM_MAG3_ODI_Z": "mavros_node::SIM_MAG3_ODI_Z"
+          value: 0.0
+        - "SIM_MAG3_OFS_X": "mavros_node::SIM_MAG3_OFS_X"
+          value: 5.0
+        - "SIM_MAG3_OFS_Y": "mavros_node::SIM_MAG3_OFS_Y"
+          value: 13.0
+        - "SIM_MAG3_OFS_Z": "mavros_node::SIM_MAG3_OFS_Z"
+          value: -18.0
+        - "SIM_MAG3_ORIENT": "mavros_node::SIM_MAG3_ORIENT"
+          value: 0
+        - "SIM_MAG3_SCALING": "mavros_node::SIM_MAG3_SCALING"
+          value: 1.0
+        - "SIM_MAG4_DEVID": "mavros_node::SIM_MAG4_DEVID"
+          value: 97283
+        - "SIM_MAG5_DEVID": "mavros_node::SIM_MAG5_DEVID"
+          value: 97795
+        - "SIM_MAG6_DEVID": "mavros_node::SIM_MAG6_DEVID"
+          value: 98051
+        - "SIM_MAG7_DEVID": "mavros_node::SIM_MAG7_DEVID"
+          value: 0
+        - "SIM_MAG8_DEVID": "mavros_node::SIM_MAG8_DEVID"
+          value: 0
+        - "SIM_MAG_ALY_HGT": "mavros_node::SIM_MAG_ALY_HGT"
+          value: 1.0
+        - "SIM_MAG_ALY_X": "mavros_node::SIM_MAG_ALY_X"
+          value: 0.0
+        - "SIM_MAG_ALY_Y": "mavros_node::SIM_MAG_ALY_Y"
+          value: 0.0
+        - "SIM_MAG_ALY_Z": "mavros_node::SIM_MAG_ALY_Z"
+          value: 0.0
+        - "SIM_MAG_DELAY": "mavros_node::SIM_MAG_DELAY"
+          value: 0
+        - "SIM_MAG_MOT_X": "mavros_node::SIM_MAG_MOT_X"
+          value: 0.0
+        - "SIM_MAG_MOT_Y": "mavros_node::SIM_MAG_MOT_Y"
+          value: 0.0
+        - "SIM_MAG_MOT_Z": "mavros_node::SIM_MAG_MOT_Z"
+          value: 0.0
+        - "SIM_MAG_RND": "mavros_node::SIM_MAG_RND"
+          value: 0.0
+        - "SIM_MAG_SAVE_IDS": "mavros_node::SIM_MAG_SAVE_IDS"
+          value: 1
+        - "SIM_ODOM_ENABLE": "mavros_node::SIM_ODOM_ENABLE"
+          value: 0
+        - "SIM_OH_MASK": "mavros_node::SIM_OH_MASK"
+          value: 0
+        - "SIM_OH_RELAY_MSK": "mavros_node::SIM_OH_RELAY_MSK"
+          value: -1
+        - "SIM_OPOS_ALT": "mavros_node::SIM_OPOS_ALT"
+          value: 584.0
+        - "SIM_OPOS_HDG": "mavros_node::SIM_OPOS_HDG"
+          value: 353.0
+        - "SIM_OPOS_LAT": "mavros_node::SIM_OPOS_LAT"
+          value: -35.36326217651367
+        - "SIM_OPOS_LNG": "mavros_node::SIM_OPOS_LNG"
+          value: 149.1652374267578
+        - "SIM_PARA_ENABLE": "mavros_node::SIM_PARA_ENABLE"
+          value: 0
+        - "SIM_PARA_PIN": "mavros_node::SIM_PARA_PIN"
+          value: -1
+        - "SIM_PIN_MASK": "mavros_node::SIM_PIN_MASK"
+          value: 0
+        - "SIM_PLD_ALT_LMT": "mavros_node::SIM_PLD_ALT_LMT"
+          value: 15.0
+        - "SIM_PLD_DIST_LMT": "mavros_node::SIM_PLD_DIST_LMT"
+          value: 10.0
+        - "SIM_PLD_ENABLE": "mavros_node::SIM_PLD_ENABLE"
+          value: 0
+        - "SIM_PLD_HEIGHT": "mavros_node::SIM_PLD_HEIGHT"
+          value: 0.0
+        - "SIM_PLD_LAT": "mavros_node::SIM_PLD_LAT"
+          value: 33.8103141784668
+        - "SIM_PLD_LON": "mavros_node::SIM_PLD_LON"
+          value: -118.39386749267578
+        - "SIM_PLD_OPTIONS": "mavros_node::SIM_PLD_OPTIONS"
+          value: 0
+        - "SIM_PLD_ORIENT": "mavros_node::SIM_PLD_ORIENT"
+          value: 24
+        - "SIM_PLD_RATE": "mavros_node::SIM_PLD_RATE"
+          value: 100
+        - "SIM_PLD_SHIP": "mavros_node::SIM_PLD_SHIP"
+          value: 0
+        - "SIM_PLD_TYPE": "mavros_node::SIM_PLD_TYPE"
+          value: 0
+        - "SIM_PLD_YAW": "mavros_node::SIM_PLD_YAW"
+          value: 270
+        - "SIM_RATE_HZ": "mavros_node::SIM_RATE_HZ"
+          value: 1200
+        - "SIM_RC_CHANCOUNT": "mavros_node::SIM_RC_CHANCOUNT"
+          value: 16
+        - "SIM_RC_FAIL": "mavros_node::SIM_RC_FAIL"
+          value: 0
+        - "SIM_RICH_CTRL": "mavros_node::SIM_RICH_CTRL"
+          value: -1
+        - "SIM_RICH_ENABLE": "mavros_node::SIM_RICH_ENABLE"
+          value: 0
+        - "SIM_SERVO_DELAY": "mavros_node::SIM_SERVO_DELAY"
+          value: 0.0
+        - "SIM_SERVO_FILTER": "mavros_node::SIM_SERVO_FILTER"
+          value: 0.0
+        - "SIM_SERVO_SPEED": "mavros_node::SIM_SERVO_SPEED"
+          value: 0.14000000059604645
+        - "SIM_SHIP_DSIZE": "mavros_node::SIM_SHIP_DSIZE"
+          value: 10.0
+        - "SIM_SHIP_ENABLE": "mavros_node::SIM_SHIP_ENABLE"
+          value: 0
+        - "SIM_SHIP_OFS_X": "mavros_node::SIM_SHIP_OFS_X"
+          value: 0.0
+        - "SIM_SHIP_OFS_Y": "mavros_node::SIM_SHIP_OFS_Y"
+          value: 0.0
+        - "SIM_SHIP_OFS_Z": "mavros_node::SIM_SHIP_OFS_Z"
+          value: 0.0
+        - "SIM_SHIP_PSIZE": "mavros_node::SIM_SHIP_PSIZE"
+          value: 1000.0
+        - "SIM_SHIP_SPEED": "mavros_node::SIM_SHIP_SPEED"
+          value: 3.0
+        - "SIM_SHIP_SYSID": "mavros_node::SIM_SHIP_SYSID"
+          value: 17
+        - "SIM_SHOVE_TIME": "mavros_node::SIM_SHOVE_TIME"
+          value: 0
+        - "SIM_SHOVE_X": "mavros_node::SIM_SHOVE_X"
+          value: 0.0
+        - "SIM_SHOVE_Y": "mavros_node::SIM_SHOVE_Y"
+          value: 0.0
+        - "SIM_SHOVE_Z": "mavros_node::SIM_SHOVE_Z"
+          value: 0.0
+        - "SIM_SLUP_ENABLE": "mavros_node::SIM_SLUP_ENABLE"
+          value: 0
+        - "SIM_SONAR_GLITCH": "mavros_node::SIM_SONAR_GLITCH"
+          value: 0.0
+        - "SIM_SONAR_POS_X": "mavros_node::SIM_SONAR_POS_X"
+          value: 0.0
+        - "SIM_SONAR_POS_Y": "mavros_node::SIM_SONAR_POS_Y"
+          value: 0.0
+        - "SIM_SONAR_POS_Z": "mavros_node::SIM_SONAR_POS_Z"
+          value: 0.0
+        - "SIM_SONAR_RND": "mavros_node::SIM_SONAR_RND"
+          value: 0.0
+        - "SIM_SONAR_ROT": "mavros_node::SIM_SONAR_ROT"
+          value: 25
+        - "SIM_SONAR_SCALE": "mavros_node::SIM_SONAR_SCALE"
+          value: 12.121199607849121
+        - "SIM_SPEEDUP": "mavros_node::SIM_SPEEDUP"
+          value: 1.0
+        - "SIM_SPR_ENABLE": "mavros_node::SIM_SPR_ENABLE"
+          value: 0
+        - "SIM_SPR_PUMP": "mavros_node::SIM_SPR_PUMP"
+          value: -1
+        - "SIM_SPR_SPIN": "mavros_node::SIM_SPR_SPIN"
+          value: -1
+        - "SIM_TA_ENABLE": "mavros_node::SIM_TA_ENABLE"
+          value: 1
+        - "SIM_TEMP_BFACTOR": "mavros_node::SIM_TEMP_BFACTOR"
+          value: 0.0
+        - "SIM_TEMP_BRD_OFF": "mavros_node::SIM_TEMP_BRD_OFF"
+          value: 20.0
+        - "SIM_TEMP_START": "mavros_node::SIM_TEMP_START"
+          value: 25.0
+        - "SIM_TEMP_TCONST": "mavros_node::SIM_TEMP_TCONST"
+          value: 30.0
+        - "SIM_TERRAIN": "mavros_node::SIM_TERRAIN"
+          value: 1
+        - "SIM_TETH_ENABLE": "mavros_node::SIM_TETH_ENABLE"
+          value: 0
+        - "SIM_THML_SCENARI": "mavros_node::SIM_THML_SCENARI"
+          value: 0
+        - "SIM_TIDE_DIR": "mavros_node::SIM_TIDE_DIR"
+          value: 0.0
+        - "SIM_TIDE_SPEED": "mavros_node::SIM_TIDE_SPEED"
+          value: 0.0
+        - "SIM_TIME_JITTER": "mavros_node::SIM_TIME_JITTER"
+          value: 0
+        - "SIM_TWIST_TIME": "mavros_node::SIM_TWIST_TIME"
+          value: 0
+        - "SIM_TWIST_X": "mavros_node::SIM_TWIST_X"
+          value: 0.0
+        - "SIM_TWIST_Y": "mavros_node::SIM_TWIST_Y"
+          value: 0.0
+        - "SIM_TWIST_Z": "mavros_node::SIM_TWIST_Z"
+          value: 0.0
+        - "SIM_UART_LOSS": "mavros_node::SIM_UART_LOSS"
+          value: 0.0
+        - "SIM_VIB_FREQ_X": "mavros_node::SIM_VIB_FREQ_X"
+          value: 0.0
+        - "SIM_VIB_FREQ_Y": "mavros_node::SIM_VIB_FREQ_Y"
+          value: 0.0
+        - "SIM_VIB_FREQ_Z": "mavros_node::SIM_VIB_FREQ_Z"
+          value: 0.0
+        - "SIM_VIB_MOT_HMNC": "mavros_node::SIM_VIB_MOT_HMNC"
+          value: 1
+        - "SIM_VIB_MOT_MASK": "mavros_node::SIM_VIB_MOT_MASK"
+          value: 0
+        - "SIM_VIB_MOT_MAX": "mavros_node::SIM_VIB_MOT_MAX"
+          value: 0.0
+        - "SIM_VIB_MOT_MULT": "mavros_node::SIM_VIB_MOT_MULT"
+          value: 1.0
+        - "SIM_VICON_FAIL": "mavros_node::SIM_VICON_FAIL"
+          value: 0
+        - "SIM_VICON_GLIT_X": "mavros_node::SIM_VICON_GLIT_X"
+          value: 0.0
+        - "SIM_VICON_GLIT_Y": "mavros_node::SIM_VICON_GLIT_Y"
+          value: 0.0
+        - "SIM_VICON_GLIT_Z": "mavros_node::SIM_VICON_GLIT_Z"
+          value: 0.0
+        - "SIM_VICON_POS_X": "mavros_node::SIM_VICON_POS_X"
+          value: 0.0
+        - "SIM_VICON_POS_Y": "mavros_node::SIM_VICON_POS_Y"
+          value: 0.0
+        - "SIM_VICON_POS_Z": "mavros_node::SIM_VICON_POS_Z"
+          value: 0.0
+        - "SIM_VICON_P_SD": "mavros_node::SIM_VICON_P_SD"
+          value: 0.0
+        - "SIM_VICON_QUAL": "mavros_node::SIM_VICON_QUAL"
+          value: 50
+        - "SIM_VICON_RATE": "mavros_node::SIM_VICON_RATE"
+          value: 50
+        - "SIM_VICON_TMASK": "mavros_node::SIM_VICON_TMASK"
+          value: 3
+        - "SIM_VICON_VGLI_X": "mavros_node::SIM_VICON_VGLI_X"
+          value: 0.0
+        - "SIM_VICON_VGLI_Y": "mavros_node::SIM_VICON_VGLI_Y"
+          value: 0.0
+        - "SIM_VICON_VGLI_Z": "mavros_node::SIM_VICON_VGLI_Z"
+          value: 0.0
+        - "SIM_VICON_V_SD": "mavros_node::SIM_VICON_V_SD"
+          value: 0.0
+        - "SIM_VICON_YAW": "mavros_node::SIM_VICON_YAW"
+          value: 0
+        - "SIM_VICON_YAWERR": "mavros_node::SIM_VICON_YAWERR"
+          value: 0
+        - "SIM_VOLZ_ENA": "mavros_node::SIM_VOLZ_ENA"
+          value: 0
+        - "SIM_VOLZ_FMASK": "mavros_node::SIM_VOLZ_FMASK"
+          value: 0
+        - "SIM_VOLZ_MASK": "mavros_node::SIM_VOLZ_MASK"
+          value: 11
+        - "SIM_WAVE_AMP": "mavros_node::SIM_WAVE_AMP"
+          value: 0.5
+        - "SIM_WAVE_DIR": "mavros_node::SIM_WAVE_DIR"
+          value: 0.0
+        - "SIM_WAVE_ENABLE": "mavros_node::SIM_WAVE_ENABLE"
+          value: 0
+        - "SIM_WAVE_LENGTH": "mavros_node::SIM_WAVE_LENGTH"
+          value: 10.0
+        - "SIM_WAVE_SPEED": "mavros_node::SIM_WAVE_SPEED"
+          value: 0.5
+        - "SIM_WIND_DIR": "mavros_node::SIM_WIND_DIR"
+          value: 180.0
+        - "SIM_WIND_DIR_Z": "mavros_node::SIM_WIND_DIR_Z"
+          value: 0.0
+        - "SIM_WIND_SPD": "mavros_node::SIM_WIND_SPD"
+          value: 0.0
+        - "SIM_WIND_T": "mavros_node::SIM_WIND_T"
+          value: 0
+        - "SIM_WIND_TC": "mavros_node::SIM_WIND_TC"
+          value: 5.0
+        - "SIM_WIND_TURB": "mavros_node::SIM_WIND_TURB"
+          value: 0.0
+        - "SIM_WIND_T_ALT": "mavros_node::SIM_WIND_T_ALT"
+          value: 60.0
+        - "SIM_WIND_T_COEF": "mavros_node::SIM_WIND_T_COEF"
+          value: 0.009999999776482582
+        - "SIM_WOW_PIN": "mavros_node::SIM_WOW_PIN"
+          value: -1
+        - "STAT_BOOTCNT": "mavros_node::STAT_BOOTCNT"
+          value: 12
+        - "STAT_DISTFLWN": "mavros_node::STAT_DISTFLWN"
+          value: 84.7109603881836
+        - "STAT_FLTCNT": "mavros_node::STAT_FLTCNT"
+          value: 11
+        - "STAT_FLTTIME": "mavros_node::STAT_FLTTIME"
+          value: 2781
+        - "STAT_RESET": "mavros_node::STAT_RESET"
+          value: 1
+        - "STAT_RUNTIME": "mavros_node::STAT_RUNTIME"
+          value: 2870
+        - "SURFACE_DEPTH": "mavros_node::SURFACE_DEPTH"
+          value: -10.0
+        - "SURFACE_MAX_THR": "mavros_node::SURFACE_MAX_THR"
+          value: 0.10000000149011612
+        - "SURFTRAK_DEPTH": "mavros_node::SURFTRAK_DEPTH"
+          value: -50.0
+        - "TEMP1_ADDR": "mavros_node::TEMP1_ADDR"
+          value: 119
+        - "TEMP1_BUS": "mavros_node::TEMP1_BUS"
+          value: 1
+        - "TEMP1_SRC": "mavros_node::TEMP1_SRC"
+          value: 0
+        - "TEMP1_SRC_ID": "mavros_node::TEMP1_SRC_ID"
+          value: -1
+        - "TEMP1_TYPE": "mavros_node::TEMP1_TYPE"
+          value: 1
+        - "TEMP2_TYPE": "mavros_node::TEMP2_TYPE"
+          value: 0
+        - "TEMP3_TYPE": "mavros_node::TEMP3_TYPE"
+          value: 0
+        - "TEMP_LOG": "mavros_node::TEMP_LOG"
+          value: 0
+        - "TERRAIN_ENABLE": "mavros_node::TERRAIN_ENABLE"
+          value: 0
+        - "THR_ARM_POS": "mavros_node::THR_ARM_POS"
+          value: 1
+        - "THR_DZ": "mavros_node::THR_DZ"
+          value: 100
+        - "VISO_TYPE": "mavros_node::VISO_TYPE"
+          value: 0
+        - "VTX_ENABLE": "mavros_node::VTX_ENABLE"
+          value: 0
+        - "WP_ACC": "mavros_node::WP_ACC"
+          value: 2.5
+        - "WP_ACC_CNR": "mavros_node::WP_ACC_CNR"
+          value: 0.0
+        - "WP_ACC_Z": "mavros_node::WP_ACC_Z"
+          value: 1.0
+        - "WP_JERK": "mavros_node::WP_JERK"
+          value: 1.0
+        - "WP_RADIUS_M": "mavros_node::WP_RADIUS_M"
+          value: 2.0
+        - "WP_RFND_USE": "mavros_node::WP_RFND_USE"
+          value: 1
+        - "WP_SPD": "mavros_node::WP_SPD"
+          value: 1.0
+        - "WP_SPD_DN": "mavros_node::WP_SPD_DN"
+          value: 1.5
+        - "WP_SPD_UP": "mavros_node::WP_SPD_UP"
+          value: 2.5
+        - "WP_TER_MARGIN": "mavros_node::WP_TER_MARGIN"
+          value: 10.0
+        - "WP_YAW_BEHAVIOR": "mavros_node::WP_YAW_BEHAVIOR"
+          value: 4
+        - "XTRACK_ANG_LIM": "mavros_node::XTRACK_ANG_LIM"
+          value: 45
+    "/mavros/setpoint_position":
+      from: "mavros./mavros/setpoint_position"
+      interfaces:
+        - "global_position/global": sub-> "mavros_node::global_position/global"
+        - "local_position/pose": sub-> "mavros_node::local_position/pose"
+        - "setpoint_position/global": sub-> "mavros_node::setpoint_position/global"
+        - "setpoint_position/global_to_local": sub-> "mavros_node::setpoint_position/global_to_local"
+        - "setpoint_position/local": sub-> "mavros_node::setpoint_position/local"
+    "/mavros/sys":
+      from: "mavros./mavros/sys"
+      interfaces:
+        - "battery": pub-> "mavros_node::battery"
+        - "estimator_status": pub-> "mavros_node::estimator_status"
+        - "extended_state": pub-> "mavros_node::extended_state"
+        - "state": pub-> "mavros_node::state"
+        - "status_event": pub-> "mavros_node::status_event"
+        - "statustext/recv": pub-> "mavros_node::statustext/recv"
+        - "sys_status": pub-> "mavros_node::sys_status"
+        - "statustext/send": sub-> "mavros_node::statustext/send"
+        - "set_message_interval": ss-> "mavros_node::set_message_interval"
+        - "set_mode": ss-> "mavros_node::set_mode"
+        - "set_stream_rate": ss-> "mavros_node::set_stream_rate"
+        - "vehicle_info_get": ss-> "mavros_node::vehicle_info_get"
+      parameters:
+        - "conn_timeout": "mavros_node::conn_timeout"
+          value: 10.0
+        - "disable_diag": "mavros_node::disable_diag"
+          value: false
+        - "heartbeat_mav_type": "mavros_node::heartbeat_mav_type"
+          value: "ONBOARD_CONTROLLER"
+        - "heartbeat_rate": "mavros_node::heartbeat_rate"
+          value: 1.0
+        - "min_voltage": "mavros_node::min_voltage"
+          value: [10.0]
+        - "use_sim_time": "mavros_node::use_sim_time"
+          value: false
+    "/mavros/time":
+      from: "mavros./mavros/time"
+      interfaces:
+        - "time_reference": pub-> "mavros_node::time_reference"
+        - "timesync_status": pub-> "mavros_node::timesync_status"
+      parameters:
+        - "convergence_window": "mavros_node::convergence_window"
+          value: 500
+        - "max_consecutive_high_deviation": "mavros_node::max_consecutive_high_deviation"
+          value: 10
+        - "max_consecutive_high_rtt": "mavros_node::max_consecutive_high_rtt"
+          value: 10
+        - "max_deviation_sample": "mavros_node::max_deviation_sample"
+          value: 10
+        - "max_rtt_sample": "mavros_node::max_rtt_sample"
+          value: 10
+        - "system_time_rate": "mavros_node::system_time_rate"
+          value: 0.0
+        - "time_ref_source": "mavros_node::time_ref_source"
+          value: "fcu"
+        - "timesync_alpha_final": "mavros_node::timesync_alpha_final"
+          value: 0.003
+        - "timesync_alpha_initial": "mavros_node::timesync_alpha_initial"
+          value: 0.05
+        - "timesync_beta_final": "mavros_node::timesync_beta_final"
+          value: 0.003
+        - "timesync_beta_initial": "mavros_node::timesync_beta_initial"
+          value: 0.05
+        - "timesync_mode": "mavros_node::timesync_mode"
+          value: "MAVLINK"
+        - "timesync_rate": "mavros_node::timesync_rate"
+          value: 1.0
+        - "use_sim_time": "mavros_node::use_sim_time"
+          value: false
+    "/water_visibility_observer_node":
+      from: "suave_monitor./water_visibility_observer_node"
+      interfaces:
+        - "diagnostics": pub-> "water_visibility_observer::diagnostics"
+      parameters:
+        - "qa_publishing_period": "water_visibility_observer::qa_publishing_period"
+          value: 1.0
+        - "use_sim_time": "water_visibility_observer::use_sim_time"
+          value: false
+        - "water_visibility_max": "water_visibility_observer::water_visibility_max"
+          value: 3.75
+        - "water_visibility_min": "water_visibility_observer::water_visibility_min"
+          value: 1.25
+        - "water_visibility_period": "water_visibility_observer::water_visibility_period"
+          value: 80
+        - "water_visibility_sec_shift": "water_visibility_observer::water_visibility_sec_shift"
+          value: 0.0
+    "/battery_monitor":
+      from: "suave_monitor./battery_monitor"
+      interfaces:
+        - "battery_monitor/recharge/complete": pub-> "battery_monitor::battery_monitor/recharge/complete"
+        - "diagnostics": pub-> "battery_monitor::diagnostics"
+        - "battery_monitor/recharge": ss-> "battery_monitor::battery_monitor/recharge"
+      parameters:
+        - "discharge_time": "battery_monitor::discharge_time"
+          value: 200.0
+        - "qa_publishing_period": "battery_monitor::qa_publishing_period"
+          value: 1.0
+        - "use_sim_time": "battery_monitor::use_sim_time"
+          value: false
+    "/detect_pipeline":
+      from: "suave./detect_pipeline"
+      interfaces:
+        - "pipeline/detected": pub-> "pipeline_detection_wv::pipeline/detected"
+        - "diagnostics": sub-> "pipeline_detection_wv::diagnostics"
+        - "model/bluerov2/pose": sub-> "pipeline_detection_wv::model/bluerov2/pose"
+        - "pipeline/get_path": ss-> "pipeline_detection_wv::pipeline/get_path"
+    "/thruster_monitor":
+      from: "suave_monitor./thruster_monitor"
+      interfaces:
+        - "diagnostics": pub-> "thruster_monitor::diagnostics"
+      parameters:
+        - "thruster_events": "thruster_monitor::thruster_events"
+          value: ['(1,failure,35)']
+        - "use_sim_time": "thruster_monitor::use_sim_time"
+          value: false
+    "/f_generate_search_path_node":
+      from: "suave./f_generate_search_path_node"
+      interfaces:
+        - "f_generate_search_path_node/transition_event": pub-> "spiral_search::f_generate_search_path_node/transition_event"
+        - "f_generate_search_path_node/change_state": ss-> "spiral_search::f_generate_search_path_node/change_state"
+        - "f_generate_search_path_node/get_available_states": ss-> "spiral_search::f_generate_search_path_node/get_available_states"
+        - "f_generate_search_path_node/get_available_transitions": ss-> "spiral_search::f_generate_search_path_node/get_available_transitions"
+        - "f_generate_search_path_node/get_state": ss-> "spiral_search::f_generate_search_path_node/get_state"
+        - "f_generate_search_path_node/get_transition_graph": ss-> "spiral_search::f_generate_search_path_node/get_transition_graph"
+      parameters:
+        - "spiral_altitude": "spiral_search::spiral_altitude"
+          value: 1.0
+        - "use_sim_time": "spiral_search::use_sim_time"
+          value: false
+    "/f_follow_pipeline_node":
+      from: "suave./f_follow_pipeline_node"
+      interfaces:
+        - "pipeline/distance_inspected": pub-> "follow_pipeline::pipeline/distance_inspected"
+        - "pipeline/inspected": pub-> "follow_pipeline::pipeline/inspected"
+        - "f_follow_pipeline_node/transition_event": pub-> "follow_pipeline::f_follow_pipeline_node/transition_event"
+        - "f_follow_pipeline_node/change_state": ss-> "follow_pipeline::f_follow_pipeline_node/change_state"
+        - "f_follow_pipeline_node/get_available_states": ss-> "follow_pipeline::f_follow_pipeline_node/get_available_states"
+        - "f_follow_pipeline_node/get_available_transitions": ss-> "follow_pipeline::f_follow_pipeline_node/get_available_transitions"
+        - "f_follow_pipeline_node/get_state": ss-> "follow_pipeline::f_follow_pipeline_node/get_state"
+        - "f_follow_pipeline_node/get_transition_graph": ss-> "follow_pipeline::f_follow_pipeline_node/get_transition_graph"
+      parameters:
+        - "use_sim_time": "follow_pipeline::use_sim_time"
+          value: false
+    "/generate_recharge_path_node":
+      from: "suave./generate_recharge_path_node"
+      interfaces:
+        - "generate_recharge_path_node/transition_event": pub-> "recharge_battery::generate_recharge_path_node/transition_event"
+        - "generate_recharge_path_node/change_state": ss-> "recharge_battery::generate_recharge_path_node/change_state"
+        - "generate_recharge_path_node/get_available_states": ss-> "recharge_battery::generate_recharge_path_node/get_available_states"
+        - "generate_recharge_path_node/get_available_transitions": ss-> "recharge_battery::generate_recharge_path_node/get_available_transitions"
+        - "generate_recharge_path_node/get_state": ss-> "recharge_battery::generate_recharge_path_node/get_state"
+        - "generate_recharge_path_node/get_transition_graph": ss-> "recharge_battery::generate_recharge_path_node/get_transition_graph"
+      parameters:
+        - "recharge_station_gz_pos": "recharge_battery::recharge_station_gz_pos"
+          value: [-3.0, -2.0, -19.5]
+        - "use_sim_time": "recharge_battery::use_sim_time"
+          value: false
+    "/f_maintain_motion_node":
+      from: "suave./f_maintain_motion_node"
+      interfaces:
+        - "diagnostics": pub-> "recover_thrusters::diagnostics"
+        - "f_maintain_motion_node/transition_event": pub-> "recover_thrusters::f_maintain_motion_node/transition_event"
+        - "f_maintain_motion_node/change_state": ss-> "recover_thrusters::f_maintain_motion_node/change_state"
+        - "f_maintain_motion_node/get_available_states": ss-> "recover_thrusters::f_maintain_motion_node/get_available_states"
+        - "f_maintain_motion_node/get_available_transitions": ss-> "recover_thrusters::f_maintain_motion_node/get_available_transitions"
+        - "f_maintain_motion_node/get_state": ss-> "recover_thrusters::f_maintain_motion_node/get_state"
+        - "f_maintain_motion_node/get_transition_graph": ss-> "recover_thrusters::f_maintain_motion_node/get_transition_graph"
+      parameters:
+        - "use_sim_time": "recover_thrusters::use_sim_time"
+          value: false
+    "/mission_metrics":
+      from: "suave_metrics./mission_metrics"
+      interfaces:
+        - "diagnostics": sub-> "mission_metrics::diagnostics"
+        - "f_maintain_motion_node/transition_event": sub-> "mission_metrics::f_maintain_motion_node/transition_event"
+        - "generate_recharge_path_node/transition_event": sub-> "mission_metrics::generate_recharge_path_node/transition_event"
+        - "pipeline/detected": sub-> "mission_metrics::pipeline/detected"
+        - "pipeline/distance_inspected": sub-> "mission_metrics::pipeline/distance_inspected"
+        - "pipeline/inspected": sub-> "mission_metrics::pipeline/inspected"
+        - "mission_metrics/save": ss-> "mission_metrics::mission_metrics/save"
+    "/mission_node":
+      from: "suave_missions./mission_node"
+      interfaces:
+        - "diagnostics": sub-> "mission_node::diagnostics"
+        - "mavros/state": sub-> "mission_node::mavros/state"
+        - "pipeline/detected": sub-> "mission_node::pipeline/detected"
+        - "pipeline/inspected": sub-> "mission_node::pipeline/inspected"
+      parameters:
+        - "time_limit": "mission_node::time_limit"
+          value: 300
+        - "use_sim_time": "mission_node::use_sim_time"
+          value: false
+

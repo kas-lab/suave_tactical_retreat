@@ -1,0 +1,16 @@
+ros_gz_bridge:
+  artifacts:
+    parameter_bridge:
+      node: /gz_pipe_pose_bridge
+      publishers:
+        'model/min_pipes_pipeline/pose':
+          type: 'geometry_msgs/msg/PoseArray'
+          qos:
+          # profile:
+          # history: UNKNOWN
+          # depth:
+            reliability: reliable
+            durability: volatile
+      subscribers:
+        'model/min_pipes_pipeline/pose':
+          type: 'geometry_msgs/msg/PoseArray'
