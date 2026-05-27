@@ -10,8 +10,8 @@ feature_model
 		Feature RECHARGE
 	}
 	crossTreeConstraints { 
-		BasicConstraint { type EXCLUDES rightFeature SEARCH_PIPELINE leftFeature FOLLOW_PIPELINE}
-		BasicConstraint { type EXCLUDES rightFeature SEARCH_PIPELINE leftFeature RECHARGE}
-		BasicConstraint { type EXCLUDES rightFeature FOLLOW_PIPELINE leftFeature RECHARGE}
+		BasicConstraint { type EXCLUDES leftFeature SEARCH_PIPELINE rightFeature FOLLOW_PIPELINE}
+		BasicConstraint { type EXCLUDES leftFeature SEARCH_PIPELINE rightFeature RECHARGE}
+		BasicConstraint { type EXCLUDES leftFeature FOLLOW_PIPELINE rightFeature RECHARGE}
 	}
 }
