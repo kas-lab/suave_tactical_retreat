@@ -27,3 +27,5 @@ replay_pid*
 
 .vscode
 **/__pycache__
+
+src-gen/
