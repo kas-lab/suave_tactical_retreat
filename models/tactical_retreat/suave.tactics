@@ -4,19 +4,10 @@ import "suave.context";
 import "suave.var";
 import "suave.resolution";
 
-rule SEARCH_PIPELINE {
-	guard {
-		!selected(suave_resolution.SEARCH_PIPELINE)
-	}
-	action {
-		select_variant(suave_resolution.SEARCH_PIPELINE)
-	}
-};
-
 rule LOW_ALTITUDE {
 	guard {
-		water_visibility < 2.25
-		AND selected(suave_resolution.SEARCH_PIPELINE)
+		context(water_visibility < 2.25)
+		features(selected(suave_resolution.SEARCH_PIPELINE))
 	}
 	action {
 		select_variant(suave_resolution.LOW_ALTITUDE)
@@ -25,9 +16,9 @@ rule LOW_ALTITUDE {
 
 rule MEDIUM_ALTITUDE {
 	guard {
-		water_visibility < 3.25
-		AND water_visibility >= 2.25
-		AND selected(suave_resolution.SEARCH_PIPELINE)
+		context(water_visibility < 3.25
+			AND water_visibility >= 2.25)
+		features(selected(suave_resolution.SEARCH_PIPELINE))
 	}
 	action {
 		select_variant(suave_resolution.MEDIUM_ALTITUDE)
@@ -36,8 +27,8 @@ rule MEDIUM_ALTITUDE {
 
 rule HIGH_ALTITUDE {
 	guard {
-		water_visibility >= 3.25
-		AND selected(suave_resolution.SEARCH_PIPELINE)
+		context(water_visibility >= 3.25)
+		features(selected(suave_resolution.SEARCH_PIPELINE))
 	}
 	action {
 		select_variant(suave_resolution.LOW_ALTITUDE)
@@ -46,13 +37,13 @@ rule HIGH_ALTITUDE {
 
 rule RECOVER_MOTION {
 	guard {
-		(c_thruster_1 == "FALSE" OR c_thruster_1 == "FALSE"
-			OR c_thruster_2 == "FALSE" OR c_thruster_2 == "FALSE"
-			OR c_thruster_3 == "FALSE" OR c_thruster_3 == "FALSE"
-			OR c_thruster_4 == "FALSE" OR c_thruster_4 == "FALSE"
-			OR c_thruster_5 == "FALSE" OR c_thruster_5 == "FALSE"
-			OR c_thruster_6 == "FALSE" OR c_thruster_6 == "FALSE")
-		AND !selected(suave_resolution.RECOVER_MOTION)
+		context(c_thruster_1 == "FALSE" OR c_thruster_1 == "ERROR"
+			OR c_thruster_2 == "FALSE" OR c_thruster_2 == "ERROR"
+			OR c_thruster_3 == "FALSE" OR c_thruster_3 == "ERROR"
+			OR c_thruster_4 == "FALSE" OR c_thruster_4 == "ERROR"
+			OR c_thruster_5 == "FALSE" OR c_thruster_5 == "ERROR"
+			OR c_thruster_6 == "FALSE" OR c_thruster_6 == "ERROR")
+		features(!selected(suave_resolution.RECOVER_MOTION))
 	}
 	action {
 		select_variant(suave_resolution.RECOVER_MOTION)
@@ -61,33 +52,44 @@ rule RECOVER_MOTION {
 
 rule END_RECOVER_MOTION {
 	guard {
-		(c_thruster_1 == "RECOVERED" OR c_thruster_1 == "OK")
-			AND (c_thruster_2 == "RECOVERED" OR c_thruster_2 == "OK")
-			AND (c_thruster_3 == "RECOVERED" OR c_thruster_3 == "OK")
-			AND (c_thruster_4 == "RECOVERED" OR c_thruster_4 == "OK")
-			AND (c_thruster_5 == "RECOVERED" OR c_thruster_5 == "OK")
-			AND (c_thruster_6 == "RECOVERED" OR c_thruster_6 == "OK")
-		AND selected(suave_resolution.RECOVER_MOTION)
+		context(c_thruster_1 == "RECOVERED"
+			AND c_thruster_2 == "RECOVERED"
+			AND c_thruster_3 == "RECOVERED"
+			AND c_thruster_4 == "RECOVERED"
+			AND c_thruster_5 == "RECOVERED"
+			AND c_thruster_6 == "RECOVERED")
+		features(selected(suave_resolution.RECOVER_MOTION))
 	}
 	action {
 		unselect_variant(suave_resolution.RECOVER_MOTION)
 	}
 };
 
-rule FOLLOW_PIPELINE {
-	guard {
-		!selected(suave_resolution.FOLLOW_PIPELINE)
-	}
-	action {
-		select_variant(suave_resolution.FOLLOW_PIPELINE)
-	}
-};
 
-rule RECHARGE {
-	guard {
-		!selected(suave_resolution.RECHARGE)
-	}
-	action {
-		select_variant(suave_resolution.RECHARGE)
-	}
-};
+//rule SEARCH_PIPELINE {
+//	guard {
+//		features(!selected(suave_resolution.SEARCH_PIPELINE))
+//	}
+//	action {
+//		select_variant(suave_resolution.SEARCH_PIPELINE)
+//	}
+//};
+//
+//rule FOLLOW_PIPELINE {
+//	guard {
+//		features(!selected(suave_resolution.FOLLOW_PIPELINE))
+//	}
+//	action {
+//		select_variant(suave_resolution.FOLLOW_PIPELINE)
+//	}
+//};
+//
+//rule RECHARGE {
+//	guard {
+//		features(!selected(suave_resolution.RECHARGE))
+//	}
+//	action {
+//		select_variant(suave_resolution.RECHARGE)
+//	}
+//};
+
