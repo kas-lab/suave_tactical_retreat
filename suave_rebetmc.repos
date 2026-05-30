@@ -15,3 +15,11 @@ repositories:
     type: git
     url: git@github.com:kas-lab/ros_monitors.git
     version: main
+  typedb_tactics:
+    type: git
+    url: git@github.com:kas-lab/typedb_tactics.git
+    version: dev
+  ros_typedb:
+    type: git
+    url: https://github.com/kas-lab/ros_typedb.git
+    version: typedb2
