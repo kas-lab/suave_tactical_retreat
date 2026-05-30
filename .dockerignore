@@ -1,0 +1,12 @@
+.git
+.pytest_cache
+.vscode
+**/__pycache__
+**/.gitignore
+.project
+Dockerfile
+LICENSE
+README.md
+!suave_tactics.tql
+src-gen/
+**/.serena
