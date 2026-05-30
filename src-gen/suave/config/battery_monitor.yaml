@@ -1,6 +1,0 @@
-/battery_monitor:
-  ros__parameters:
-    discharge_time: 200.0
-    qa_publishing_period: 1.0
-    use_sim_time: false
-

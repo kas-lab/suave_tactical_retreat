@@ -1,5 +1,0 @@
-/generate_recharge_path_node:
-  ros__parameters:
-    recharge_station_gz_pos: [-3.0, -2.0, -19.5]
-    use_sim_time: false
-

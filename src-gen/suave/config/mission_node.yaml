@@ -1,5 +1,0 @@
-/mission_node:
-  ros__parameters:
-    time_limit: 300
-    use_sim_time: false
-
