@@ -42,7 +42,7 @@ docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$
 Mounting ros_typedb
 
 ```Bash
-docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD/src/suave_rebetmc:/home/ubuntu-user/suave_ws/src/suave_rebetmc" -v "$PWD/src/ros_typedb:/home/ubuntu-user/suave_ws/src/ros_typedb" suave-rebetmc:dev typedb server
+docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD/src/suave_rebetmc:/home/ubuntu-user/suave_ws/src/suave_rebetmc" -v "$PWD/src/ros_typedb:/home/ubuntu-user/suave_ws/src/ros_typedb" -v "$PWD/src/typedb_tactics:/home/ubuntu-user/suave_ws/src/typedb_tactics" suave-rebetmc:dev typedb server
 ```
 
 From pkg root:
