@@ -29,3 +29,4 @@ replay_pid*
 **/__pycache__
 
 src-gen/
+.project
