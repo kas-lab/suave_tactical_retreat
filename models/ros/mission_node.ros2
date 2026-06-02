@@ -5,8 +5,6 @@ suave_missions:
       subscribers:
         'diagnostics':
           type: 'diagnostic_msgs/msg/DiagnosticArray'
-        'mavros/state':
-          type: 'mavros_msgs/msg/State'
         'pipeline/detected':
           type: 'std_msgs/msg/Bool'
         'pipeline/inspected':
