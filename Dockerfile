@@ -6,9 +6,12 @@ RUN sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 17507562824cfd
     echo "deb https://repo.typedb.com/public/public-release/deb/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/vaticle.list > /dev/null
 
 RUN sudo apt-get update && sudo apt-get install -y \
-    openjdk-21-jre \
+    openjdk-21-jdk \
     typedb=2.28.3 \
     && sudo rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz -P /tmp && \
     sudo tar -xf /tmp/apache-maven-3.9.16-bin.tar.gz -C /opt && \
