@@ -1,0 +1,1155 @@
+insert
+
+
+$suave_runner_node_node isa ROSNode,
+has node_name "/suave_runner_node",
+has namespace "";
+$ardupilot_executable_param isa ParameterString,
+	has parameter_name "ardupilot_executable";
+$ardupilot_executable_param_pvalue isa ValueString, has string_value "sim_vehicle.py -L RATBeach -v ArduSub --model=JSON";
+(node: $suave_runner_node_node,
+parameter: $ardupilot_executable_param,
+parameter_value: $ardupilot_executable_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$experiment_logging_param isa ParameterBool,
+	has parameter_name "experiment_logging";
+$experiment_logging_param_pvalue isa ValueBool, has bool_value false;	
+(node: $suave_runner_node_node,
+parameter: $experiment_logging_param,
+parameter_value: $experiment_logging_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$experiments_param isa ParameterStringArray,
+	has parameter_name "experiments";
+$experiments_param_p_array_value isa ValueArray;
+$experiments_param_pvalue isa ValueString, has string_value '{"experiment_launch": "ros2 launch suave_bt suave_bt.launch.py", "num_runs": 2, "adaptation_manager": "bt", "mission_name": "suave"}';
+$experiments_param_p_array_value_elem_0 (array: $experiments_param_p_array_value, array_value: $experiments_param_pvalue) isa at_index, has index 0;
+
+(node: $suave_runner_node_node,
+parameter: $experiments_param,
+parameter_value: $experiments_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$gui_param isa ParameterBool,
+	has parameter_name "gui";
+$gui_param_pvalue isa ValueBool, has bool_value true;	
+(node: $suave_runner_node_node,
+parameter: $gui_param,
+parameter_value: $gui_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$initial_pos_x_param isa ParameterDouble,
+	has parameter_name "initial_pos_x";
+$initial_pos_x_param_pvalue isa ValueDouble, has double_value -17.0;	
+(node: $suave_runner_node_node,
+parameter: $initial_pos_x_param,
+parameter_value: $initial_pos_x_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$initial_pos_x_random_interval_param isa ParameterDoubleArray,
+	has parameter_name "initial_pos_x_random_interval";
+$initial_pos_x_random_interval_param_p_array_value isa ValueArray;
+$initial_pos_x_random_interval_param_pvalue isa ValueDouble, has double_value 0.0;	
+$initial_pos_x_random_interval_param_p_array_value_elem_0 (array: $initial_pos_x_random_interval_param_p_array_value, array_value: $initial_pos_x_random_interval_param_pvalue) isa at_index, has index 0;
+$initial_pos_x_random_interval_param_pvalue_1 isa ValueDouble, has double_value 0.0;	
+$initial_pos_x_random_interval_param_p_array_value_elem_1 (array: $initial_pos_x_random_interval_param_p_array_value, array_value: $initial_pos_x_random_interval_param_pvalue_1) isa at_index, has index 1;
+
+(node: $suave_runner_node_node,
+parameter: $initial_pos_x_random_interval_param,
+parameter_value: $initial_pos_x_random_interval_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$initial_pos_y_param isa ParameterDouble,
+	has parameter_name "initial_pos_y";
+$initial_pos_y_param_pvalue isa ValueDouble, has double_value 2.0;	
+(node: $suave_runner_node_node,
+parameter: $initial_pos_y_param,
+parameter_value: $initial_pos_y_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$initial_pos_y_random_interval_param isa ParameterDoubleArray,
+	has parameter_name "initial_pos_y_random_interval";
+$initial_pos_y_random_interval_param_p_array_value isa ValueArray;
+$initial_pos_y_random_interval_param_pvalue isa ValueDouble, has double_value 0.0;	
+$initial_pos_y_random_interval_param_p_array_value_elem_0 (array: $initial_pos_y_random_interval_param_p_array_value, array_value: $initial_pos_y_random_interval_param_pvalue) isa at_index, has index 0;
+$initial_pos_y_random_interval_param_pvalue_1 isa ValueDouble, has double_value 0.0;	
+$initial_pos_y_random_interval_param_p_array_value_elem_1 (array: $initial_pos_y_random_interval_param_p_array_value, array_value: $initial_pos_y_random_interval_param_pvalue_1) isa at_index, has index 1;
+
+(node: $suave_runner_node_node,
+parameter: $initial_pos_y_random_interval_param,
+parameter_value: $initial_pos_y_random_interval_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$initial_pos_z_param isa ParameterDouble,
+	has parameter_name "initial_pos_z";
+$initial_pos_z_param_pvalue isa ValueDouble, has double_value -18.5;	
+(node: $suave_runner_node_node,
+parameter: $initial_pos_z_param,
+parameter_value: $initial_pos_z_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$initial_pos_z_random_interval_param isa ParameterDoubleArray,
+	has parameter_name "initial_pos_z_random_interval";
+$initial_pos_z_random_interval_param_p_array_value isa ValueArray;
+$initial_pos_z_random_interval_param_pvalue isa ValueDouble, has double_value 0.0;	
+$initial_pos_z_random_interval_param_p_array_value_elem_0 (array: $initial_pos_z_random_interval_param_p_array_value, array_value: $initial_pos_z_random_interval_param_pvalue) isa at_index, has index 0;
+$initial_pos_z_random_interval_param_pvalue_1 isa ValueDouble, has double_value 0.0;	
+$initial_pos_z_random_interval_param_p_array_value_elem_1 (array: $initial_pos_z_random_interval_param_p_array_value, array_value: $initial_pos_z_random_interval_param_pvalue_1) isa at_index, has index 1;
+
+(node: $suave_runner_node_node,
+parameter: $initial_pos_z_random_interval_param,
+parameter_value: $initial_pos_z_random_interval_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$mission_config_file_param isa ParameterString,
+	has parameter_name "mission_config_file";
+$mission_config_file_param_pvalue isa ValueString, has string_value "config/mission_config.yaml";
+(node: $suave_runner_node_node,
+parameter: $mission_config_file_param,
+parameter_value: $mission_config_file_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$mission_config_pkg_param isa ParameterString,
+	has parameter_name "mission_config_pkg";
+$mission_config_pkg_param_pvalue isa ValueString, has string_value "suave_missions";
+(node: $suave_runner_node_node,
+parameter: $mission_config_pkg_param,
+parameter_value: $mission_config_pkg_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$random_interval_param isa ParameterInteger,
+	has parameter_name "random_interval";
+$random_interval_param_pvalue isa ValueInteger, has integer_value 5;	
+(node: $suave_runner_node_node,
+parameter: $random_interval_param,
+parameter_value: $random_interval_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$result_path_param isa ParameterString,
+	has parameter_name "result_path";
+$result_path_param_pvalue isa ValueString, has string_value "~/suave/results";
+(node: $suave_runner_node_node,
+parameter: $result_path_param,
+parameter_value: $result_path_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$run_duration_param isa ParameterInteger,
+	has parameter_name "run_duration";
+$run_duration_param_pvalue isa ValueInteger, has integer_value 600;	
+(node: $suave_runner_node_node,
+parameter: $run_duration_param,
+parameter_value: $run_duration_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$suave_simulation_param isa ParameterString,
+	has parameter_name "suave_simulation";
+$suave_simulation_param_pvalue isa ValueString, has string_value "ros2 launch suave simulation.launch.py";
+(node: $suave_runner_node_node,
+parameter: $suave_simulation_param,
+parameter_value: $suave_simulation_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$thruster_events_param isa ParameterStringArray,
+	has parameter_name "thruster_events";
+$thruster_events_param_p_array_value isa ValueArray;
+$thruster_events_param_pvalue isa ValueString, has string_value "";
+$thruster_events_param_p_array_value_elem_0 (array: $thruster_events_param_p_array_value, array_value: $thruster_events_param_pvalue) isa at_index, has index 0;
+
+(node: $suave_runner_node_node,
+parameter: $thruster_events_param,
+parameter_value: $thruster_events_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$thruster_events_random_interval_param isa ParameterDoubleArray,
+	has parameter_name "thruster_events_random_interval";
+$thruster_events_random_interval_param_p_array_value isa ValueArray;
+$thruster_events_random_interval_param_pvalue isa ValueDouble, has double_value 0.0;	
+$thruster_events_random_interval_param_p_array_value_elem_0 (array: $thruster_events_random_interval_param_p_array_value, array_value: $thruster_events_random_interval_param_pvalue) isa at_index, has index 0;
+$thruster_events_random_interval_param_pvalue_1 isa ValueDouble, has double_value 0.0;	
+$thruster_events_random_interval_param_p_array_value_elem_1 (array: $thruster_events_random_interval_param_p_array_value, array_value: $thruster_events_random_interval_param_pvalue_1) isa at_index, has index 1;
+
+(node: $suave_runner_node_node,
+parameter: $thruster_events_random_interval_param,
+parameter_value: $thruster_events_random_interval_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_pvalue isa ValueBool, has bool_value false;	
+(node: $suave_runner_node_node,
+parameter: $use_sim_time_param,
+parameter_value: $use_sim_time_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibility_sec_shift_param isa ParameterDouble,
+	has parameter_name "water_visibility_sec_shift";
+$water_visibility_sec_shift_param_pvalue isa ValueDouble, has double_value 0.0;	
+(node: $suave_runner_node_node,
+parameter: $water_visibility_sec_shift_param,
+parameter_value: $water_visibility_sec_shift_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibility_sec_shift_random_interval_param isa ParameterDoubleArray,
+	has parameter_name "water_visibility_sec_shift_random_interval";
+$water_visibility_sec_shift_random_interval_param_p_array_value isa ValueArray;
+$water_visibility_sec_shift_random_interval_param_pvalue isa ValueDouble, has double_value 0.0;	
+$water_visibility_sec_shift_random_interval_param_p_array_value_elem_0 (array: $water_visibility_sec_shift_random_interval_param_p_array_value, array_value: $water_visibility_sec_shift_random_interval_param_pvalue) isa at_index, has index 0;
+$water_visibility_sec_shift_random_interval_param_pvalue_1 isa ValueDouble, has double_value 0.0;	
+$water_visibility_sec_shift_random_interval_param_p_array_value_elem_1 (array: $water_visibility_sec_shift_random_interval_param_p_array_value, array_value: $water_visibility_sec_shift_random_interval_param_pvalue_1) isa at_index, has index 1;
+
+(node: $suave_runner_node_node,
+parameter: $water_visibility_sec_shift_random_interval_param,
+parameter_value: $water_visibility_sec_shift_random_interval_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+
+$suave_runner_node_node_parameters (
+	node: $suave_runner_node_node,
+	parameter: $ardupilot_executable_param, 
+	parameter: $experiment_logging_param, 
+	parameter: $experiments_param, 
+	parameter: $gui_param, 
+	parameter: $initial_pos_x_param, 
+	parameter: $initial_pos_x_random_interval_param, 
+	parameter: $initial_pos_y_param, 
+	parameter: $initial_pos_y_random_interval_param, 
+	parameter: $initial_pos_z_param, 
+	parameter: $initial_pos_z_random_interval_param, 
+	parameter: $mission_config_file_param, 
+	parameter: $mission_config_pkg_param, 
+	parameter: $random_interval_param, 
+	parameter: $result_path_param, 
+	parameter: $run_duration_param, 
+	parameter: $suave_simulation_param, 
+	parameter: $thruster_events_param, 
+	parameter: $thruster_events_random_interval_param, 
+	parameter: $use_sim_time_param, 
+	parameter: $water_visibility_sec_shift_param, 
+	parameter: $water_visibility_sec_shift_random_interval_param
+	) isa has_parameter;
+$gz_pipe_pose_bridge_node isa ROSNode,
+has node_name "/gz_pipe_pose_bridge",
+has namespace "";
+$gz_pipe_pose_bridge_node_sub isa Subscriber,
+has interface_name "sub_model/min_pipes_pipeline/pose",
+has interface_type "geometry_msgs/PoseArray";
+
+(node: $gz_pipe_pose_bridge_node, subscriber: $gz_pipe_pose_bridge_node_sub) isa has_topic;
+
+$gz_pipe_pose_bridge_nodepub isa Publisher,
+has interface_name "model/min_pipes_pipeline/pose",
+has interface_type "geometry_msgs/PoseArray";
+
+$gz_pipe_pose_bridge_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$gz_pipe_pose_bridge_nodepub_qos_rel (interface: $gz_pipe_pose_bridge_nodepub, qos: $gz_pipe_pose_bridge_nodepub_qos) isa has_qos;
+
+(node: $gz_pipe_pose_bridge_node, publisher: $gz_pipe_pose_bridge_nodepub) isa has_topic;
+$gz_bluerov_pose_bridge_node isa ROSNode,
+has node_name "/gz_bluerov_pose_bridge",
+has namespace "";
+$gz_bluerov_pose_bridge_node_sub isa Subscriber,
+has interface_name "sub_model/bluerov2/pose",
+has interface_type "geometry_msgs/Pose";
+
+(node: $gz_bluerov_pose_bridge_node, subscriber: $gz_bluerov_pose_bridge_node_sub) isa has_topic;
+
+$gz_bluerov_pose_bridge_nodepub isa Publisher,
+has interface_name "model/bluerov2/pose",
+has interface_type "geometry_msgs/Pose";
+
+$gz_bluerov_pose_bridge_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$gz_bluerov_pose_bridge_nodepub_qos_rel (interface: $gz_bluerov_pose_bridge_nodepub, qos: $gz_bluerov_pose_bridge_nodepub_qos) isa has_qos;
+
+(node: $gz_bluerov_pose_bridge_node, publisher: $gz_bluerov_pose_bridge_nodepub) isa has_topic;
+$water_visibility_observer_node_node isa ROSNode,
+has node_name "/water_visibility_observer_node",
+has namespace "";
+$qa_publishing_period_param isa ParameterDouble,
+	has parameter_name "qa_publishing_period";
+$qa_publishing_period_param_pvalue isa ValueDouble, has double_value 1.0;	
+(node: $water_visibility_observer_node_node,
+parameter: $qa_publishing_period_param,
+parameter_value: $qa_publishing_period_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_1 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_1_pvalue isa ValueBool, has bool_value false;	
+(node: $water_visibility_observer_node_node,
+parameter: $use_sim_time_param_1,
+parameter_value: $use_sim_time_param_1_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibility_max_param isa ParameterDouble,
+	has parameter_name "water_visibility_max";
+$water_visibility_max_param_pvalue isa ValueDouble, has double_value 3.75;	
+(node: $water_visibility_observer_node_node,
+parameter: $water_visibility_max_param,
+parameter_value: $water_visibility_max_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibility_min_param isa ParameterDouble,
+	has parameter_name "water_visibility_min";
+$water_visibility_min_param_pvalue isa ValueDouble, has double_value 1.25;	
+(node: $water_visibility_observer_node_node,
+parameter: $water_visibility_min_param,
+parameter_value: $water_visibility_min_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibility_period_param isa ParameterInteger,
+	has parameter_name "water_visibility_period";
+$water_visibility_period_param_pvalue isa ValueInteger, has integer_value 80;	
+(node: $water_visibility_observer_node_node,
+parameter: $water_visibility_period_param,
+parameter_value: $water_visibility_period_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibility_sec_shift_param_1 isa ParameterDouble,
+	has parameter_name "water_visibility_sec_shift";
+$water_visibility_sec_shift_param_1_pvalue isa ValueDouble, has double_value 0.0;	
+(node: $water_visibility_observer_node_node,
+parameter: $water_visibility_sec_shift_param_1,
+parameter_value: $water_visibility_sec_shift_param_1_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$water_visibility_observer_node_node_parameters (
+	node: $water_visibility_observer_node_node,
+	parameter: $qa_publishing_period_param, 
+	parameter: $use_sim_time_param_1, 
+	parameter: $water_visibility_max_param, 
+	parameter: $water_visibility_min_param, 
+	parameter: $water_visibility_period_param, 
+	parameter: $water_visibility_sec_shift_param_1
+	) isa has_parameter;
+$water_visibility_observer_node_nodepub isa Publisher,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+$water_visibility_observer_node_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$water_visibility_observer_node_nodepub_qos_rel (interface: $water_visibility_observer_node_nodepub, qos: $water_visibility_observer_node_nodepub_qos) isa has_qos;
+
+(node: $water_visibility_observer_node_node, publisher: $water_visibility_observer_node_nodepub) isa has_topic;
+$battery_monitor_node isa ROSNode,
+has node_name "/battery_monitor",
+has namespace "";
+$discharge_time_param isa ParameterDouble,
+	has parameter_name "discharge_time";
+$discharge_time_param_pvalue isa ValueDouble, has double_value 200.0;	
+(node: $battery_monitor_node,
+parameter: $discharge_time_param,
+parameter_value: $discharge_time_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$qa_publishing_period_param_1 isa ParameterDouble,
+	has parameter_name "qa_publishing_period";
+$qa_publishing_period_param_1_pvalue isa ValueDouble, has double_value 1.0;	
+(node: $battery_monitor_node,
+parameter: $qa_publishing_period_param_1,
+parameter_value: $qa_publishing_period_param_1_pvalue)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_2 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_2_pvalue isa ValueBool, has bool_value false;	
+(node: $battery_monitor_node,
+parameter: $use_sim_time_param_2,
+parameter_value: $use_sim_time_param_2_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$battery_monitor_node_parameters (
+	node: $battery_monitor_node,
+	parameter: $discharge_time_param, 
+	parameter: $qa_publishing_period_param_1, 
+	parameter: $use_sim_time_param_2
+	) isa has_parameter;
+$battery_monitor_nodepub isa Publisher,
+has interface_name "battery_monitor/recharge/complete",
+has interface_type "std_msgs/Bool";
+
+$battery_monitor_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$battery_monitor_nodepub_qos_rel (interface: $battery_monitor_nodepub, qos: $battery_monitor_nodepub_qos) isa has_qos;
+
+(node: $battery_monitor_node, publisher: $battery_monitor_nodepub) isa has_topic;
+$battery_monitor_nodepub_1 isa Publisher,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+$battery_monitor_nodepub_1_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$battery_monitor_nodepub_1_qos_rel (interface: $battery_monitor_nodepub_1, qos: $battery_monitor_nodepub_1_qos) isa has_qos;
+
+(node: $battery_monitor_node, publisher: $battery_monitor_nodepub_1) isa has_topic;
+$battery_monitor_node_service_server isa ServiceServer,
+has interface_name "battery_monitor/recharge",
+has interface_type "std_srvs/Trigger";
+(node: $battery_monitor_node, server: $battery_monitor_node_service_server) isa has_service;	
+$detect_pipeline_node isa ROSNode,
+has node_name "/detect_pipeline",
+has namespace "";
+$use_sim_time_param_3 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_3_pvalue isa ValueBool, has bool_value false;	
+(node: $detect_pipeline_node,
+parameter: $use_sim_time_param_3,
+parameter_value: $use_sim_time_param_3_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$detect_pipeline_node_parameters (
+	node: $detect_pipeline_node,
+	parameter: $use_sim_time_param_3
+	) isa has_parameter;
+$detect_pipeline_node_sub isa Subscriber,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+(node: $detect_pipeline_node, subscriber: $detect_pipeline_node_sub) isa has_topic;
+
+$detect_pipeline_node_sub_1 isa Subscriber,
+has interface_name "model/bluerov2/pose",
+has interface_type "geometry_msgs/Pose";
+
+(node: $detect_pipeline_node, subscriber: $detect_pipeline_node_sub_1) isa has_topic;
+
+$detect_pipeline_nodepub isa Publisher,
+has interface_name "pipeline/detected",
+has interface_type "std_msgs/Bool";
+
+$detect_pipeline_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$detect_pipeline_nodepub_qos_rel (interface: $detect_pipeline_nodepub, qos: $detect_pipeline_nodepub_qos) isa has_qos;
+
+(node: $detect_pipeline_node, publisher: $detect_pipeline_nodepub) isa has_topic;
+$detect_pipeline_node_service_server isa ServiceServer,
+has interface_name "pipeline/get_path",
+has interface_type "suave_msgs/GetPath";
+(node: $detect_pipeline_node, server: $detect_pipeline_node_service_server) isa has_service;	
+$thruster_monitor_node isa ROSNode,
+has node_name "/thruster_monitor",
+has namespace "";
+$thruster_events_param_1 isa ParameterStringArray,
+	has parameter_name "thruster_events";
+$thruster_events_param_1_p_array_value isa ValueArray;
+$thruster_events_param_1_pvalue isa ValueString, has string_value "(1,failure,35)";
+$thruster_events_param_1_p_array_value_elem_0 (array: $thruster_events_param_1_p_array_value, array_value: $thruster_events_param_1_pvalue) isa at_index, has index 0;
+
+(node: $thruster_monitor_node,
+parameter: $thruster_events_param_1,
+parameter_value: $thruster_events_param_1_p_array_value)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_4 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_4_pvalue isa ValueBool, has bool_value false;	
+(node: $thruster_monitor_node,
+parameter: $use_sim_time_param_4,
+parameter_value: $use_sim_time_param_4_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$thruster_monitor_node_parameters (
+	node: $thruster_monitor_node,
+	parameter: $thruster_events_param_1, 
+	parameter: $use_sim_time_param_4
+	) isa has_parameter;
+$thruster_monitor_nodepub isa Publisher,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+$thruster_monitor_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$thruster_monitor_nodepub_qos_rel (interface: $thruster_monitor_nodepub, qos: $thruster_monitor_nodepub_qos) isa has_qos;
+
+(node: $thruster_monitor_node, publisher: $thruster_monitor_nodepub) isa has_topic;
+$f_generate_search_path_node_node isa LifeCycleNode,
+has node_name "/f_generate_search_path_node",
+has namespace "";
+$spiral_altitude_param isa ParameterDouble,
+	has parameter_name "spiral_altitude";
+$spiral_altitude_param_pvalue isa ValueDouble, has double_value 1.0;	
+(node: $f_generate_search_path_node_node,
+parameter: $spiral_altitude_param,
+parameter_value: $spiral_altitude_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_5 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_5_pvalue isa ValueBool, has bool_value false;	
+(node: $f_generate_search_path_node_node,
+parameter: $use_sim_time_param_5,
+parameter_value: $use_sim_time_param_5_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$f_generate_search_path_node_node_parameters (
+	node: $f_generate_search_path_node_node,
+	parameter: $spiral_altitude_param, 
+	parameter: $use_sim_time_param_5
+	) isa has_parameter;
+$f_generate_search_path_node_nodepub isa Publisher,
+has interface_name "f_generate_search_path_node/transition_event",
+has interface_type "lifecycle_msgs/TransitionEvent";
+
+$f_generate_search_path_node_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$f_generate_search_path_node_nodepub_qos_rel (interface: $f_generate_search_path_node_nodepub, qos: $f_generate_search_path_node_nodepub_qos) isa has_qos;
+
+(node: $f_generate_search_path_node_node, publisher: $f_generate_search_path_node_nodepub) isa has_topic;
+$f_generate_search_path_node_node_service_server isa ServiceServer,
+has interface_name "f_generate_search_path_node/change_state",
+has interface_type "lifecycle_msgs/ChangeState";
+(node: $f_generate_search_path_node_node, server: $f_generate_search_path_node_node_service_server) isa has_service;	
+$f_generate_search_path_node_node_service_server_1 isa ServiceServer,
+has interface_name "f_generate_search_path_node/get_available_states",
+has interface_type "lifecycle_msgs/GetAvailableStates";
+(node: $f_generate_search_path_node_node, server: $f_generate_search_path_node_node_service_server_1) isa has_service;	
+$f_generate_search_path_node_node_service_server_2 isa ServiceServer,
+has interface_name "f_generate_search_path_node/get_available_transitions",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $f_generate_search_path_node_node, server: $f_generate_search_path_node_node_service_server_2) isa has_service;	
+$f_generate_search_path_node_node_service_server_3 isa ServiceServer,
+has interface_name "f_generate_search_path_node/get_state",
+has interface_type "lifecycle_msgs/GetState";
+(node: $f_generate_search_path_node_node, server: $f_generate_search_path_node_node_service_server_3) isa has_service;	
+$f_generate_search_path_node_node_service_server_4 isa ServiceServer,
+has interface_name "f_generate_search_path_node/get_transition_graph",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $f_generate_search_path_node_node, server: $f_generate_search_path_node_node_service_server_4) isa has_service;	
+$f_follow_pipeline_node_node isa LifeCycleNode,
+has node_name "/f_follow_pipeline_node",
+has namespace "";
+$use_sim_time_param_6 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_6_pvalue isa ValueBool, has bool_value false;	
+(node: $f_follow_pipeline_node_node,
+parameter: $use_sim_time_param_6,
+parameter_value: $use_sim_time_param_6_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$f_follow_pipeline_node_node_parameters (
+	node: $f_follow_pipeline_node_node,
+	parameter: $use_sim_time_param_6
+	) isa has_parameter;
+$f_follow_pipeline_node_nodepub isa Publisher,
+has interface_name "f_follow_pipeline_node/transition_event",
+has interface_type "lifecycle_msgs/TransitionEvent";
+
+$f_follow_pipeline_node_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$f_follow_pipeline_node_nodepub_qos_rel (interface: $f_follow_pipeline_node_nodepub, qos: $f_follow_pipeline_node_nodepub_qos) isa has_qos;
+
+(node: $f_follow_pipeline_node_node, publisher: $f_follow_pipeline_node_nodepub) isa has_topic;
+$f_follow_pipeline_node_nodepub_1 isa Publisher,
+has interface_name "pipeline/distance_inspected",
+has interface_type "std_msgs/Float32";
+
+$f_follow_pipeline_node_nodepub_1_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$f_follow_pipeline_node_nodepub_1_qos_rel (interface: $f_follow_pipeline_node_nodepub_1, qos: $f_follow_pipeline_node_nodepub_1_qos) isa has_qos;
+
+(node: $f_follow_pipeline_node_node, publisher: $f_follow_pipeline_node_nodepub_1) isa has_topic;
+$f_follow_pipeline_node_nodepub_2 isa Publisher,
+has interface_name "pipeline/inspected",
+has interface_type "std_msgs/Bool";
+
+$f_follow_pipeline_node_nodepub_2_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$f_follow_pipeline_node_nodepub_2_qos_rel (interface: $f_follow_pipeline_node_nodepub_2, qos: $f_follow_pipeline_node_nodepub_2_qos) isa has_qos;
+
+(node: $f_follow_pipeline_node_node, publisher: $f_follow_pipeline_node_nodepub_2) isa has_topic;
+$f_follow_pipeline_node_node_service_server isa ServiceServer,
+has interface_name "f_follow_pipeline_node/change_state",
+has interface_type "lifecycle_msgs/ChangeState";
+(node: $f_follow_pipeline_node_node, server: $f_follow_pipeline_node_node_service_server) isa has_service;	
+$f_follow_pipeline_node_node_service_server_1 isa ServiceServer,
+has interface_name "f_follow_pipeline_node/get_available_states",
+has interface_type "lifecycle_msgs/GetAvailableStates";
+(node: $f_follow_pipeline_node_node, server: $f_follow_pipeline_node_node_service_server_1) isa has_service;	
+$f_follow_pipeline_node_node_service_server_2 isa ServiceServer,
+has interface_name "f_follow_pipeline_node/get_available_transitions",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $f_follow_pipeline_node_node, server: $f_follow_pipeline_node_node_service_server_2) isa has_service;	
+$f_follow_pipeline_node_node_service_server_3 isa ServiceServer,
+has interface_name "f_follow_pipeline_node/get_state",
+has interface_type "lifecycle_msgs/GetState";
+(node: $f_follow_pipeline_node_node, server: $f_follow_pipeline_node_node_service_server_3) isa has_service;	
+$f_follow_pipeline_node_node_service_server_4 isa ServiceServer,
+has interface_name "f_follow_pipeline_node/get_transition_graph",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $f_follow_pipeline_node_node, server: $f_follow_pipeline_node_node_service_server_4) isa has_service;	
+$generate_recharge_path_node_node isa LifeCycleNode,
+has node_name "/generate_recharge_path_node",
+has namespace "";
+$recharge_station_gz_pos_param isa ParameterDoubleArray,
+	has parameter_name "recharge_station_gz_pos";
+$recharge_station_gz_pos_param_p_array_value isa ValueArray;
+$recharge_station_gz_pos_param_pvalue isa ValueDouble, has double_value -3.0;	
+$recharge_station_gz_pos_param_p_array_value_elem_0 (array: $recharge_station_gz_pos_param_p_array_value, array_value: $recharge_station_gz_pos_param_pvalue) isa at_index, has index 0;
+$recharge_station_gz_pos_param_pvalue_1 isa ValueDouble, has double_value -2.0;	
+$recharge_station_gz_pos_param_p_array_value_elem_1 (array: $recharge_station_gz_pos_param_p_array_value, array_value: $recharge_station_gz_pos_param_pvalue_1) isa at_index, has index 1;
+$recharge_station_gz_pos_param_pvalue_2 isa ValueDouble, has double_value -19.5;	
+$recharge_station_gz_pos_param_p_array_value_elem_2 (array: $recharge_station_gz_pos_param_p_array_value, array_value: $recharge_station_gz_pos_param_pvalue_2) isa at_index, has index 2;
+
+(node: $generate_recharge_path_node_node,
+parameter: $recharge_station_gz_pos_param,
+parameter_value: $recharge_station_gz_pos_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_7 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_7_pvalue isa ValueBool, has bool_value false;	
+(node: $generate_recharge_path_node_node,
+parameter: $use_sim_time_param_7,
+parameter_value: $use_sim_time_param_7_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$generate_recharge_path_node_node_parameters (
+	node: $generate_recharge_path_node_node,
+	parameter: $recharge_station_gz_pos_param, 
+	parameter: $use_sim_time_param_7
+	) isa has_parameter;
+$generate_recharge_path_node_nodepub isa Publisher,
+has interface_name "generate_recharge_path_node/transition_event",
+has interface_type "lifecycle_msgs/TransitionEvent";
+
+$generate_recharge_path_node_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$generate_recharge_path_node_nodepub_qos_rel (interface: $generate_recharge_path_node_nodepub, qos: $generate_recharge_path_node_nodepub_qos) isa has_qos;
+
+(node: $generate_recharge_path_node_node, publisher: $generate_recharge_path_node_nodepub) isa has_topic;
+$generate_recharge_path_node_node_service_server isa ServiceServer,
+has interface_name "generate_recharge_path_node/change_state",
+has interface_type "lifecycle_msgs/ChangeState";
+(node: $generate_recharge_path_node_node, server: $generate_recharge_path_node_node_service_server) isa has_service;	
+$generate_recharge_path_node_node_service_server_1 isa ServiceServer,
+has interface_name "generate_recharge_path_node/get_available_states",
+has interface_type "lifecycle_msgs/GetAvailableStates";
+(node: $generate_recharge_path_node_node, server: $generate_recharge_path_node_node_service_server_1) isa has_service;	
+$generate_recharge_path_node_node_service_server_2 isa ServiceServer,
+has interface_name "generate_recharge_path_node/get_available_transitions",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $generate_recharge_path_node_node, server: $generate_recharge_path_node_node_service_server_2) isa has_service;	
+$generate_recharge_path_node_node_service_server_3 isa ServiceServer,
+has interface_name "generate_recharge_path_node/get_state",
+has interface_type "lifecycle_msgs/GetState";
+(node: $generate_recharge_path_node_node, server: $generate_recharge_path_node_node_service_server_3) isa has_service;	
+$generate_recharge_path_node_node_service_server_4 isa ServiceServer,
+has interface_name "generate_recharge_path_node/get_transition_graph",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $generate_recharge_path_node_node, server: $generate_recharge_path_node_node_service_server_4) isa has_service;	
+$f_maintain_motion_node_node isa LifeCycleNode,
+has node_name "/f_maintain_motion_node",
+has namespace "";
+$use_sim_time_param_8 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_8_pvalue isa ValueBool, has bool_value false;	
+(node: $f_maintain_motion_node_node,
+parameter: $use_sim_time_param_8,
+parameter_value: $use_sim_time_param_8_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$f_maintain_motion_node_node_parameters (
+	node: $f_maintain_motion_node_node,
+	parameter: $use_sim_time_param_8
+	) isa has_parameter;
+$f_maintain_motion_node_nodepub isa Publisher,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+$f_maintain_motion_node_nodepub_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$f_maintain_motion_node_nodepub_qos_rel (interface: $f_maintain_motion_node_nodepub, qos: $f_maintain_motion_node_nodepub_qos) isa has_qos;
+
+(node: $f_maintain_motion_node_node, publisher: $f_maintain_motion_node_nodepub) isa has_topic;
+$f_maintain_motion_node_nodepub_1 isa Publisher,
+has interface_name "f_maintain_motion_node/transition_event",
+has interface_type "lifecycle_msgs/TransitionEvent";
+
+$f_maintain_motion_node_nodepub_1_qos isa QoSProfile,
+ 	   	has reliability "RELIABLE",
+ 	   	has history "KEEP_ALL",
+ 	   	has durability "VOLATILE"
+;
+
+$f_maintain_motion_node_nodepub_1_qos_rel (interface: $f_maintain_motion_node_nodepub_1, qos: $f_maintain_motion_node_nodepub_1_qos) isa has_qos;
+
+(node: $f_maintain_motion_node_node, publisher: $f_maintain_motion_node_nodepub_1) isa has_topic;
+$f_maintain_motion_node_node_service_server isa ServiceServer,
+has interface_name "f_maintain_motion_node/change_state",
+has interface_type "lifecycle_msgs/ChangeState";
+(node: $f_maintain_motion_node_node, server: $f_maintain_motion_node_node_service_server) isa has_service;	
+$f_maintain_motion_node_node_service_server_1 isa ServiceServer,
+has interface_name "f_maintain_motion_node/get_available_states",
+has interface_type "lifecycle_msgs/GetAvailableStates";
+(node: $f_maintain_motion_node_node, server: $f_maintain_motion_node_node_service_server_1) isa has_service;	
+$f_maintain_motion_node_node_service_server_2 isa ServiceServer,
+has interface_name "f_maintain_motion_node/get_available_transitions",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $f_maintain_motion_node_node, server: $f_maintain_motion_node_node_service_server_2) isa has_service;	
+$f_maintain_motion_node_node_service_server_3 isa ServiceServer,
+has interface_name "f_maintain_motion_node/get_state",
+has interface_type "lifecycle_msgs/GetState";
+(node: $f_maintain_motion_node_node, server: $f_maintain_motion_node_node_service_server_3) isa has_service;	
+$f_maintain_motion_node_node_service_server_4 isa ServiceServer,
+has interface_name "f_maintain_motion_node/get_transition_graph",
+has interface_type "lifecycle_msgs/GetAvailableTransitions";
+(node: $f_maintain_motion_node_node, server: $f_maintain_motion_node_node_service_server_4) isa has_service;	
+$mission_metrics_node isa ROSNode,
+has node_name "/mission_metrics",
+has namespace "";
+$adaptation_manager_param isa ParameterString,
+	has parameter_name "adaptation_manager";
+$adaptation_manager_param_pvalue isa ValueString, has string_value "bt";
+(node: $mission_metrics_node,
+parameter: $adaptation_manager_param,
+parameter_value: $adaptation_manager_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$battery_limit_param isa ParameterDouble,
+	has parameter_name "battery_limit";
+$battery_limit_param_pvalue isa ValueDouble, has double_value 0.25;	
+(node: $mission_metrics_node,
+parameter: $battery_limit_param,
+parameter_value: $battery_limit_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$expected_altitude_param isa ParameterDoubleArray,
+	has parameter_name "expected_altitude";
+$expected_altitude_param_p_array_value isa ValueArray;
+$expected_altitude_param_pvalue isa ValueDouble, has double_value 3.0;	
+$expected_altitude_param_p_array_value_elem_0 (array: $expected_altitude_param_p_array_value, array_value: $expected_altitude_param_pvalue) isa at_index, has index 0;
+$expected_altitude_param_pvalue_1 isa ValueDouble, has double_value 2.0;	
+$expected_altitude_param_p_array_value_elem_1 (array: $expected_altitude_param_p_array_value, array_value: $expected_altitude_param_pvalue_1) isa at_index, has index 1;
+$expected_altitude_param_pvalue_2 isa ValueDouble, has double_value 1.0;	
+$expected_altitude_param_p_array_value_elem_2 (array: $expected_altitude_param_p_array_value, array_value: $expected_altitude_param_pvalue_2) isa at_index, has index 2;
+
+(node: $mission_metrics_node,
+parameter: $expected_altitude_param,
+parameter_value: $expected_altitude_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$mission_name_param isa ParameterString,
+	has parameter_name "mission_name";
+$mission_name_param_pvalue isa ValueString, has string_value "suave";
+(node: $mission_metrics_node,
+parameter: $mission_name_param,
+parameter_value: $mission_name_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$result_filename_param isa ParameterString,
+	has parameter_name "result_filename";
+$result_filename_param_pvalue isa ValueString, has string_value "bt_suave";
+(node: $mission_metrics_node,
+parameter: $result_filename_param,
+parameter_value: $result_filename_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$result_path_param_1 isa ParameterString,
+	has parameter_name "result_path";
+$result_path_param_1_pvalue isa ValueString, has string_value "/home/ubuntu-user/suave/results/2026_05_12_17-42-14";
+(node: $mission_metrics_node,
+parameter: $result_path_param_1,
+parameter_value: $result_path_param_1_pvalue)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_9 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_9_pvalue isa ValueBool, has bool_value false;	
+(node: $mission_metrics_node,
+parameter: $use_sim_time_param_9,
+parameter_value: $use_sim_time_param_9_pvalue)
+	isa has_parameter_value, has default_value true;
+$water_visibiity_threshold_param isa ParameterDoubleArray,
+	has parameter_name "water_visibiity_threshold";
+$water_visibiity_threshold_param_p_array_value isa ValueArray;
+$water_visibiity_threshold_param_pvalue isa ValueDouble, has double_value 3.25;	
+$water_visibiity_threshold_param_p_array_value_elem_0 (array: $water_visibiity_threshold_param_p_array_value, array_value: $water_visibiity_threshold_param_pvalue) isa at_index, has index 0;
+$water_visibiity_threshold_param_pvalue_1 isa ValueDouble, has double_value 2.25;	
+$water_visibiity_threshold_param_p_array_value_elem_1 (array: $water_visibiity_threshold_param_p_array_value, array_value: $water_visibiity_threshold_param_pvalue_1) isa at_index, has index 1;
+$water_visibiity_threshold_param_pvalue_2 isa ValueDouble, has double_value 1.25;	
+$water_visibiity_threshold_param_p_array_value_elem_2 (array: $water_visibiity_threshold_param_p_array_value, array_value: $water_visibiity_threshold_param_pvalue_2) isa at_index, has index 2;
+
+(node: $mission_metrics_node,
+parameter: $water_visibiity_threshold_param,
+parameter_value: $water_visibiity_threshold_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+$water_visibility_threshold_param isa ParameterDoubleArray,
+	has parameter_name "water_visibility_threshold";
+$water_visibility_threshold_param_p_array_value isa ValueArray;
+$water_visibility_threshold_param_pvalue isa ValueDouble, has double_value 3.25;	
+$water_visibility_threshold_param_p_array_value_elem_0 (array: $water_visibility_threshold_param_p_array_value, array_value: $water_visibility_threshold_param_pvalue) isa at_index, has index 0;
+$water_visibility_threshold_param_pvalue_1 isa ValueDouble, has double_value 2.25;	
+$water_visibility_threshold_param_p_array_value_elem_1 (array: $water_visibility_threshold_param_p_array_value, array_value: $water_visibility_threshold_param_pvalue_1) isa at_index, has index 1;
+$water_visibility_threshold_param_pvalue_2 isa ValueDouble, has double_value 1.25;	
+$water_visibility_threshold_param_p_array_value_elem_2 (array: $water_visibility_threshold_param_p_array_value, array_value: $water_visibility_threshold_param_pvalue_2) isa at_index, has index 2;
+
+(node: $mission_metrics_node,
+parameter: $water_visibility_threshold_param,
+parameter_value: $water_visibility_threshold_param_p_array_value)
+	isa has_parameter_value, has default_value true;
+
+$mission_metrics_node_parameters (
+	node: $mission_metrics_node,
+	parameter: $adaptation_manager_param, 
+	parameter: $battery_limit_param, 
+	parameter: $expected_altitude_param, 
+	parameter: $mission_name_param, 
+	parameter: $result_filename_param, 
+	parameter: $result_path_param_1, 
+	parameter: $use_sim_time_param_9, 
+	parameter: $water_visibiity_threshold_param, 
+	parameter: $water_visibility_threshold_param
+	) isa has_parameter;
+$mission_metrics_node_sub isa Subscriber,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+(node: $mission_metrics_node, subscriber: $mission_metrics_node_sub) isa has_topic;
+
+$mission_metrics_node_sub_1 isa Subscriber,
+has interface_name "f_maintain_motion_node/transition_event",
+has interface_type "lifecycle_msgs/TransitionEvent";
+
+(node: $mission_metrics_node, subscriber: $mission_metrics_node_sub_1) isa has_topic;
+
+$mission_metrics_node_sub_2 isa Subscriber,
+has interface_name "generate_recharge_path_node/transition_event",
+has interface_type "lifecycle_msgs/TransitionEvent";
+
+(node: $mission_metrics_node, subscriber: $mission_metrics_node_sub_2) isa has_topic;
+
+$mission_metrics_node_sub_3 isa Subscriber,
+has interface_name "pipeline/detected",
+has interface_type "std_msgs/Bool";
+
+(node: $mission_metrics_node, subscriber: $mission_metrics_node_sub_3) isa has_topic;
+
+$mission_metrics_node_sub_4 isa Subscriber,
+has interface_name "pipeline/distance_inspected",
+has interface_type "std_msgs/Float32";
+
+(node: $mission_metrics_node, subscriber: $mission_metrics_node_sub_4) isa has_topic;
+
+$mission_metrics_node_sub_5 isa Subscriber,
+has interface_name "pipeline/inspected",
+has interface_type "std_msgs/Bool";
+
+(node: $mission_metrics_node, subscriber: $mission_metrics_node_sub_5) isa has_topic;
+
+$mission_metrics_node_service_server isa ServiceServer,
+has interface_name "mission_metrics/save",
+has interface_type "std_srvs/Empty";
+(node: $mission_metrics_node, server: $mission_metrics_node_service_server) isa has_service;	
+$mission_node_node isa ROSNode,
+has node_name "/mission_node",
+has namespace "";
+$time_limit_param isa ParameterInteger,
+	has parameter_name "time_limit";
+$time_limit_param_pvalue isa ValueInteger, has integer_value 300;	
+(node: $mission_node_node,
+parameter: $time_limit_param,
+parameter_value: $time_limit_param_pvalue)
+	isa has_parameter_value, has default_value true;
+$use_sim_time_param_10 isa ParameterBool,
+	has parameter_name "use_sim_time";
+$use_sim_time_param_10_pvalue isa ValueBool, has bool_value false;	
+(node: $mission_node_node,
+parameter: $use_sim_time_param_10,
+parameter_value: $use_sim_time_param_10_pvalue)
+	isa has_parameter_value, has default_value true;
+
+$mission_node_node_parameters (
+	node: $mission_node_node,
+	parameter: $time_limit_param, 
+	parameter: $use_sim_time_param_10
+	) isa has_parameter;
+$mission_node_node_sub isa Subscriber,
+has interface_name "diagnostics",
+has interface_type "diagnostic_msgs/DiagnosticArray";
+
+(node: $mission_node_node, subscriber: $mission_node_node_sub) isa has_topic;
+
+$mission_node_node_sub_1 isa Subscriber,
+has interface_name "pipeline/detected",
+has interface_type "std_msgs/Bool";
+
+(node: $mission_node_node, subscriber: $mission_node_node_sub_1) isa has_topic;
+
+$mission_node_node_sub_2 isa Subscriber,
+has interface_name "pipeline/inspected",
+has interface_type "std_msgs/Bool";
+
+(node: $mission_node_node, subscriber: $mission_node_node_sub_2) isa has_topic;
+
+
+$ta_suave_tactics isa Tactic, has tactic_name "suave_tactics";
+$f_recover_motion isa Feature, has feature_name "RECOVER_MOTION", has mandatory false;
+
+$f_follow_pipeline isa Feature, has feature_name "FOLLOW_PIPELINE", has mandatory false;
+
+$f_recharge isa Feature, has feature_name "RECHARGE", has mandatory false;
+
+$f_low_altitude isa Feature, has feature_name "LOW_ALTITUDE", has mandatory false;
+
+$f_medium_altitude isa Feature, has feature_name "MEDIUM_ALTITUDE", has mandatory false;
+
+$f_high_altitude isa Feature, has feature_name "HIGH_ALTITUDE", has mandatory false;
+
+$alt_ isa Feature, has feature_name "SEARCH_PIPELINE", has mandatory false;
+$alt_search_pipeline (parent: $alt_,
+	child: $f_low_altitude, 
+	child: $f_medium_altitude, 
+	child: $f_high_altitude
+) isa alternative;	
+
+$f_pipeline_inspection isa Feature, has feature_name "PIPELINE_INSPECTION", has mandatory false;
+$feat_hierf_pipeline_inspection (parent: $f_pipeline_inspection, 
+	child: $f_recover_motion, 
+	child: $f_follow_pipeline, 
+	child: $f_recharge, 
+	child: $alt_
+) isa feature_hierarchy;	
+
+$t_measured_water_visibility isa Measure, has measure_name "water_visibility";
+
+(measure: $t_measured_water_visibility, source: $water_visibility_observer_node_nodepub) isa measurement_interface,
+	    has measurement_function_args 'QA status,water_visibility,float',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_battery_level isa Measure, has measure_name "battery_level";
+
+(measure: $t_measured_battery_level, source: $battery_monitor_nodepub_1) isa measurement_interface,
+	    has measurement_function_args 'QA status,battery_level,float',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_c_thruster_1 isa Measure, has measure_name "c_thruster_1";
+
+(measure: $t_measured_c_thruster_1, source: $thruster_monitor_nodepub) isa measurement_interface,
+	    has measurement_function_args 'Component status,c_thruster_1,str',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_c_thruster_2 isa Measure, has measure_name "c_thruster_2";
+
+(measure: $t_measured_c_thruster_2, source: $thruster_monitor_nodepub) isa measurement_interface,
+	    has measurement_function_args 'Component status,c_thruster_2,str',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_c_thruster_3 isa Measure, has measure_name "c_thruster_3";
+
+(measure: $t_measured_c_thruster_3, source: $thruster_monitor_nodepub) isa measurement_interface,
+	    has measurement_function_args 'Component status,c_thruster_3,str',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_c_thruster_4 isa Measure, has measure_name "c_thruster_4";
+
+(measure: $t_measured_c_thruster_4, source: $thruster_monitor_nodepub) isa measurement_interface,
+	    has measurement_function_args 'Component status,c_thruster_4,str',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_c_thruster_5 isa Measure, has measure_name "c_thruster_5";
+
+(measure: $t_measured_c_thruster_5, source: $thruster_monitor_nodepub) isa measurement_interface,
+	    has measurement_function_args 'Component status,c_thruster_5,str',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+$t_measured_c_thruster_6 isa Measure, has measure_name "c_thruster_6";
+
+(measure: $t_measured_c_thruster_6, source: $thruster_monitor_nodepub) isa measurement_interface,
+	    has measurement_function_args 'Component status,c_thruster_6,str',
+	    has measurement_function_name 'get_data_from_diagnostic_array';
+
+ $is_selected_alt__1 (atom: $alt_) isa propositional_expression;
+$water_visibility_less_val isa ValueDouble, has double_value 2.25;
+$water_visibility_less (lhs_value:$t_measured_water_visibility, rhs_value: $water_visibility_less_val) isa less_than;
+$expr_ (
+		    	expression:$is_selected_alt__1, 
+		    	expression:$water_visibility_less
+		    	) isa and_expression;
+$low_altitudefa (
+activation: $f_low_altitude	
+) isa feature_adaptation;
+
+$tactic_rule_low_altitude (tactic:$ta_suave_tactics,   antecedent:$expr_,  consequent:$low_altitudefa) isa tactic_rule, has rule_name "LOW_ALTITUDE";
+ $is_selected_alt__2 (atom: $alt_) isa propositional_expression;
+$water_visibility_less_1_val isa ValueDouble, has double_value 3.25;
+$water_visibility_less_1 (lhs_value:$t_measured_water_visibility, rhs_value: $water_visibility_less_1_val) isa less_than;
+$water_visibility_greq_val isa ValueDouble, has double_value 2.25;
+$water_visibility_greq (lhs_value:$t_measured_water_visibility, rhs_value: $water_visibility_greq_val) isa greater_than_equal;
+$expr__1 (
+		    	expression:$is_selected_alt__2, 
+		    	expression:$water_visibility_less_1, 
+		    	expression:$water_visibility_greq
+		    	) isa and_expression;
+$medium_altitudefa (
+activation: $f_medium_altitude	
+) isa feature_adaptation;
+
+$tactic_rule_medium_altitude (tactic:$ta_suave_tactics,   antecedent:$expr__1,  consequent:$medium_altitudefa) isa tactic_rule, has rule_name "MEDIUM_ALTITUDE";
+ $is_selected_alt__3 (atom: $alt_) isa propositional_expression;
+$water_visibility_greq_1_val isa ValueDouble, has double_value 3.25;
+$water_visibility_greq_1 (lhs_value:$t_measured_water_visibility, rhs_value: $water_visibility_greq_1_val) isa greater_than_equal;
+$expr__2 (
+		    	expression:$is_selected_alt__3, 
+		    	expression:$water_visibility_greq_1
+		    	) isa and_expression;
+$high_altitudefa (
+activation: $f_low_altitude	
+) isa feature_adaptation;
+
+$tactic_rule_high_altitude (tactic:$ta_suave_tactics,   antecedent:$expr__2,  consequent:$high_altitudefa) isa tactic_rule, has rule_name "HIGH_ALTITUDE";
+ $is_selected_f_recover_motion_1 (atom: $f_recover_motion) isa propositional_expression;
+$c_thruster_1_equal_val isa ValueString, has string_value "FALSE";
+$c_thruster_1_equal (lhs_value:$t_measured_c_thruster_1, rhs_value: $c_thruster_1_equal_val) isa equal;
+
+$c_thruster_1_equal_1_val isa ValueString, has string_value "ERROR";
+$c_thruster_1_equal_1 (lhs_value:$t_measured_c_thruster_1, rhs_value: $c_thruster_1_equal_1_val) isa equal;
+
+$c_thruster_2_equal_val isa ValueString, has string_value "FALSE";
+$c_thruster_2_equal (lhs_value:$t_measured_c_thruster_2, rhs_value: $c_thruster_2_equal_val) isa equal;
+
+$c_thruster_2_equal_1_val isa ValueString, has string_value "ERROR";
+$c_thruster_2_equal_1 (lhs_value:$t_measured_c_thruster_2, rhs_value: $c_thruster_2_equal_1_val) isa equal;
+
+$c_thruster_3_equal_val isa ValueString, has string_value "FALSE";
+$c_thruster_3_equal (lhs_value:$t_measured_c_thruster_3, rhs_value: $c_thruster_3_equal_val) isa equal;
+
+$c_thruster_3_equal_1_val isa ValueString, has string_value "ERROR";
+$c_thruster_3_equal_1 (lhs_value:$t_measured_c_thruster_3, rhs_value: $c_thruster_3_equal_1_val) isa equal;
+
+$c_thruster_4_equal_val isa ValueString, has string_value "FALSE";
+$c_thruster_4_equal (lhs_value:$t_measured_c_thruster_4, rhs_value: $c_thruster_4_equal_val) isa equal;
+
+$c_thruster_4_equal_1_val isa ValueString, has string_value "ERROR";
+$c_thruster_4_equal_1 (lhs_value:$t_measured_c_thruster_4, rhs_value: $c_thruster_4_equal_1_val) isa equal;
+
+$c_thruster_5_equal_val isa ValueString, has string_value "FALSE";
+$c_thruster_5_equal (lhs_value:$t_measured_c_thruster_5, rhs_value: $c_thruster_5_equal_val) isa equal;
+
+$c_thruster_5_equal_1_val isa ValueString, has string_value "ERROR";
+$c_thruster_5_equal_1 (lhs_value:$t_measured_c_thruster_5, rhs_value: $c_thruster_5_equal_1_val) isa equal;
+
+$c_thruster_6_equal_val isa ValueString, has string_value "FALSE";
+$c_thruster_6_equal (lhs_value:$t_measured_c_thruster_6, rhs_value: $c_thruster_6_equal_val) isa equal;
+
+$c_thruster_6_equal_1_val isa ValueString, has string_value "ERROR";
+$c_thruster_6_equal_1 (lhs_value:$t_measured_c_thruster_6, rhs_value: $c_thruster_6_equal_1_val) isa equal;
+
+$expr__3 (
+expression:$c_thruster_1_equal, 
+expression:$c_thruster_1_equal_1, 
+expression:$c_thruster_2_equal, 
+expression:$c_thruster_2_equal_1, 
+expression:$c_thruster_3_equal, 
+expression:$c_thruster_3_equal_1, 
+expression:$c_thruster_4_equal, 
+expression:$c_thruster_4_equal_1, 
+expression:$c_thruster_5_equal, 
+expression:$c_thruster_5_equal_1, 
+expression:$c_thruster_6_equal, 
+expression:$c_thruster_6_equal_1
+) isa or_expression;
+$expr__4 (
+		    	expression:$is_selected_f_recover_motion_1, 
+		    	expression:$expr__3
+		    	) isa and_expression;
+$recover_motionfa (
+activation: $f_recover_motion	
+) isa feature_adaptation;
+
+$tactic_rule_recover_motion (tactic:$ta_suave_tactics,   antecedent:$expr__4,  consequent:$recover_motionfa) isa tactic_rule, has rule_name "RECOVER_MOTION";
+ $is_selected_f_recover_motion_2 (atom: $f_recover_motion) isa propositional_expression;
+$c_thruster_1_equal_2_val isa ValueString, has string_value "RECOVERED";
+$c_thruster_1_equal_2 (lhs_value:$t_measured_c_thruster_1, rhs_value: $c_thruster_1_equal_2_val) isa equal;
+$c_thruster_2_equal_2_val isa ValueString, has string_value "RECOVERED";
+$c_thruster_2_equal_2 (lhs_value:$t_measured_c_thruster_2, rhs_value: $c_thruster_2_equal_2_val) isa equal;
+$c_thruster_3_equal_2_val isa ValueString, has string_value "RECOVERED";
+$c_thruster_3_equal_2 (lhs_value:$t_measured_c_thruster_3, rhs_value: $c_thruster_3_equal_2_val) isa equal;
+$c_thruster_4_equal_2_val isa ValueString, has string_value "RECOVERED";
+$c_thruster_4_equal_2 (lhs_value:$t_measured_c_thruster_4, rhs_value: $c_thruster_4_equal_2_val) isa equal;
+$c_thruster_5_equal_2_val isa ValueString, has string_value "RECOVERED";
+$c_thruster_5_equal_2 (lhs_value:$t_measured_c_thruster_5, rhs_value: $c_thruster_5_equal_2_val) isa equal;
+$c_thruster_6_equal_2_val isa ValueString, has string_value "RECOVERED";
+$c_thruster_6_equal_2 (lhs_value:$t_measured_c_thruster_6, rhs_value: $c_thruster_6_equal_2_val) isa equal;
+$expr__5 (
+		    	expression:$is_selected_f_recover_motion_2, 
+		    	expression:$c_thruster_1_equal_2, 
+		    	expression:$c_thruster_2_equal_2, 
+		    	expression:$c_thruster_3_equal_2, 
+		    	expression:$c_thruster_4_equal_2, 
+		    	expression:$c_thruster_5_equal_2, 
+		    	expression:$c_thruster_6_equal_2
+		    	) isa and_expression;
+$end_recover_motionfa (
+deactivation: $f_recover_motion	
+) isa feature_adaptation;
+
+$tactic_rule_end_recover_motion (tactic:$ta_suave_tactics,   antecedent:$expr__5,  consequent:$end_recover_motionfa) isa tactic_rule, has rule_name "END_RECOVER_MOTION";
+
+$slc_nonodenamegiven_active (node: $f_generate_search_path_node_node) isa set_lifecycle_state, has lifecycle_state "active";
+$slc_nonodenamegiven_inactive (node: $f_generate_search_path_node_node) isa set_lifecycle_state, has lifecycle_state "inactive";
+$search_pipeline_resolution_act (
+	resolution_action: $slc_nonodenamegiven_active
+, variant: $alt_) isa variant_activation;
+$search_pipeline_resolution_deact (
+	resolution_action: $slc_nonodenamegiven_inactive
+, variant: $alt_) isa variant_deactivation;
+$sp_spiral_altitude_pvalue isa ValueDouble, has double_value 1.0;	
+$sp_spiral_altitude (node: $f_generate_search_path_node_node, parameter: $spiral_altitude_param, parameter_value: $sp_spiral_altitude_pvalue) isa set_nodes_parameters;
+$low_altitude_resolution_act (
+	resolution_action: $sp_spiral_altitude
+, variant: $f_low_altitude) isa variant_activation;
+$sp_spiral_altitude_1_pvalue isa ValueDouble, has double_value 2.0;	
+$sp_spiral_altitude_1 (node: $f_generate_search_path_node_node, parameter: $spiral_altitude_param, parameter_value: $sp_spiral_altitude_1_pvalue) isa set_nodes_parameters;
+$medium_altitude_resolution_act (
+	resolution_action: $sp_spiral_altitude_1
+, variant: $f_medium_altitude) isa variant_activation;
+$sp_spiral_altitude_2_pvalue isa ValueDouble, has double_value 3.0;	
+$sp_spiral_altitude_2 (node: $f_generate_search_path_node_node, parameter: $spiral_altitude_param, parameter_value: $sp_spiral_altitude_2_pvalue) isa set_nodes_parameters;
+$high_altitude_resolution_act (
+	resolution_action: $sp_spiral_altitude_2
+, variant: $f_high_altitude) isa variant_activation;
+$slc_nonodenamegiven_active_1 (node: $f_follow_pipeline_node_node) isa set_lifecycle_state, has lifecycle_state "active";
+$slc_nonodenamegiven_inactive_1 (node: $f_follow_pipeline_node_node) isa set_lifecycle_state, has lifecycle_state "inactive";
+$follow_pipeline_resolution_act (
+	resolution_action: $slc_nonodenamegiven_active_1
+, variant: $f_follow_pipeline) isa variant_activation;
+$follow_pipeline_resolution_deact (
+	resolution_action: $slc_nonodenamegiven_inactive_1
+, variant: $f_follow_pipeline) isa variant_deactivation;
+$slc_nonodenamegiven_active_2 (node: $generate_recharge_path_node_node) isa set_lifecycle_state, has lifecycle_state "active";
+$slc_nonodenamegiven_inactive_2 (node: $generate_recharge_path_node_node) isa set_lifecycle_state, has lifecycle_state "inactive";
+$recharge_resolution_act (
+	resolution_action: $slc_nonodenamegiven_active_2
+, variant: $f_recharge) isa variant_activation;
+$recharge_resolution_deact (
+	resolution_action: $slc_nonodenamegiven_inactive_2
+, variant: $f_recharge) isa variant_deactivation;
+$slc_nonodenamegiven_active_3 (node: $f_maintain_motion_node_node) isa set_lifecycle_state, has lifecycle_state "active";
+$slc_nonodenamegiven_inactive_3 (node: $f_maintain_motion_node_node) isa set_lifecycle_state, has lifecycle_state "inactive";
+$recover_motion_resolution_act (
+	resolution_action: $slc_nonodenamegiven_active_3
+, variant: $f_recover_motion) isa variant_activation;
+$recover_motion_resolution_deact (
+	resolution_action: $slc_nonodenamegiven_inactive_3
+, variant: $f_recover_motion) isa variant_deactivation;
+$res_suave_resolution (tactic: $ta_suave_tactics,
+variant_resolution:$search_pipeline_resolution_act, variant_resolution:$search_pipeline_resolution_deact, 
+ variant_resolution:$low_altitude_resolution_act, 
+ variant_resolution:$medium_altitude_resolution_act, 
+ variant_resolution:$high_altitude_resolution_act, 
+ variant_resolution:$follow_pipeline_resolution_act, variant_resolution:$follow_pipeline_resolution_deact, 
+ variant_resolution:$recharge_resolution_act, variant_resolution:$recharge_resolution_deact, 
+ variant_resolution:$recover_motion_resolution_act, variant_resolution:$recover_motion_resolution_deact
+ ) 
+ isa resolution_model, 
+    has resolution_model_name "suave_resolution", has ros_system "suave";
