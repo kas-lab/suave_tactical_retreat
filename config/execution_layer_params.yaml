@@ -1,0 +1,21 @@
+execution_layer_node:
+  ros__parameters:
+    # Retry policy: each failed-retriable step is retried up to 2 times
+    # (3 total attempts) with a 500 ms pause between attempts.
+    retry_policy: retry_n
+    max_retries: 2
+    retry_delay_ms: 500
+
+    # SequentialOrderingPlugin preserves the order of adaptations in each request.
+    ordering_plugin: execution_layer/SequentialOrderingPlugin
+
+    # Loaded adaptation plugins — both are always active once the node activates.
+    adaptation_plugins:
+      - execution_layer/ParameterAdaptationPlugin
+      - execution_layer/LifecycleAdaptationPlugin
+
+    # Trigger plugins: logical name "service" maps to ServiceTriggerPlugin.
+    # The service is advertised at /execute_adaptations (default service_name).
+    trigger_plugins:
+      - service
+    service.plugin: execution_layer/ServiceTriggerPlugin
