@@ -1,5 +1,15 @@
 # suave_rebetmc
 
+## Run SUAVE + rebetmc
+
+```bash
+ros2 launch suave simulation.launch.py x:=-17.0 y:=2.0
+```
+
+```bash
+ros2 launch suave_rebetmc suave_rebetmc_bringup.launch.py
+```
+
 ## Docker
 
 ### Build
@@ -50,8 +60,6 @@ From pkg root:
 ```Bash
 docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD:/home/ubuntu-user/suave_ws/src/suave_rebetmc" suave-rebetmc:dev typedb server
 ```
-
-
 
 ## Tests
 

@@ -10,7 +10,7 @@ repositories:
   adapt_x:
     type: git
     url: git@github.com:kas-lab/adapt_x.git
-    version: main
+    version: suave
   ros_monitors:
     type: git
     url: git@github.com:kas-lab/ros_monitors.git
@@ -18,8 +18,12 @@ repositories:
   typedb_tactics:
     type: git
     url: git@github.com:kas-lab/typedb_tactics.git
-    version: dev
+    version: suave
   ros_typedb:
     type: git
     url: git@github.com:kas-lab/ros_typedb.git
     version: typedb2
+  adaptation_execution_layer:
+    type: git
+    url: git@github.com:kas-lab/adaptation_execution_layer.git
+    version: main

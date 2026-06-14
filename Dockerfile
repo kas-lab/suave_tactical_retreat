@@ -7,7 +7,7 @@ RUN sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 17507562824cfd
 
 RUN sudo apt-get update && sudo apt-get install -y \
     openjdk-21-jdk \
-    typedb=2.28.3 \
+    typedb=2.29.1 \
     && sudo rm -rf /var/lib/apt/lists/*
 
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
@@ -18,7 +18,7 @@ RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9
     sudo ln -sf /opt/apache-maven-3.9.16/bin/mvn /usr/local/bin/mvn && \
     rm /tmp/apache-maven-3.9.16-bin.tar.gz
 
-RUN pip3 install typedb-driver==2.28.0 jpype1
+RUN pip3 install typedb-driver==2.29.7 jpype1
 
 ## Import extra dependencies into the existing suave_ws (suave already present → skip-existing)
 COPY --chown=ubuntu-user:ubuntu-user suave_rebetmc.repos $HOME/suave_ws/suave_rebetmc.repos

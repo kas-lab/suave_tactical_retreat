@@ -14,9 +14,8 @@
 
 import pathlib
 
-import pytest
-
 from ament_index_python.packages import get_package_share_directory
+import pytest
 
 from typedb_tactics.typedb_tactical_retreat_interface import TacticalRetreatInterface
 
