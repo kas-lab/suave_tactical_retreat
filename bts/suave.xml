@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4"
+      main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <RetryUntilSuccessful num_attempts="-1">
+      <Fallback>
+        <is_mission_aborted/>
+        <SequenceWithMemory>
+          <SequenceWithMemory>
+            <arm_thrusters/>
+            <set_guided_mode/>
+          </SequenceWithMemory>
+          <SequenceWithMemory>
+            <EnsureConfiguration features_to_deactivate_on_exit="SEARCH_PIPELINE"
+                                 features_to_deactivate=""
+                                 features_to_activate="SEARCH_PIPELINE"
+                                 action_name="/set_desired_features">
+              <search_pipeline/>
+            </EnsureConfiguration>
+            <EnsureConfiguration features_to_deactivate_on_exit="FOLLOW_PIPELINE"
+                                 features_to_deactivate=""
+                                 features_to_activate="FOLLOW_PIPELINE"
+                                 action_name="/set_desired_features">
+              <inspect_pipeline/>
+            </EnsureConfiguration>
+          </SequenceWithMemory>
+        </SequenceWithMemory>
+      </Fallback>
+    </RetryUntilSuccessful>
+  </BehaviorTree>
+
+  <!-- Description of Node Models (used by Groot) -->
+  <TreeNodesModel>
+    <Decorator ID="EnsureConfiguration">
+      <input_port name="features_to_deactivate_on_exit"
+                  type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Teardown override. Empty=deactivate features_to_activate. ["none"]=skip.</input_port>
+      <input_port name="features_to_deactivate"
+                  type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be inactive before the child runs</input_port>
+      <input_port name="features_to_activate"
+                  type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be active before the child runs</input_port>
+      <input_port name="action_name"
+                  default="/set_desired_features"
+                  type="std::string">SetDesiredFeatures action server name</input_port>
+    </Decorator>
+    <Action ID="arm_thrusters"
+            editable="true"/>
+    <Action ID="inspect_pipeline"
+            editable="true"/>
+    <Condition ID="is_mission_aborted"
+               editable="true"/>
+    <Action ID="search_pipeline"
+            editable="true"/>
+    <Action ID="set_guided_mode"
+            editable="true"/>
+  </TreeNodesModel>
+
+</root>

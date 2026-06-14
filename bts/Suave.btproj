@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4" project_name="Project">
+    <include path="suave.xml"/>
+    <!-- Description of Node Models (used by Groot) -->
+    <TreeNodesModel>
+        <Decorator ID="EnsureConfiguration">
+            <input_port name="features_to_deactivate_on_exit" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Teardown override. Empty=deactivate features_to_activate. ["none"]=skip.</input_port>
+            <input_port name="features_to_deactivate" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be inactive before the child runs</input_port>
+            <input_port name="features_to_activate" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be active before the child runs</input_port>
+            <input_port name="action_name" default="/set_desired_features" type="std::string">SetDesiredFeatures action server name</input_port>
+        </Decorator>
+        <Action ID="arm_thrusters" editable="true"/>
+        <Action ID="inspect_pipeline" editable="true"/>
+        <Condition ID="is_mission_aborted" editable="true"/>
+        <Action ID="search_pipeline" editable="true"/>
+        <Action ID="set_guided_mode" editable="true"/>
+    </TreeNodesModel>
+</root>
