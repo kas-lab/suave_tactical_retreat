@@ -67,7 +67,7 @@ def generate_launch_description():
         os.path.join(schema_files, 'tactics_model', 'tactics_model.tql'),
         # os.path.join(
         #     schema_files, 'discover_tactics_model', 'discover_tactics_model.tql'),
-        # os.path.join(schema_files, 'relaxed', 'relaxed_model.tql'),
+        os.path.join(schema_files, 'relaxed', 'relaxed_model.tql'),
         # os.path.join(
         #     schema_files,
         #     'discover_hypothetical_req_fulfillment',
@@ -90,7 +90,7 @@ def generate_launch_description():
 
     suave_adap_engine = LifecycleNode(
         package='adapt_x',
-        executable='adaptation_engine',
+        executable='setup_node',
         output='screen',
         name='adaptation_engine',
         namespace='',

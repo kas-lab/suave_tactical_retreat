@@ -2,6 +2,10 @@
 
 ## Run SUAVE + rebetmc
 
+```Bash
+sim_vehicle.py -L RATBeach -v ArduSub --model=JSON --console
+```
+
 ```bash
 ros2 launch suave simulation.launch.py x:=-17.0 y:=2.0
 ```
