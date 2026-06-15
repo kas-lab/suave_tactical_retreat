@@ -72,6 +72,6 @@ docker exec suave_rebetmc bash -lc '
   cd /home/ubuntu-user/suave_ws &&
   source /opt/ros/humble/setup.bash &&
   source install/setup.bash &&
-  colcon test --packages-select suave_rebetmc --event-handlers console_direct+ --pytest-args -k test_suave_tactics_kb
+  colcon test --event-handlers console_direct+ --packages-select suave_rebetmc --pytest-args -k test_suave_tactics_kb
 '
 ```

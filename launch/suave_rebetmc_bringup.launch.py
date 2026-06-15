@@ -35,6 +35,9 @@ def generate_launch_description():
     result_path = LaunchConfiguration('result_path')
     result_filename = LaunchConfiguration('result_filename')
     mission_config = LaunchConfiguration('mission_config')
+    save_generated_tql = LaunchConfiguration('save_generated_tql')
+    generated_tql_path = LaunchConfiguration('generated_tql_path')
+    generated_tql_filename = LaunchConfiguration('generated_tql_filename')
 
     mission_config_default = os.path.join(
         get_package_share_directory('suave_missions'),
@@ -62,6 +65,22 @@ def generate_launch_description():
         default_value=mission_config_default,
         description='Mission configuration file',
     )
+    save_generated_tql_arg = DeclareLaunchArgument(
+        'save_generated_tql',
+        default_value='false',
+        description='Save the generated TQL insert query to file',
+    )
+    generated_tql_path_arg = DeclareLaunchArgument(
+        'generated_tql_path',
+        default_value='',
+        description='Directory path where the generated TQL file is saved '
+                    '(empty = adapt_x share/generated/)',
+    )
+    generated_tql_filename_arg = DeclareLaunchArgument(
+        'generated_tql_filename',
+        default_value='setup_insert_query.tql',
+        description='Filename for the generated TQL file',
+    )
 
     suave_rebetmc_share = get_package_share_directory('suave_rebetmc')
     suave_base = IncludeLaunchDescription(
@@ -87,7 +106,12 @@ def generate_launch_description():
                 'launch',
                 'adaptation_engine_with_execution_layer_launch.py',
             )
-        )
+        ),
+        launch_arguments={
+            'save_generated_tql': save_generated_tql,
+            'generated_tql_path': generated_tql_path,
+            'generated_tql_filename': generated_tql_filename,
+        }.items(),
     )
 
     suave_rebetmc_bt = Node(
@@ -121,6 +145,9 @@ def generate_launch_description():
         result_path_arg,
         result_filename_arg,
         mission_config_arg,
+        save_generated_tql_arg,
+        generated_tql_path_arg,
+        generated_tql_filename_arg,
         suave_base,
         launch_bt_when_kb_is_active,
         adaptation_engine_with_execution_layer,

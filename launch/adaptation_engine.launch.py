@@ -15,11 +15,13 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
 from launch.actions import EmitEvent
 from launch.actions import IncludeLaunchDescription
 from launch.actions import RegisterEventHandler
 from launch.events import matches_action
 from launch.launch_description_sources import AnyLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import LifecycleNode
 from launch_ros.event_handlers import OnStateTransition
 from launch_ros.events.lifecycle import ChangeState
@@ -28,6 +30,30 @@ from nav2_common.launch import ReplaceString
 
 
 def generate_launch_description():
+
+    save_generated_tql = LaunchConfiguration('save_generated_tql')
+    generated_tql_path = LaunchConfiguration('generated_tql_path')
+    generated_tql_filename = LaunchConfiguration('generated_tql_filename')
+
+    save_generated_tql_arg = DeclareLaunchArgument(
+        'save_generated_tql',
+        # default_value='false',
+        default_value='true',
+        description='Save the generated TQL insert query to file',
+    )
+    generated_tql_path_arg = DeclareLaunchArgument(
+        'generated_tql_path',
+        # default_value='',
+        default_value='/home/ubuntu-user/suave_ws/src/suave_rebetmc/models/tmp',
+        description='Directory path where the generated TQL file is saved '
+                    '(empty = adapt_x share/generated/)',
+    )
+    generated_tql_filename_arg = DeclareLaunchArgument(
+        'generated_tql_filename',
+        # default_value='setup_insert_query.tql',
+        default_value='suave_generated.tql',
+        description='Filename for the generated TQL file',
+    )
 
     config_files = os.path.join(
         get_package_share_directory('suave_rebetmc'), 'config')
@@ -94,7 +120,11 @@ def generate_launch_description():
         output='screen',
         name='adaptation_engine',
         namespace='',
-        parameters=[engine_config_file]
+        parameters=[engine_config_file, {
+            'save_generated_tql': save_generated_tql,
+            'generated_tql_path': generated_tql_path,
+            'generated_tql_filename': generated_tql_filename,
+        }]
     )
 
     config_event = EmitEvent(
@@ -117,6 +147,12 @@ def generate_launch_description():
         )
     )
 
-    return LaunchDescription(
-        [typedb, suave_adap_engine, config_event, activate]
-    )
+    return LaunchDescription([
+        save_generated_tql_arg,
+        generated_tql_path_arg,
+        generated_tql_filename_arg,
+        typedb,
+        suave_adap_engine,
+        config_event,
+        activate,
+    ])
