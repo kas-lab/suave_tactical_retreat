@@ -1,23 +1,21 @@
-feature_model 
+feature_model
 {
     name suave_variability
-    root 
-    	selected Feature PIPELINE_INSPECTION id PIPELINE_INSPECTION children { 
-    		Feature RECOVER_MOTION id RECOVER_MOTION,
-    		Feature FOLLOW_PIPELINE id FOLLOW_PIPELINE,
-	        Feature RECHARGE id RECHARGE,
-	        Alternative SEARCH_PIPELINE id SEARCH_PIPELINE children 
-	        {
-	            Feature LOW_ALTITUDE id LOW_ALTITUDE, 
-	            Feature MEDIUM_ALTITUDE id MEDIUM_ALTITUDE, 
-	            Feature HIGH_ALTITUDE id HIGH_ALTITUDE
-	        }
-    	} 
-    crossTreeConstraints { 
-        SEARCH_PIPELINE excludes FOLLOW_PIPELINE
-        SEARCH_PIPELINE excludes RECHARGE
-        FOLLOW_PIPELINE excludes RECHARGE
-    }
+    root
+    	selected Feature PIPELINE_INSPECTION id PIPELINE_INSPECTION children {
+			Alternative TASK id TASK children {
+				Feature FOLLOW_PIPELINE id FOLLOW_PIPELINE,
+				Feature RECHARGE id RECHARGE,
+				Alternative SEARCH_PIPELINE id SEARCH_PIPELINE children
+				{
+					Feature LOW_ALTITUDE id LOW_ALTITUDE,
+					Feature MEDIUM_ALTITUDE id MEDIUM_ALTITUDE,
+					Feature HIGH_ALTITUDE id HIGH_ALTITUDE
+				}
+			},
+			Feature RECOVER_MOTION id RECOVER_MOTION
+    	}
+
+    crossTreeConstraints {}
 }
 
-	        

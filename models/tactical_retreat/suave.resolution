@@ -6,8 +6,8 @@ variability_model suave_variability;
 ros_system suave;
 
 resolutions
-PIPELINE_INSPECTION.SEARCH_PIPELINE : 
-select: SetLifecycleState(/f_generate_search_path_node, ACTIVE) 
+TASK.SEARCH_PIPELINE :
+select: SetLifecycleState(/f_generate_search_path_node, ACTIVE)
 deselect: SetLifecycleState(/f_generate_search_path_node, INACTIVE)
 
 
@@ -15,14 +15,14 @@ SEARCH_PIPELINE.LOW_ALTITUDE : select: SetParameter(/f_generate_search_path_node
 SEARCH_PIPELINE.MEDIUM_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,2.0) deselect:
 SEARCH_PIPELINE.HIGH_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,3.0) deselect:
 
-PIPELINE_INSPECTION.FOLLOW_PIPELINE: 
-select: SetLifecycleState(/f_follow_pipeline_node, ACTIVE) 
+TASK.FOLLOW_PIPELINE:
+select: SetLifecycleState(/f_follow_pipeline_node, ACTIVE)
 deselect: SetLifecycleState(/f_follow_pipeline_node, INACTIVE)
 
-PIPELINE_INSPECTION.RECHARGE: 
+TASK.RECHARGE:
 select: SetLifecycleState(/generate_recharge_path_node, ACTIVE)
 deselect: SetLifecycleState(/generate_recharge_path_node, INACTIVE)
 
-PIPELINE_INSPECTION.RECOVER_MOTION: 
-select: SetLifecycleState(/f_maintain_motion_node, ACTIVE) 
+PIPELINE_INSPECTION.RECOVER_MOTION:
+select: SetLifecycleState(/f_maintain_motion_node, ACTIVE)
 deselect: SetLifecycleState(/f_maintain_motion_node, INACTIVE)
