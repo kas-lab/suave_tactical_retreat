@@ -5,24 +5,27 @@ import "suave.var";
 variability_model suave_variability;
 ros_system suave;
 
-resolutions
+FunctionalMapping 
+SEARCH_PIPELINE -> SpiralSearch 
+
+Reconfigurations
 TASK.SEARCH_PIPELINE :
-select: SetLifecycleState(/f_generate_search_path_node, ACTIVE)
-deselect: SetLifecycleState(/f_generate_search_path_node, INACTIVE)
+select: SetLifecycleState(_slash_f_generate_search_path_node, ACTIVE)
+deselect: SetLifecycleState(_slash_f_generate_search_path_node, INACTIVE)
 
 
-SEARCH_PIPELINE.LOW_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,1.0) deselect:
-SEARCH_PIPELINE.MEDIUM_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,2.0) deselect:
-SEARCH_PIPELINE.HIGH_ALTITUDE : select: SetParameter(/f_generate_search_path_node,spiral_altitude,3.0) deselect:
+SEARCH_PIPELINE.LOW_ALTITUDE : select: SetParameter(_slash_f_generate_search_path_node,spiral_altitude,1.0) deselect:
+SEARCH_PIPELINE.MEDIUM_ALTITUDE : select: SetParameter(_slash_f_generate_search_path_node,spiral_altitude,2.0) deselect:
+SEARCH_PIPELINE.HIGH_ALTITUDE : select: SetParameter(_slash_f_generate_search_path_node,spiral_altitude,3.0) deselect:
 
 TASK.FOLLOW_PIPELINE:
-select: SetLifecycleState(/f_follow_pipeline_node, ACTIVE)
-deselect: SetLifecycleState(/f_follow_pipeline_node, INACTIVE)
+select: SetLifecycleState(_slash_f_follow_pipeline_node, ACTIVE)
+deselect: SetLifecycleState(_slash_f_follow_pipeline_node, INACTIVE)
 
 TASK.RECHARGE:
-select: SetLifecycleState(/generate_recharge_path_node, ACTIVE)
-deselect: SetLifecycleState(/generate_recharge_path_node, INACTIVE)
+select: SetLifecycleState(_slash_generate_recharge_path_node, ACTIVE)
+deselect: SetLifecycleState(_slash_generate_recharge_path_node, INACTIVE)
 
 PIPELINE_INSPECTION.RECOVER_MOTION:
-select: SetLifecycleState(/f_maintain_motion_node, ACTIVE)
-deselect: SetLifecycleState(/f_maintain_motion_node, INACTIVE)
+select: SetLifecycleState(_slash_f_maintain_motion_node, ACTIVE)
+deselect: SetLifecycleState(_slash_f_maintain_motion_node, INACTIVE)

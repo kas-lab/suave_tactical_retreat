@@ -22,6 +22,9 @@ suave:
           type: 'lifecycle_msgs/srv/GetState'
         'f_generate_search_path_node/get_transition_graph':
           type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+      actionservers:
+        'spiral_search':
+          type: 'suave_msgs/action/SpiralSearch'
       parameters:
         'spiral_altitude':
           type: Double

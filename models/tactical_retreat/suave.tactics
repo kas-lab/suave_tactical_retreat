@@ -3,93 +3,100 @@ import "../system/suave.rossystem";
 import "suave.context";
 import "suave.var";
 import "suave.resolution";
+import "../interfaces/suave_msgs.ros";
 
-rule LOW_ALTITUDE {
-	guard {
-		context(water_visibility < 2.25)
-		features(selected(suave_resolution.SEARCH_PIPELINE))
-	}
-	action {
-		select_variant(suave_resolution.LOW_ALTITUDE)
-	}
-};
+SpiralSearch {
+    rule LOW_ALTITUDE {
+        guard {
+            context(water_visibility < 2.25)
+            features(selected(suave_resolution.SEARCH_PIPELINE))
+        }
+        action {
+            select_variant(suave_resolution.LOW_ALTITUDE)
+        }
+    };
+    
+    rule MEDIUM_ALTITUDE {
+        guard {
+            context(water_visibility < 3.25
+                AND water_visibility >= 2.25)
+            features(selected(suave_resolution.SEARCH_PIPELINE))
+        }
+        action {
+            select_variant(suave_resolution.MEDIUM_ALTITUDE)
+        }
+    };
+    
+    rule HIGH_ALTITUDE {
+        guard {
+            context(water_visibility >= 3.25)
+            features(selected(suave_resolution.SEARCH_PIPELINE))
+        }
+        action {
+            select_variant(suave_resolution.HIGH_ALTITUDE)
+        }
+    };
+    
+    rule START_RECOVER_MOTION {
+        guard {
+            context(c_thruster_1 == "FALSE"
+                OR c_thruster_2 == "FALSE"
+                OR c_thruster_3 == "FALSE"
+                OR c_thruster_4 == "FALSE"
+                OR c_thruster_5 == "FALSE"
+                OR c_thruster_6 == "FALSE")
+            features(!selected(suave_resolution.RECOVER_MOTION))
+        }
+        action {
+            select_variant(suave_resolution.RECOVER_MOTION)
+        }
+    };
+    
+    rule END_RECOVER_MOTION {
+        guard {
+            context(c_thruster_1 == "RECOVERED"
+                AND c_thruster_2 == "RECOVERED"
+                AND c_thruster_3 == "RECOVERED"
+                AND c_thruster_4 == "RECOVERED"
+                AND c_thruster_5 == "RECOVERED"
+                AND c_thruster_6 == "RECOVERED")
+            features(selected(suave_resolution.RECOVER_MOTION))
+        }
+        action {
+            unselect_variant(suave_resolution.RECOVER_MOTION)
+        }
+    };  
+}
 
-rule MEDIUM_ALTITUDE {
-	guard {
-		context(water_visibility < 3.25
-			AND water_visibility >= 2.25)
-		features(selected(suave_resolution.SEARCH_PIPELINE))
-	}
-	action {
-		select_variant(suave_resolution.MEDIUM_ALTITUDE)
-	}
-};
+FollowPipeline {
+	rule START_RECOVER_MOTION {
+        guard {
+            context(c_thruster_1 == "FALSE"
+                OR c_thruster_2 == "FALSE"
+                OR c_thruster_3 == "FALSE"
+                OR c_thruster_4 == "FALSE"
+                OR c_thruster_5 == "FALSE"
+                OR c_thruster_6 == "FALSE")
+            features(!selected(suave_resolution.RECOVER_MOTION))
+        }
+        action {
+            select_variant(suave_resolution.RECOVER_MOTION)
+        }
+    };
 
-rule HIGH_ALTITUDE {
-	guard {
-		context(water_visibility >= 3.25)
-		features(selected(suave_resolution.SEARCH_PIPELINE))
-	}
-	action {
-		select_variant(suave_resolution.LOW_ALTITUDE)
-	}
-};
-
-rule RECOVER_MOTION {
-	guard {
-		context(c_thruster_1 == "FALSE" OR c_thruster_1 == "ERROR"
-			OR c_thruster_2 == "FALSE" OR c_thruster_2 == "ERROR"
-			OR c_thruster_3 == "FALSE" OR c_thruster_3 == "ERROR"
-			OR c_thruster_4 == "FALSE" OR c_thruster_4 == "ERROR"
-			OR c_thruster_5 == "FALSE" OR c_thruster_5 == "ERROR"
-			OR c_thruster_6 == "FALSE" OR c_thruster_6 == "ERROR")
-		features(!selected(suave_resolution.RECOVER_MOTION))
-	}
-	action {
-		select_variant(suave_resolution.RECOVER_MOTION)
-	}
-};
-
-rule END_RECOVER_MOTION {
-	guard {
-		context(c_thruster_1 == "RECOVERED"
-			AND c_thruster_2 == "RECOVERED"
-			AND c_thruster_3 == "RECOVERED"
-			AND c_thruster_4 == "RECOVERED"
-			AND c_thruster_5 == "RECOVERED"
-			AND c_thruster_6 == "RECOVERED")
-		features(selected(suave_resolution.RECOVER_MOTION))
-	}
-	action {
-		unselect_variant(suave_resolution.RECOVER_MOTION)
-	}
-};
-
-
-//rule SEARCH_PIPELINE {
-//	guard {
-//		features(!selected(suave_resolution.SEARCH_PIPELINE))
-//	}
-//	action {
-//		select_variant(suave_resolution.SEARCH_PIPELINE)
-//	}
-//};
-//
-//rule FOLLOW_PIPELINE {
-//	guard {
-//		features(!selected(suave_resolution.FOLLOW_PIPELINE))
-//	}
-//	action {
-//		select_variant(suave_resolution.FOLLOW_PIPELINE)
-//	}
-//};
-//
-//rule RECHARGE {
-//	guard {
-//		features(!selected(suave_resolution.RECHARGE))
-//	}
-//	action {
-//		select_variant(suave_resolution.RECHARGE)
-//	}
-//};
+    rule END_RECOVER_MOTION {
+    	guard {
+    		context(c_thruster_1 == "RECOVERED"
+    			AND c_thruster_2 == "RECOVERED"
+    			AND c_thruster_3 == "RECOVERED"
+    			AND c_thruster_4 == "RECOVERED"
+    			AND c_thruster_5 == "RECOVERED"
+    			AND c_thruster_6 == "RECOVERED")
+    		features(selected(suave_resolution.RECOVER_MOTION))
+    	}
+    	action {
+    		unselect_variant(suave_resolution.RECOVER_MOTION)
+    	}
+    };
+}
 

@@ -9,3 +9,30 @@ suave_msgs:
             string task_name
         response
             bool success
+  actions:
+    SpiralSearch
+      goal
+      result
+        float32 time_spent
+        bool pipeline_found
+      feedback
+        float32 elapsed_time
+    FollowPipeline
+      goal
+        float32 timeout
+      result
+        float32 distance_inspected
+        bool success
+        bool timed_out
+      feedback
+        float32 distance_inspected
+    RecoverThrusters
+      goal
+      result
+        bool success
+      feedback
+    RechargeBattery
+      goal
+      result
+        bool success
+      feedback

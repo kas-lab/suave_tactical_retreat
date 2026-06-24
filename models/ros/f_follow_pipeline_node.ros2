@@ -38,6 +38,9 @@ suave:
           type: 'lifecycle_msgs/srv/GetState'
         'f_follow_pipeline_node/get_transition_graph':
           type: 'lifecycle_msgs/srv/GetAvailableTransitions'
+      actionservers:
+        'follow_pipeline':
+          type: 'suave_msgs/action/FollowPipeline'
       parameters:
         'use_sim_time':
           type: Boolean
