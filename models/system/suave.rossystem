@@ -1,5 +1,7 @@
 suave:
   nodes:
+    "/suave_runner_node":
+      from: "suave_runner./suave_runner_node"
     "/gz_pipe_pose_bridge":
       from: "ros_gz_bridge./gz_pipe_pose_bridge"
       interfaces:
