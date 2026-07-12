@@ -1,7 +1,7 @@
-/adaptation_engine:
+/adaptation_engine_setup_node:
   ros__parameters:
     use_sim_time: true
-    policy_mode: false
+    generate_state: false
     save_generated_tql: true
     generated_tql_path: "~/suave_ws/src/suave_rebetmc/models/typedb"
     generated_tql_filename: "suave_rebetmc.tql"
@@ -25,6 +25,7 @@
       - "<suave_rebetmc_models_dir>/interfaces/system_modes_msgs.ros"
       - "<suave_rebetmc_models_dir>/interfaces/tf2_msgs.ros"
       - "<suave_rebetmc_models_dir>/interfaces/unique_identifier_msgs.ros"
+      - "<suave_rebetmc_models_dir>/interfaces/adapt_x_msgs.ros"
 
     ros2_path:
       - "<suave_rebetmc_models_dir>/ros/battery_monitor.ros2"
@@ -35,10 +36,12 @@
       - "<suave_rebetmc_models_dir>/ros/generate_recharge_path_node.ros2"
       - "<suave_rebetmc_models_dir>/ros/gz_bluerov_pose_bridge.ros2"
       - "<suave_rebetmc_models_dir>/ros/gz_pipe_pose_bridge.ros2"
-      - "<suave_rebetmc_models_dir>/ros/mission_metrics.ros2"
-      - "<suave_rebetmc_models_dir>/ros/mission_node.ros2"
-      - "<suave_rebetmc_models_dir>/ros/suave_runner_node.ros2"
       - "<suave_rebetmc_models_dir>/ros/thruster_monitor.ros2"
       - "<suave_rebetmc_models_dir>/ros/water_visibility_observer_node.ros2"
+      - "<suave_rebetmc_models_dir>/ros/follow_pipeline_adaptation_proxy.ros2"
+      - "<suave_rebetmc_models_dir>/ros/recharge_battery_adaptation_proxy.ros2"
+      - "<suave_rebetmc_models_dir>/ros/spiral_search_adaptation_proxy.ros2"
+      - "<suave_rebetmc_models_dir>/ros/suave_rebetmc_bt.ros2"
+      - "<suave_rebetmc_models_dir>/ros/recover_thrusters_adaptation_proxy.ros2"
     rossystem_path:
       - "<suave_rebetmc_models_dir>/system/suave.rossystem"

@@ -1,0 +1,27 @@
+spiral_search_adaptation_proxy:
+  ros__parameters:
+    interface_name: "spiral_search"
+    system_name: "suave_resolution"
+    interface_type: "suave_msgs/SpiralSearch"
+    adaptation_strategy: "tactic"
+
+follow_pipeline_adaptation_proxy:
+  ros__parameters:
+    interface_name: "follow_pipeline"
+    system_name: "suave_resolution"
+    interface_type: "suave_msgs/FollowPipeline"
+    adaptation_strategy: "tactic"
+
+recover_thrusters_adaptation_proxy:
+  ros__parameters:
+    interface_name: "recover_thrusters"
+    system_name: "suave_resolution"
+    interface_type: "suave_msgs/RecoverThrusters"
+    adaptation_strategy: "tactic"
+
+recharge_battery_adaptation_proxy:
+  ros__parameters:
+    interface_name: "recharge_battery"
+    system_name: "suave_resolution"
+    interface_type: "suave_msgs/RechargeBattery"
+    adaptation_strategy: "tactic"
