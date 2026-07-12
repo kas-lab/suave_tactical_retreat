@@ -91,8 +91,8 @@ def generate_launch_description():
             'feature_model',
             'feature_model_logical_expression.tql'),
         os.path.join(schema_files, 'tactics_model', 'tactics_model.tql'),
-        # os.path.join(
-        #     schema_files, 'discover_tactics_model', 'discover_tactics_model.tql'),
+        os.path.join(
+            schema_files, 'discover_tactics_model', 'discover_tactics_model.tql'),
         os.path.join(schema_files, 'relaxed', 'relaxed_model.tql'),
         # os.path.join(
         #     schema_files,
@@ -118,13 +118,14 @@ def generate_launch_description():
         package='adapt_x',
         executable='setup_node',
         output='screen',
-        name='adaptation_engine',
+        name='adaptation_engine_setup_node',
         namespace='',
-        parameters=[engine_config_file, {
-            'save_generated_tql': save_generated_tql,
-            'generated_tql_path': generated_tql_path,
-            'generated_tql_filename': generated_tql_filename,
-        }]
+        parameters=[engine_config_file]
+        # parameters=[engine_config_file, {
+        #     'save_generated_tql': save_generated_tql,
+        #     'generated_tql_path': generated_tql_path,
+        #     'generated_tql_filename': generated_tql_filename,
+        # }]
     )
 
     config_event = EmitEvent(

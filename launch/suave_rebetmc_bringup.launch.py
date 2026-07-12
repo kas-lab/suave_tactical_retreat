@@ -104,7 +104,7 @@ def generate_launch_description():
             os.path.join(
                 suave_rebetmc_share,
                 'launch',
-                'adaptation_engine_with_execution_layer_launch.py',
+                'adaptation_engine_with_aal.launch.py',
             )
         ),
         launch_arguments={
@@ -118,6 +118,11 @@ def generate_launch_description():
         package='suave_rebetmc',
         executable='suave_rebetmc_bt',
         output='screen',
+        parameters=[{
+            'spiral_search_action_name': 'proxy_spiral_search',
+            'follow_pipeline_action_name': 'proxy_follow_pipeline',
+            'recover_thrusters_action_name': 'proxy_recover_thrusters',
+        }],
     )
 
     def tactical_retreat_is_active(event):
