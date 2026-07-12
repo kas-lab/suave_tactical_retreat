@@ -1,4 +1,4 @@
-FROM suave-headless:dev
+FROM suave-headless:dev AS base
 
 ## Install TypeDB
 RUN sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 17507562824cfdcc && \
@@ -45,10 +45,11 @@ RUN ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash \
 ## There is a bug with the default setuptools and packaging versions
 RUN USER=ubuntu-user python3 -m pip install setuptools==75.8.2 packaging==24.1 empy==3.3.4 pandas==2.0.2 scipy==1.15.2 numpy==1.23.5
 
+WORKDIR $HOME/suave_ws/
+RUN sudo apt autoremove -y && sudo rm -rf /var/lib/apt/lists/
+
+FROM base AS built
+
 RUN ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash \
     && cd $HOME/suave_ws \
     && colcon build --symlink-install"]
-
-RUN sudo apt autoremove -y && sudo rm -rf /var/lib/apt/lists/
-
-WORKDIR $HOME/suave_ws/

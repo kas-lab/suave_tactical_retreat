@@ -15,15 +15,18 @@
   <depend>suave_monitor</depend>
   <depend>suave_msgs</depend>
   <depend>suave_runner</depend>
-  <depend>adapt_x</depend>
-  <depend>adapt_x_msgs</depend>
-  <depend>ament_index_cpp</depend>
-  <depend>behaviortree_cpp</depend>
-  <depend>rclcpp</depend>
   <depend>suave_bt</depend>
 
-  <depend>tactical_bt</depend>
-  <depend>tactical_msgs</depend>
+  <depend>adapt_x</depend>
+  <depend>adapt_x_bt</depend>
+  <depend>adapt_x_msgs</depend>
+
+  <depend>ament_index_cpp</depend>
+  <depend>rclcpp</depend>
+
+  <depend>behaviortree_cpp</depend>
+  <depend>aal</depend>
+  <depend>aal_msgs</depend>
   <depend>typedb_tactics</depend>
 
   <test_depend>ament_cmake_pytest</test_depend>
