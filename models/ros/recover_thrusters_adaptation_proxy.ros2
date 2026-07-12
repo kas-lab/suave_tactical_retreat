@@ -1,0 +1,13 @@
+adapt_x:
+  artifacts:
+    adaptation_proxy:
+      node: /recover_thrusters_adaptation_proxy
+      subscribers:
+        'requirements':
+          type: 'adapt_x_msgs/msg/RelaxedRequirements'
+      actionservers:
+        'proxy_recover_thrusters':
+          type: 'suave_msgs/action/RecoverThrusters'
+      actionclients:
+        'recover_thrusters':
+          type: 'suave_msgs/action/RecoverThrusters'

@@ -67,10 +67,10 @@ function_args "Component status,c_thruster_6,str"
 }
 }
 
-Mission-Related 
+Mission-Related
 {
 SpiralSearch:
 FollowPipeline:
-RecoverThrusters:
 RechargeBattery:
+RecoverThrusters:
 }

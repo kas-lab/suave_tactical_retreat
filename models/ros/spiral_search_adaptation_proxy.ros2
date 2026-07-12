@@ -1,0 +1,13 @@
+adapt_x:
+  artifacts:
+    adaptation_proxy:
+      node: /spiral_search_adaptation_proxy
+      subscribers:
+        'requirements':
+          type: 'adapt_x_msgs/msg/RelaxedRequirements'
+      actionservers:
+        'proxy_spiral_search':
+          type: 'suave_msgs/action/SpiralSearch'
+      actionclients:
+        'spiral_search':
+          type: 'suave_msgs/action/SpiralSearch'

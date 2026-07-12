@@ -1,0 +1,13 @@
+adapt_x:
+  artifacts:
+    adaptation_proxy:
+      node: /recharge_battery_adaptation_proxy
+      subscribers:
+        'requirements':
+          type: 'adapt_x_msgs/msg/RelaxedRequirements'
+      actionservers:
+        'proxy_recharge_battery':
+          type: 'suave_msgs/action/RechargeBattery'
+      actionclients:
+        'recharge_battery':
+          type: 'suave_msgs/action/RechargeBattery'

@@ -1,0 +1,11 @@
+suave_rebetmc:
+  artifacts:
+    suave_rebetmc_bt:
+      node: /suave_rebetmc_bt
+      actionclients:
+        'proxy_follow_pipeline':
+          type: 'suave_msgs/action/FollowPipeline'
+        'proxy_spiral_search':
+          type: 'suave_msgs/action/SpiralSearch'
+        'proxy_recover_thrusters':
+          type: 'suave_msgs/action/RecoverThrusters'

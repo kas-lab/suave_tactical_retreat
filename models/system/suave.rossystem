@@ -1,7 +1,5 @@
 suave:
   nodes:
-    "/suave_runner_node":
-      from: "suave_runner./suave_runner_node"
     "/gz_pipe_pose_bridge":
       from: "ros_gz_bridge./gz_pipe_pose_bridge"
       interfaces:
@@ -113,25 +111,33 @@ suave:
       parameters:
         - "use_sim_time": "recover_thrusters::use_sim_time"
           value: false
-    "/mission_metrics":
-      from: "suave_metrics./mission_metrics"
+    "/suave_rebetmc_bt":
+      from: "suave_rebetmc./suave_rebetmc_bt"
       interfaces:
-        - "diagnostics": sub-> "mission_metrics::diagnostics"
-        - "f_maintain_motion_node/transition_event": sub-> "mission_metrics::f_maintain_motion_node/transition_event"
-        - "generate_recharge_path_node/transition_event": sub-> "mission_metrics::generate_recharge_path_node/transition_event"
-        - "pipeline/detected": sub-> "mission_metrics::pipeline/detected"
-        - "pipeline/distance_inspected": sub-> "mission_metrics::pipeline/distance_inspected"
-        - "pipeline/inspected": sub-> "mission_metrics::pipeline/inspected"
-        - "mission_metrics/save": ss-> "mission_metrics::mission_metrics/save"
-    "/mission_node":
-      from: "suave_missions./mission_node"
+        - "proxy_follow_pipeline": ac-> "suave_rebetmc_bt::proxy_follow_pipeline"
+        - "proxy_spiral_search": ac-> "suave_rebetmc_bt::proxy_spiral_search"
+        - "proxy_recover_thrusters": ac-> "suave_rebetmc_bt::proxy_recover_thrusters"
+    "/spiral_search_adaptation_proxy":
+      from: "adapt_x./spiral_search_adaptation_proxy"
       interfaces:
-        - "diagnostics": sub-> "mission_node::diagnostics"
-        - "pipeline/detected": sub-> "mission_node::pipeline/detected"
-        - "pipeline/inspected": sub-> "mission_node::pipeline/inspected"
-      parameters:
-        - "time_limit": "mission_node::time_limit"
-          value: 300
-        - "use_sim_time": "mission_node::use_sim_time"
-          value: false
-
+        - "requirements": sub-> "adaptation_proxy::requirements"
+        - "proxy_spiral_search": as-> "adaptation_proxy::proxy_spiral_search"
+        - "spiral_search": ac-> "adaptation_proxy::spiral_search"
+    "/follow_pipeline_adaptation_proxy":
+      from: "adapt_x./follow_pipeline_adaptation_proxy"
+      interfaces:
+        - "requirements": sub-> "adaptation_proxy::requirements"
+        - "proxy_follow_pipeline": as-> "adaptation_proxy::proxy_follow_pipeline"
+        - "follow_pipeline": ac-> "adaptation_proxy::follow_pipeline"
+    "/recharge_battery_adaptation_proxy":
+      from: "adapt_x./recharge_battery_adaptation_proxy"
+      interfaces:
+        - "requirements": sub-> "adaptation_proxy::requirements"
+        - "proxy_recharge_battery": as-> "adaptation_proxy::proxy_recharge_battery"
+        - "recharge_battery": ac-> "adaptation_proxy::recharge_battery"
+    "/recover_thrusters_adaptation_proxy":
+      from: "adapt_x./recover_thrusters_adaptation_proxy"
+      interfaces:
+        - "requirements": sub-> "adaptation_proxy::requirements"
+        - "proxy_recover_thrusters": as-> "adaptation_proxy::proxy_recover_thrusters"
+        - "recover_thrusters": ac-> "adaptation_proxy::recover_thrusters"

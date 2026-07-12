@@ -5,8 +5,11 @@ import "suave.var";
 variability_model suave_variability;
 ros_system suave;
 
-FunctionalMapping 
-SEARCH_PIPELINE -> SpiralSearch 
+FunctionalMapping
+SEARCH_PIPELINE -> SpiralSearch
+FOLLOW_PIPELINE -> FollowPipeline
+RECHARGE -> RechargeBattery
+RECOVER_MOTION -> RecoverThrusters
 
 Reconfigurations
 TASK.SEARCH_PIPELINE :

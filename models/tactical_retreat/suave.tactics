@@ -15,7 +15,7 @@ SpiralSearch {
             select_variant(suave_resolution.LOW_ALTITUDE)
         }
     };
-    
+
     rule MEDIUM_ALTITUDE {
         guard {
             context(water_visibility < 3.25
@@ -26,7 +26,7 @@ SpiralSearch {
             select_variant(suave_resolution.MEDIUM_ALTITUDE)
         }
     };
-    
+
     rule HIGH_ALTITUDE {
         guard {
             context(water_visibility >= 3.25)
@@ -36,39 +36,9 @@ SpiralSearch {
             select_variant(suave_resolution.HIGH_ALTITUDE)
         }
     };
-    
-    rule START_RECOVER_MOTION {
-        guard {
-            context(c_thruster_1 == "FALSE"
-                OR c_thruster_2 == "FALSE"
-                OR c_thruster_3 == "FALSE"
-                OR c_thruster_4 == "FALSE"
-                OR c_thruster_5 == "FALSE"
-                OR c_thruster_6 == "FALSE")
-            features(!selected(suave_resolution.RECOVER_MOTION))
-        }
-        action {
-            select_variant(suave_resolution.RECOVER_MOTION)
-        }
-    };
-    
-    rule END_RECOVER_MOTION {
-        guard {
-            context(c_thruster_1 == "RECOVERED"
-                AND c_thruster_2 == "RECOVERED"
-                AND c_thruster_3 == "RECOVERED"
-                AND c_thruster_4 == "RECOVERED"
-                AND c_thruster_5 == "RECOVERED"
-                AND c_thruster_6 == "RECOVERED")
-            features(selected(suave_resolution.RECOVER_MOTION))
-        }
-        action {
-            unselect_variant(suave_resolution.RECOVER_MOTION)
-        }
-    };  
 }
 
-FollowPipeline {
+RecoverThrusters {
 	rule START_RECOVER_MOTION {
         guard {
             context(c_thruster_1 == "FALSE"

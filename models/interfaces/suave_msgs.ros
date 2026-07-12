@@ -26,12 +26,12 @@ suave_msgs:
         bool timed_out
       feedback
         float32 distance_inspected
-    RecoverThrusters
+    RechargeBattery
       goal
       result
         bool success
       feedback
-    RechargeBattery
+    RecoverThrusters
       goal
       result
         bool success

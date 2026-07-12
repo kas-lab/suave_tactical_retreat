@@ -1,0 +1,16 @@
+adapt_x_msgs:
+  msgs:
+    DesiredFeatures
+        message
+            string[] active_features
+            string[] inactive_features
+    RelaxedRequirement
+        message
+            string name
+            string natural_language_description
+            float64 fulfillment
+            string system_name
+    RelaxedRequirements
+        message
+            "std_msgs/msg/Header" header
+            "adapt_x_msgs/msg/RelaxedRequirement"[] requirements
