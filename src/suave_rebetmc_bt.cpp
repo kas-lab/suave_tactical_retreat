@@ -38,10 +38,10 @@ int main(int argc, char * argv[])
 
   BT::BehaviorTreeFactory factory;
 
-  const auto tactical_bt_pkgpath = ament_index_cpp::get_package_share_directory("tactical_bt");
-  const auto tactical_bt_plugin_path =
-    tactical_bt_pkgpath + "/bt_plugins/" + BT::SharedLibrary::getOSName("tactical_bt_nodes");
-  factory.registerFromPlugin(tactical_bt_plugin_path);
+  const auto adapt_x_bt_pkgpath = ament_index_cpp::get_package_share_directory("adapt_x_bt");
+  const auto adapt_x_bt =
+    adapt_x_bt_pkgpath + "/bt_plugins/" + BT::SharedLibrary::getOSName("adapt_x_bt_nodes");
+  factory.registerFromPlugin(adapt_x_bt);
 
   factory.registerNodeType<suave_bt::ArmThrusters>("arm_thrusters");
   factory.registerNodeType<suave_bt::InspectPipeline>("inspect_pipeline");
@@ -58,6 +58,7 @@ int main(int argc, char * argv[])
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set<std::shared_ptr<suave_bt::SuaveMission>>("node", node);
+  blackboard->set<bool>("use_action_server", true);
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
 

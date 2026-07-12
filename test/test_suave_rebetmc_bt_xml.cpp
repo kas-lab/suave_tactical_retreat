@@ -20,7 +20,8 @@
 #include <thread>
 #include <vector>
 
-#include "tactical_msgs/action/set_desired_features.hpp"
+#include "aal_msgs/srv/adapt_architecture.hpp"
+#include "adapt_x_msgs/srv/fetch_plan_from_desired_features.hpp"
 #include "ament_index_cpp/get_package_share_directory.hpp"
 #include "behaviortree_cpp/bt_factory.h"
 #include "behaviortree_cpp/utils/shared_library.h"
@@ -29,7 +30,6 @@
 #include "mavros_msgs/srv/command_bool.hpp"
 #include "mavros_msgs/srv/set_mode.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "rclcpp_action/rclcpp_action.hpp"
 #include "std_msgs/msg/bool.hpp"
 #include "std_srvs/srv/empty.hpp"
 #include "suave_bt/action_arm_thrusters.hpp"
@@ -51,10 +51,10 @@ struct ReconfigureGoal
 
 void RegisterSuaveRebetmcNodes(BT::BehaviorTreeFactory & factory)
 {
-  const auto tactical_bt_pkgpath = ament_index_cpp::get_package_share_directory("tactical_bt");
-  const auto tactical_bt_plugin_path =
-    tactical_bt_pkgpath + "/bt_plugins/" + BT::SharedLibrary::getOSName("tactical_bt_nodes");
-  factory.registerFromPlugin(tactical_bt_plugin_path);
+  const auto adapt_x_bt_pkgpath = ament_index_cpp::get_package_share_directory("adapt_x_bt");
+  const auto adapt_x_bt_plugin_path =
+    adapt_x_bt_pkgpath + "/bt_plugins/" + BT::SharedLibrary::getOSName("adapt_x_bt_nodes");
+  factory.registerFromPlugin(adapt_x_bt_plugin_path);
 
   factory.registerNodeType<suave_bt::ArmThrusters>("arm_thrusters");
   factory.registerNodeType<suave_bt::InspectPipeline>("inspect_pipeline");
@@ -75,29 +75,40 @@ BT::Tree CreateSuaveRebetmcTree(
 class MockSuaveRuntime : public rclcpp::Node
 {
 public:
-  using ReconfigureAction = tactical_msgs::action::SetDesiredFeatures;
-  using ReconfigureGoalHandle = rclcpp_action::ServerGoalHandle<ReconfigureAction>;
+  using FetchPlanSrv = adapt_x_msgs::srv::FetchPlanFromDesiredFeatures;
+  using AdaptSrv = aal_msgs::srv::AdaptArchitecture;
 
   MockSuaveRuntime()
   : Node("mock_suave_rebetmc_bt_runtime")
   {
-    reconfigure_server_ = rclcpp_action::create_server<ReconfigureAction>(
-      this,
-      "/set_desired_features",
+    fetch_plan_service_ = create_service<FetchPlanSrv>(
+      "/fetch_plan_from_desired_features",
       [this](
-        const rclcpp_action::GoalUUID &,
-        std::shared_ptr<const ReconfigureAction::Goal>)
+        const FetchPlanSrv::Request::SharedPtr request,
+        FetchPlanSrv::Response::SharedPtr response)
       {
-        return rclcpp_action::GoalResponse::ACCEPT_AND_EXECUTE;
-      },
-      [](const std::shared_ptr<ReconfigureGoalHandle>)
+        {
+          std::lock_guard<std::mutex> lock(mutex_);
+          received_goals_.push_back(
+            ReconfigureGoal{
+              request->desired_features.active_features,
+              request->desired_features.inactive_features});
+        }
+        // The mock runtime doesn't need a real reconfiguration plan: the
+        // decorator only forwards whatever fetch_plan_from_desired_features
+        // returns to adapt_architecture, which is mocked below.
+        response->adaptation_plan = {};
+        response->success = true;
+      });
+
+    adapt_service_ = create_service<AdaptSrv>(
+      "/adapt_architecture",
+      [this](
+        const AdaptSrv::Request::SharedPtr,
+        AdaptSrv::Response::SharedPtr response)
       {
-        return rclcpp_action::CancelResponse::ACCEPT;
-      },
-      [this](const std::shared_ptr<ReconfigureGoalHandle> goal_handle)
-      {
-        std::thread{std::bind(&MockSuaveRuntime::executeReconfigure, this, goal_handle)}
-        .detach();
+        adapt_requests_++;
+        response->success = true;
       });
 
     arming_service_ = create_service<mavros_msgs::srv::CommandBool>(
@@ -162,30 +173,18 @@ public:
   int armedRequests() const {return armed_requests_;}
   int guidedRequests() const {return guided_requests_;}
   int saveMetricsRequests() const {return save_metrics_requests_;}
+  int adaptRequests() const {return adapt_requests_;}
 
 private:
-  void executeReconfigure(const std::shared_ptr<ReconfigureGoalHandle> goal_handle)
-  {
-    const auto & configuration = goal_handle->get_goal()->desired_features;
-    {
-      std::lock_guard<std::mutex> lock(mutex_);
-      received_goals_.push_back(
-        ReconfigureGoal{configuration.active_features, configuration.inactive_features});
-    }
-
-    auto result = std::make_shared<ReconfigureAction::Result>();
-    result->success = true;
-    result->message = "mock reconfiguration complete";
-    goal_handle->succeed(result);
-  }
-
   mutable std::mutex mutex_;
   std::vector<ReconfigureGoal> received_goals_;
   int armed_requests_{0};
   int guided_requests_{0};
   int save_metrics_requests_{0};
+  int adapt_requests_{0};
 
-  rclcpp_action::Server<ReconfigureAction>::SharedPtr reconfigure_server_;
+  rclcpp::Service<FetchPlanSrv>::SharedPtr fetch_plan_service_;
+  rclcpp::Service<AdaptSrv>::SharedPtr adapt_service_;
   rclcpp::Service<mavros_msgs::srv::CommandBool>::SharedPtr arming_service_;
   rclcpp::Service<mavros_msgs::srv::SetMode>::SharedPtr set_mode_service_;
   rclcpp::Service<std_srvs::srv::Empty>::SharedPtr save_metrics_service_;

@@ -14,13 +14,17 @@
             <EnsureConfiguration features_to_deactivate_on_exit="SEARCH_PIPELINE"
                                  features_to_deactivate=""
                                  features_to_activate="SEARCH_PIPELINE"
-                                 action_name="/set_desired_features">
+                                 resolution_model="suave_resolution"
+                                 fetch_plan_service_name="/tactical_retreat_kb_node/fetch_plan_from_desired_features"
+                                 adapt_service_name="/adapt_architecture">
               <search_pipeline/>
             </EnsureConfiguration>
             <EnsureConfiguration features_to_deactivate_on_exit="FOLLOW_PIPELINE"
                                  features_to_deactivate=""
                                  features_to_activate="FOLLOW_PIPELINE"
-                                 action_name="/set_desired_features">
+                                 resolution_model="suave_resolution"
+                                 fetch_plan_service_name="/tactical_retreat_kb_node/fetch_plan_from_desired_features"
+                                 adapt_service_name="/adapt_architecture">
               <inspect_pipeline/>
             </EnsureConfiguration>
           </SequenceWithMemory>
@@ -38,9 +42,14 @@
                   type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be inactive before the child runs</input_port>
       <input_port name="features_to_activate"
                   type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be active before the child runs</input_port>
-      <input_port name="action_name"
-                  default="/set_desired_features"
-                  type="std::string">SetDesiredFeatures action server name</input_port>
+      <input_port name="resolution_model"
+                  type="std::string">Resolution model to scope the reconfiguration plan lookup to</input_port>
+      <input_port name="fetch_plan_service_name"
+                  default="/fetch_plan_from_desired_features"
+                  type="std::string">FetchPlanFromDesiredFeatures service name</input_port>
+      <input_port name="adapt_service_name"
+                  default="/adapt_architecture"
+                  type="std::string">AdaptArchitecture service name</input_port>
     </Decorator>
     <Action ID="arm_thrusters"
             editable="true"/>

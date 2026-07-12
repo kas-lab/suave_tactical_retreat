@@ -1,18 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root BTCPP_format="4" project_name="Project">
+    <include path="../../rebet_frog/trees/frog_aal_arch_tactical.xml"/>
     <include path="suave.xml"/>
     <!-- Description of Node Models (used by Groot) -->
     <TreeNodesModel>
+        <Decorator ID="AdaptOnConditionAny">
+            <input_port name="child_status" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Status of child which should trigger adaptation.</input_port>
+            <input_port name="adaptation_type" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Whether to do an internal, external, or tactical adaptation</input_port>
+            <input_port name="period" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">The number of (ns/ms/s/min) to wait between sending adaptation requests e.g. 5s</input_port>
+        </Decorator>
+        <Decorator ID="AdaptPictureRateOff" editable="true">
+            <input_port name="ros_node_name"/>
+            <input_port name="parameter_name"/>
+            <input_port name="in_power"/>
+            <input_port name="in_pictask"/>
+            <input_port name="obstacles_total"/>
+            <input_port name="lighting_in"/>
+            <input_port name="out_pic_rate"/>
+            <input_port name="out_cam_top"/>
+        </Decorator>
+        <Decorator ID="DetectObjectsEfficiently" editable="true">
+            <input_port name="weight"/>
+            <input_port name="objs_identified"/>
+            <input_port name="metric"/>
+            <input_port name="mean_metric"/>
+            <input_port name="out_status"/>
+        </Decorator>
+        <Decorator ID="DetectObjectsSavePower" editable="true">
+            <input_port name="weight"/>
+            <input_port name="obstacles_total"/>
+            <input_port name="metric"/>
+            <input_port name="objs_identified"/>
+            <input_port name="mean_metric"/>
+        </Decorator>
         <Decorator ID="EnsureConfiguration">
             <input_port name="features_to_deactivate_on_exit" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Teardown override. Empty=deactivate features_to_activate. ["none"]=skip.</input_port>
             <input_port name="features_to_deactivate" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be inactive before the child runs</input_port>
             <input_port name="features_to_activate" type="std::vector&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;, std::allocator&lt;std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt; &gt; &gt;">Features that must be active before the child runs</input_port>
             <input_port name="action_name" default="/set_desired_features" type="std::string">SetDesiredFeatures action server name</input_port>
         </Decorator>
+        <Decorator ID="MoveQuickly" editable="true">
+            <input_port name="weight"/>
+            <input_port name="metric"/>
+            <input_port name="mean_metric"/>
+            <input_port name="in_odom"/>
+        </Decorator>
+        <Decorator ID="MoveSafely" editable="true">
+            <input_port name="weight"/>
+            <input_port name="metric"/>
+            <input_port name="mean_metric"/>
+            <input_port name="in_laser_scan"/>
+        </Decorator>
+        <Decorator ID="MovementPowerQR" editable="true">
+            <input_port name="weight"/>
+            <input_port name="metric"/>
+            <input_port name="mean_metric"/>
+            <input_port name="in_odom"/>
+        </Decorator>
+        <Action ID="NewIDObj" editable="true">
+            <input_port name="pictures_taken"/>
+            <input_port name="number_detected"/>
+            <input_port name="service_name"/>
+            <input_port name="objs_identified"/>
+            <input_port name="name_of_task"/>
+        </Action>
         <Action ID="arm_thrusters" editable="true"/>
-        <Action ID="inspect_pipeline" editable="true"/>
+        <Action ID="filterObstacles" editable="true">
+            <input_port name="map_to_filter"/>
+            <input_port name="obstacle_positions"/>
+            <input_port name="obstacle_number"/>
+        </Action>
+        <Action ID="getMap" editable="true">
+            <input_port name="service_name"/>
+            <input_port name="map_retrieved"/>
+        </Action>
+        <Action ID="getRobotPose" editable="true">
+            <input_port name="topic_name"/>
+            <input_port name="out_pose"/>
+        </Action>
+        <Action ID="initialPose" editable="true">
+            <input_port name="topic_name"/>
+            <input_port name="in_pose"/>
+        </Action>
+        <Action ID="inspect_pipeline" editable="true">
+            <input_port name="action_name" type="std::string">Action name</input_port>
+        </Action>
         <Condition ID="is_mission_aborted" editable="true"/>
-        <Action ID="search_pipeline" editable="true"/>
+        <Action ID="search_pipeline" editable="true">
+            <input_port name="action_name" type="std::string">Action name</input_port>
+        </Action>
         <Action ID="set_guided_mode" editable="true"/>
+        <Action ID="visitObs" editable="true">
+            <input_port name="poses"/>
+            <input_port name="name_of_task"/>
+            <input_port name="in_pose"/>
+            <input_port name="action_name"/>
+        </Action>
     </TreeNodesModel>
 </root>
