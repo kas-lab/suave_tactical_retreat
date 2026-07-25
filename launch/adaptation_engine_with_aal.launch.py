@@ -84,7 +84,7 @@ def generate_launch_description():
         package='aal',
         executable='adaptation_layer',
         name='adaptation_layer',
-        output='screen'
+        output='full',
     )
 
     suave_rebetmc_config = os.path.join(
@@ -103,14 +103,14 @@ def generate_launch_description():
         parameters=[adaptation_proxies_config],
     )
 
-    follow_pipeline_proxy_node = LifecycleNode(
-        package='adapt_x',
-        executable='adaptation_proxy',
-        output='screen',
-        name='follow_pipeline_adaptation_proxy',
-        namespace='',
-        parameters=[adaptation_proxies_config],
-    )
+    # follow_pipeline_proxy_node = LifecycleNode(
+    #     package='adapt_x',
+    #     executable='adaptation_proxy',
+    #     output='screen',
+    #     name='follow_pipeline_adaptation_proxy',
+    #     namespace='',
+    #     parameters=[adaptation_proxies_config],
+    # )
 
     recover_thrusters_proxy_node = LifecycleNode(
         package='adapt_x',
@@ -121,20 +121,20 @@ def generate_launch_description():
         parameters=[adaptation_proxies_config],
     )
 
-    recharge_battery_proxy_node = LifecycleNode(
-        package='adapt_x',
-        executable='adaptation_proxy',
-        output='screen',
-        name='recharge_battery_adaptation_proxy',
-        namespace='',
-        parameters=[adaptation_proxies_config],
-    )
+    # recharge_battery_proxy_node = LifecycleNode(
+    #     package='adapt_x',
+    #     executable='adaptation_proxy',
+    #     output='screen',
+    #     name='recharge_battery_adaptation_proxy',
+    #     namespace='',
+    #     parameters=[adaptation_proxies_config],
+    # )
 
     adaptation_proxy_names = [
         'spiral_search_adaptation_proxy',
-        'follow_pipeline_adaptation_proxy',
         'recover_thrusters_adaptation_proxy',
-        'recharge_battery_adaptation_proxy',
+        # 'follow_pipeline_adaptation_proxy',
+        # 'recharge_battery_adaptation_proxy',
     ]
 
     lifecycle_manager = LifecycleNode(
@@ -220,8 +220,8 @@ def generate_launch_description():
         generated_tql_filename_arg,
         adaptation_layer,
         spiral_search_proxy_node,
-        follow_pipeline_proxy_node,
-        recharge_battery_proxy_node,
+        # follow_pipeline_proxy_node,
+        # recharge_battery_proxy_node,
         recover_thrusters_proxy_node,
         lifecycle_manager,
         lifecycle_manager_activate_event,

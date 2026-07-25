@@ -16,6 +16,7 @@
                                  features_to_activate="SEARCH_PIPELINE"
                                  resolution_model="suave_resolution"
                                  fetch_plan_service_name="/tactical_retreat_kb_node/fetch_plan_from_desired_features"
+                                 update_features_service_name="/tactical_retreat_kb_node/update_features_selected"
                                  adapt_service_name="/adapt_architecture">
               <search_pipeline/>
             </EnsureConfiguration>
@@ -24,6 +25,7 @@
                                  features_to_activate="FOLLOW_PIPELINE"
                                  resolution_model="suave_resolution"
                                  fetch_plan_service_name="/tactical_retreat_kb_node/fetch_plan_from_desired_features"
+                                 update_features_service_name="/tactical_retreat_kb_node/update_features_selected"
                                  adapt_service_name="/adapt_architecture">
               <inspect_pipeline/>
             </EnsureConfiguration>
@@ -50,6 +52,9 @@
       <input_port name="adapt_service_name"
                   default="/adapt_architecture"
                   type="std::string">AdaptArchitecture service name</input_port>
+      <input_port name="update_features_service_name"
+                  default="/update_features_selected"
+                  type="std::string">UpdateFeaturesSelected service name</input_port>
     </Decorator>
     <Action ID="arm_thrusters"
             editable="true"/>

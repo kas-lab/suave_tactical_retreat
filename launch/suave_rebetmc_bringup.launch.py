@@ -96,6 +96,8 @@ def generate_launch_description():
             'result_path': result_path,
             'result_filename': result_filename,
             'mission_config': mission_config,
+            'use_action_server': 'true',
+            'recover_thrusters_use_action_server': 'false',
         }.items(),
     )
 
@@ -120,8 +122,8 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'spiral_search_action_name': 'proxy_spiral_search',
-            'follow_pipeline_action_name': 'proxy_follow_pipeline',
-            'recover_thrusters_action_name': 'proxy_recover_thrusters',
+            'use_action_server': True,
+            # 'follow_pipeline_action_name': 'proxy_follow_pipeline',
         }],
     )
 

@@ -14,9 +14,9 @@ follow_pipeline_adaptation_proxy:
 
 recover_thrusters_adaptation_proxy:
   ros__parameters:
+    operation_mode: "autonomous"
     interface_name: "recover_thrusters"
     system_name: "suave_resolution"
-    interface_type: "suave_msgs/RecoverThrusters"
     adaptation_strategy: "tactic"
 
 recharge_battery_adaptation_proxy:

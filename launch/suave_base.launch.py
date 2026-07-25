@@ -68,6 +68,20 @@ def generate_launch_description():
         description='Mission configuration file',
     )
 
+    use_action_server = LaunchConfiguration('use_action_server')
+    use_action_server_arg = DeclareLaunchArgument(
+        'use_action_server',
+        default_value='false',
+        description='Start managed behaviors through ROS action servers',
+    )
+    recover_thrusters_use_action_server = LaunchConfiguration(
+        'recover_thrusters_use_action_server')
+    recover_thrusters_use_action_server_arg = DeclareLaunchArgument(
+        'recover_thrusters_use_action_server',
+        default_value=use_action_server,
+        description='Override action-server mode for thruster recovery',
+    )
+
     pkg_suave_path = get_package_share_directory('suave')
     suave_launch_path = os.path.join(
         pkg_suave_path,
@@ -80,6 +94,9 @@ def generate_launch_description():
         launch_arguments={
             'task_bridge': 'False',
             'system_modes': 'False',
+            'use_action_server': use_action_server,
+            'recover_thrusters_use_action_server': (
+                recover_thrusters_use_action_server),
         }.items(),
     )
 
@@ -99,6 +116,8 @@ def generate_launch_description():
         result_path_arg,
         result_filename_arg,
         mission_config_arg,
+        use_action_server_arg,
+        recover_thrusters_use_action_server_arg,
         silent_arg,
         OpaqueFunction(function=configure_logging),
         suave_launch,

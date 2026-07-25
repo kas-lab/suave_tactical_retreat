@@ -2,31 +2,27 @@ repositories:
   suave:
     type: git
     url: git@github.com:kas-lab/suave.git
-    version: main
+    version: v1.5.0
   aal:
     type: git
-    url: https://github.com/EGAlberts/AAL-ROS2.git
-    version: mc
+    url: git@github.com:Rezenders/AAL-ROS2.git
+    version: aal_bt
   adapt_x:
     type: git
     url: git@github.com:kas-lab/adapt_x.git
-    version: eval2
+    version: adapt_x_bt
   ros_monitors:
     type: git
     url: git@github.com:kas-lab/ros_monitors.git
-    version: main
+    version: enhancements
   typedb_tactics:
     type: git
     url: git@github.com:kas-lab/typedb_tactics.git
-    version: dev
+    version: suave_experiment
   ros_typedb:
     type: git
     url: git@github.com:kas-lab/ros_typedb.git
     version: timeout_improv
-  adaptation_execution_layer:
-    type: git
-    url: git@github.com:kas-lab/adaptation_execution_layer.git
-    version: main
   rebet_monitors:
     type: git
     url: git@github.com:kas-lab/rebet_monitors.git

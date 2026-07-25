@@ -85,6 +85,11 @@ if(BUILD_TESTING)
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
   ament_add_pytest_test(
+    test_recovery_configuration
+    test/test_recovery_configuration.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  )
+  ament_add_pytest_test(
     test_suave_tactics_kb
     test/test_suave_tactics_kb.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}

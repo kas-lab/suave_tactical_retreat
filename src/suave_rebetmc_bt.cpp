@@ -58,7 +58,7 @@ int main(int argc, char * argv[])
 
   auto blackboard = BT::Blackboard::create();
   blackboard->set<std::shared_ptr<suave_bt::SuaveMission>>("node", node);
-  blackboard->set<bool>("use_action_server", true);
+  // blackboard->set<bool>("use_action_server", true);
 
   BT::Tree tree = factory.createTreeFromFile(xml_file, blackboard);
 

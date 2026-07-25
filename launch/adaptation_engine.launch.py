@@ -17,8 +17,12 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import EmitEvent
+from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
 from launch.actions import RegisterEventHandler
+from launch.actions import Shutdown
+from launch.event_handlers import OnProcessExit
+from launch.event_handlers import OnProcessStart
 from launch.events import matches_action
 from launch.launch_description_sources import AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
@@ -94,11 +98,39 @@ def generate_launch_description():
         os.path.join(
             schema_files, 'discover_tactics_model', 'discover_tactics_model.tql'),
         os.path.join(schema_files, 'relaxed', 'relaxed_model.tql'),
-        # os.path.join(
-        #     schema_files,
-        #     'discover_hypothetical_req_fulfillment',
-        #     'discover_hypothetical_req_fulfillment.tql'),
+        os.path.join(schema_files, 'feature_adaptation_plan', 'feature_adaptation_plan.tql'),
     ]
+
+    typedb_server = ExecuteProcess(
+        cmd=['typedb', 'server'],
+        name='typedb_server',
+        output='screen'
+    )
+
+    typedb_ready_probe = ExecuteProcess(
+        cmd=[
+            'python3',
+            '-c',
+            (
+                'import sys\n'
+                'import time\n'
+                'from typedb.driver import TypeDB\n'
+                '\n'
+                'deadline = time.monotonic() + 10.0\n'
+                'while True:\n'
+                '    try:\n'
+                '        driver = TypeDB.core_driver("localhost:1729")\n'
+                '        driver.close()\n'
+                '        sys.exit(0)\n'
+                '    except Exception:\n'
+                '        if time.monotonic() >= deadline:\n'
+                '            sys.exit(1)\n'
+                '        time.sleep(0.1)\n'
+            ),
+        ],
+        name='wait_for_typedb',
+        output='screen',
+    )
 
     typedb = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
@@ -121,17 +153,38 @@ def generate_launch_description():
         name='adaptation_engine_setup_node',
         namespace='',
         parameters=[engine_config_file]
-        # parameters=[engine_config_file, {
-        #     'save_generated_tql': save_generated_tql,
-        #     'generated_tql_path': generated_tql_path,
-        #     'generated_tql_filename': generated_tql_filename,
-        # }]
     )
 
     config_event = EmitEvent(
         event=ChangeState(
             lifecycle_node_matcher=matches_action(suave_adap_engine),
             transition_id=lifecycle_msgs.msg.Transition.TRANSITION_CONFIGURE,
+        )
+    )
+
+    def on_typedb_probe_exit(event, context):
+        del context
+
+        if event.returncode == 0:
+            return [typedb, suave_adap_engine, config_event]
+
+        return [
+            Shutdown(
+                reason='TypeDB did not become ready within 10 seconds',
+            ),
+        ]
+
+    start_typedb_probe = RegisterEventHandler(
+        OnProcessStart(
+            target_action=typedb_server,
+            on_start=[typedb_ready_probe],
+        )
+    )
+
+    launch_after_typedb_ready = RegisterEventHandler(
+        OnProcessExit(
+            target_action=typedb_ready_probe,
+            on_exit=on_typedb_probe_exit,
         )
     )
 
@@ -152,8 +205,8 @@ def generate_launch_description():
         save_generated_tql_arg,
         generated_tql_path_arg,
         generated_tql_filename_arg,
-        typedb,
-        suave_adap_engine,
-        config_event,
         activate,
+        launch_after_typedb_ready,
+        start_typedb_probe,
+        typedb_server,
     ])

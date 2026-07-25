@@ -732,23 +732,24 @@ activation: $f_high_altitude
 $tactic_rule_high_altitude (tactic:$ta_suave_tactics,
 							 antecedent:$expr__2, 
 							consequent:$high_altitudefa							) isa tactic_rule, has rule_name "HIGH_ALTITUDE";
- $is_selected_f_recover_motion_1 (atom: $f_recover_motion) isa propositional_expression;
-$c_thruster_1_equal_val isa ValueString, has string_value '"FALSE"';
+ $is_selected_f_recover_motion_1_positive (atom: $f_recover_motion) isa propositional_expression;
+$is_selected_f_recover_motion_1 (expression: $is_selected_f_recover_motion_1_positive) isa not_expression;
+$c_thruster_1_equal_val isa ValueString, has string_value "FALSE";
 $c_thruster_1_equal (lhs_value:$t_measured_c_thruster_1, rhs_value: $c_thruster_1_equal_val) isa equal, has expression_name "c_thruster_1_equal";
 
-$c_thruster_2_equal_val isa ValueString, has string_value '"FALSE"';
+$c_thruster_2_equal_val isa ValueString, has string_value "FALSE";
 $c_thruster_2_equal (lhs_value:$t_measured_c_thruster_2, rhs_value: $c_thruster_2_equal_val) isa equal, has expression_name "c_thruster_2_equal";
 
-$c_thruster_3_equal_val isa ValueString, has string_value '"FALSE"';
+$c_thruster_3_equal_val isa ValueString, has string_value "FALSE";
 $c_thruster_3_equal (lhs_value:$t_measured_c_thruster_3, rhs_value: $c_thruster_3_equal_val) isa equal, has expression_name "c_thruster_3_equal";
 
-$c_thruster_4_equal_val isa ValueString, has string_value '"FALSE"';
+$c_thruster_4_equal_val isa ValueString, has string_value "FALSE";
 $c_thruster_4_equal (lhs_value:$t_measured_c_thruster_4, rhs_value: $c_thruster_4_equal_val) isa equal, has expression_name "c_thruster_4_equal";
 
-$c_thruster_5_equal_val isa ValueString, has string_value '"FALSE"';
+$c_thruster_5_equal_val isa ValueString, has string_value "FALSE";
 $c_thruster_5_equal (lhs_value:$t_measured_c_thruster_5, rhs_value: $c_thruster_5_equal_val) isa equal, has expression_name "c_thruster_5_equal";
 
-$c_thruster_6_equal_val isa ValueString, has string_value '"FALSE"';
+$c_thruster_6_equal_val isa ValueString, has string_value "FALSE";
 $c_thruster_6_equal (lhs_value:$t_measured_c_thruster_6, rhs_value: $c_thruster_6_equal_val) isa equal, has expression_name "c_thruster_6_equal";
 
 $expr__3 (
@@ -771,17 +772,17 @@ $tactic_rule_start_recover_motion (tactic:$ta_suave_tactics,
 							 antecedent:$expr__4, 
 							consequent:$start_recover_motionfa							) isa tactic_rule, has rule_name "START_RECOVER_MOTION";
  $is_selected_f_recover_motion_2 (atom: $f_recover_motion) isa propositional_expression;
-$c_thruster_1_equal_1_val isa ValueString, has string_value '"RECOVERED"';
+$c_thruster_1_equal_1_val isa ValueString, has string_value "RECOVERED";
 $c_thruster_1_equal_1 (lhs_value:$t_measured_c_thruster_1, rhs_value: $c_thruster_1_equal_1_val) isa equal, has expression_name "c_thruster_1_equal_1";
-$c_thruster_2_equal_1_val isa ValueString, has string_value '"RECOVERED"';
+$c_thruster_2_equal_1_val isa ValueString, has string_value "RECOVERED";
 $c_thruster_2_equal_1 (lhs_value:$t_measured_c_thruster_2, rhs_value: $c_thruster_2_equal_1_val) isa equal, has expression_name "c_thruster_2_equal_1";
-$c_thruster_3_equal_1_val isa ValueString, has string_value '"RECOVERED"';
+$c_thruster_3_equal_1_val isa ValueString, has string_value "RECOVERED";
 $c_thruster_3_equal_1 (lhs_value:$t_measured_c_thruster_3, rhs_value: $c_thruster_3_equal_1_val) isa equal, has expression_name "c_thruster_3_equal_1";
-$c_thruster_4_equal_1_val isa ValueString, has string_value '"RECOVERED"';
+$c_thruster_4_equal_1_val isa ValueString, has string_value "RECOVERED";
 $c_thruster_4_equal_1 (lhs_value:$t_measured_c_thruster_4, rhs_value: $c_thruster_4_equal_1_val) isa equal, has expression_name "c_thruster_4_equal_1";
-$c_thruster_5_equal_1_val isa ValueString, has string_value '"RECOVERED"';
+$c_thruster_5_equal_1_val isa ValueString, has string_value "RECOVERED";
 $c_thruster_5_equal_1 (lhs_value:$t_measured_c_thruster_5, rhs_value: $c_thruster_5_equal_1_val) isa equal, has expression_name "c_thruster_5_equal_1";
-$c_thruster_6_equal_1_val isa ValueString, has string_value '"RECOVERED"';
+$c_thruster_6_equal_1_val isa ValueString, has string_value "RECOVERED";
 $c_thruster_6_equal_1 (lhs_value:$t_measured_c_thruster_6, rhs_value: $c_thruster_6_equal_1_val) isa equal, has expression_name "c_thruster_6_equal_1";
 $expr__5 (
 		    	expression:$is_selected_f_recover_motion_2, 
