@@ -14,7 +14,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The managed system is SUAVE (see `suave.repos` / the SUAVE CLAUDE.md). suave_rebetmc is the *managing subsystem* that plugs into SUAVE's `/task/request`, `/task/cancel`, and `system_modes` interfaces.
 
-Runtime stack: ROS 2 Humble · TypeDB 2.28.3 · adapt_x · AAL · ros_monitors · ArduSub/ArduPilot SITL · Gazebo Harmonic · MAVROS · Docker.
+Runtime stack: ROS 2 Humble · TypeDB 2.29.1 · adapt_x · AAL · ros_monitors · ArduSub/ArduPilot SITL · Gazebo Harmonic · MAVROS · Docker.
 
 ## Repository Layout
 
@@ -85,7 +85,7 @@ docker build --secret id=gh_token,src=<(gh auth token) --build-arg DEPS_CACHE_BU
 docker build --check src/suave_rebetmc/
 ```
 
-The Dockerfile extends `suave-headless:dev` and adds: TypeDB 2.28.3, Java 21 (`openjdk-21-jre`), Maven 3.9.16, `typedb-driver==2.28.0`, and the extra workspace deps via `suave_rebetmc.repos` + `vcs import --skip-existing`.
+The Dockerfile extends `suave-headless:dev` and adds: TypeDB 2.29.1, Java 21 (`openjdk-21-jre`), Maven 3.9.16, `typedb-driver==2.29.7`, and the extra workspace deps via `suave_rebetmc.repos` + `vcs import --skip-existing`.
 
 ## Dependencies
 

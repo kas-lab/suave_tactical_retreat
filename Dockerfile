@@ -6,12 +6,8 @@ RUN sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 17507562824cfd
     echo "deb https://repo.typedb.com/public/public-release/deb/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/vaticle.list > /dev/null
 
 RUN sudo apt-get update && sudo apt-get install -y \
-    openjdk-21-jdk \
     typedb=2.29.1 \
     && sudo rm -rf /var/lib/apt/lists/*
-
-ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
-ENV PATH="${JAVA_HOME}/bin:${PATH}"
 
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz -P /tmp && \
     sudo tar -xf /tmp/apache-maven-3.9.16-bin.tar.gz -C /opt && \
@@ -34,6 +30,8 @@ RUN --mount=type=secret,id=gh_token,uid=1000,gid=1000,mode=0400 bash -lc '\
 
 ## Copy suave_rebetmc source
 COPY --chown=ubuntu-user:ubuntu-user . $HOME/suave_ws/src/suave_rebetmc/
+COPY --chown=ubuntu-user:ubuntu-user --chmod=0755 \
+    scripts/run_suave_runner.sh $HOME/suave_ws/run_suave_runner.sh
 
 RUN ["/bin/bash", "-c", "source /opt/ros/humble/setup.bash \
     && cd $HOME/suave_ws \

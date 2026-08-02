@@ -31,7 +31,7 @@ Dockerfile                 Extends suave-headless:dev
 ## Dependencies And Environment
 
 - ROS 2 Humble (from `suave-headless:dev` base)
-- TypeDB 2.28.3, typedb-driver 2.28.0
+- TypeDB 2.29.1, typedb-driver 2.29.7
 - Java 21 JDK (`openjdk-21-jdk`; `JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64`), Maven 3.9.16
 - adapt_x, aal (branch `mc`), ros_monitors, typedb_tactics (branch `dev`)
 - Full SUAVE stack (ardupilot, Gazebo Harmonic, MAVROS) — inherited from base image

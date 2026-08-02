@@ -119,8 +119,9 @@ def generate_launch_description():
     suave_rebetmc_bt = Node(
         package='suave_rebetmc',
         executable='suave_rebetmc_bt',
+        name='mission_node',
         output='screen',
-        parameters=[{
+        parameters=[mission_config, {
             'spiral_search_action_name': 'proxy_spiral_search',
             'use_action_server': True,
             # 'follow_pipeline_action_name': 'proxy_follow_pipeline',

@@ -102,3 +102,18 @@ ros2 run suave_runner suave_runner \
       \"mission_name\": \"suave\"}"
   ]'
 ```
+
+### Metacontrol
+
+```bash
+ros2 run suave_runner suave_runner \
+  --ros-args \
+  -p gui:=False \
+  -p experiment_logging:=True \
+  -p experiments:='[
+    "{\"experiment_launch\": \"ros2 launch suave_bringup mission.launch.py adaptation_manager:=metacontrol\", \
+      \"num_runs\": 1, \
+      \"adaptation_manager\": \"metacontrol\", \
+      \"mission_name\": \"suave\"}"
+  ]'
+```

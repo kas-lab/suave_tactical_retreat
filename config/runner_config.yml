@@ -21,35 +21,35 @@
       - |
         {
           "experiment_launch": "ros2 launch suave_rebetmc suave_rebetmc_bringup.launch.py",
-          "num_runs": 10,
+          "num_runs": 20,
           "adaptation_manager": "rebetmc",
           "mission_name": "suave"
         }
       - |
         {
           "experiment_launch": "ros2 launch suave_bringup mission.launch.py adaptation_manager:=bt",
-          "num_runs": 10,
+          "num_runs": 20,
           "adaptation_manager": "bt",
           "mission_name": "suave"
         }
       - |
         {
           "experiment_launch": "ros2 launch suave_bringup mission.launch.py adaptation_manager:=metacontrol",
-          "num_runs": 10,
+          "num_runs": 20,
           "adaptation_manager": "metacontrol",
           "mission_name": "suave"
         }
       - |
         {
           "experiment_launch": "ros2 launch suave_bringup mission.launch.py adaptation_manager:=random",
-          "num_runs": 10,
+          "num_runs": 20,
           "adaptation_manager": "random",
           "mission_name": "suave"
         }
       - |
         {
           "experiment_launch": "ros2 launch suave_bringup mission.launch.py adaptation_manager:=none",
-          "num_runs": 10,
+          "num_runs": 20,
           "adaptation_manager": "none",
           "mission_name": "suave"
         }
