@@ -3,6 +3,38 @@
     result_path: '~/suave/results'
     gui: false # Enable GUI
     experiment_logging: false # Enable silent mode
+    health_logging_mode: trace # Persist summary, events, and compact 1 Hz trace
+    health_trace_period: 1.0 # Seconds between compact trace snapshots
+    health_writer_queue_size: 120 # Maximum buffered trace rows
+    health_writer_flush_rows: 10 # Flush CSV output after this many rows
+    critical_processes: # A zero-code early exit still invalidates these
+      - ardupilot
+      - simulation_launch
+      - experiment_launch
+      - mavros_node
+      - parameter_bridge
+      - water_visibility_observer
+      - battery_monitor
+      - thruster_monitor
+      - pipeline_detection_wv
+      - f_generate_search_path_node
+      - spiral_search
+      - follow_pipeline
+      - recharge_battery
+      - recover_thrusters
+      - task_bridge
+      - mode_manager
+      - time_constrained_mission
+      - mission_metrics
+    state_stale_timeout_s: 3.0
+    pose_stale_timeout_s: 3.0
+    detector_stale_timeout_s: 3.0
+    setpoint_stale_timeout_s: 15.0
+    stall_window_s: 15.0
+    stall_min_displacement_m: 0.10
+    stall_target_error_m: 0.50
+    recovery_grace_s: 5.0
+    startup_grace_s: 10.0
     mission_config_pkg: 'suave_rebetmc'
     mission_config_file: 'config/runner_mission_config.yaml'
     water_visibility_sec_shift: 0.0
