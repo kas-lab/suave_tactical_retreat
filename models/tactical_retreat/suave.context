@@ -10,12 +10,28 @@ function_name "get_data_from_diagnostic_array"
 function_args "QA status,water_visibility,float"
 }
 
+ContextVariable search_coverage_area
+{
+source: origin: publisher: _slash_pipeline_detection_node.diagnostics
+type: float32 cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "QA status,water_visibility,float"
+}
+
 ContextVariable battery_level
 {
 source: origin: publisher: _slash_battery_monitor.diagnostics
 type: float32 cache? false
 function_name "get_data_from_diagnostic_array"
 function_args "QA status,battery_level,float"
+}
+
+ContextVariable operational_thrusters_delta
+{
+source: origin: publisher: _slash_thruster_monitor.diagnostics
+type: float32 cache? false
+function_name "get_data_from_diagnostic_array"
+function_args "QA status, operational_thrusters,float"
 }
 
 ContextVariable c_thruster_1

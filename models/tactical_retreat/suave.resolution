@@ -8,14 +8,12 @@ ros_system suave;
 FunctionalMapping
 SEARCH_PIPELINE -> SpiralSearch
 FOLLOW_PIPELINE -> FollowPipeline
-RECHARGE -> RechargeBattery
 RECOVER_MOTION -> RecoverThrusters
 
 Reconfigurations
 TASK.SEARCH_PIPELINE :
 select: SetLifecycleState(_slash_f_generate_search_path_node, ACTIVE)
 deselect: SetLifecycleState(_slash_f_generate_search_path_node, INACTIVE)
-
 
 SEARCH_PIPELINE.LOW_ALTITUDE : select: SetParameter(_slash_f_generate_search_path_node,spiral_altitude,1.0) deselect:
 SEARCH_PIPELINE.MEDIUM_ALTITUDE : select: SetParameter(_slash_f_generate_search_path_node,spiral_altitude,2.0) deselect:
@@ -24,10 +22,6 @@ SEARCH_PIPELINE.HIGH_ALTITUDE : select: SetParameter(_slash_f_generate_search_pa
 TASK.FOLLOW_PIPELINE:
 select: SetLifecycleState(_slash_f_follow_pipeline_node, ACTIVE)
 deselect: SetLifecycleState(_slash_f_follow_pipeline_node, INACTIVE)
-
-TASK.RECHARGE:
-select: SetLifecycleState(_slash_generate_recharge_path_node, ACTIVE)
-deselect: SetLifecycleState(_slash_generate_recharge_path_node, INACTIVE)
 
 PIPELINE_INSPECTION.RECOVER_MOTION:
 select: SetLifecycleState(_slash_f_maintain_motion_node, ACTIVE)

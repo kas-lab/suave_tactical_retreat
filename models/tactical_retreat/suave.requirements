@@ -1,0 +1,14 @@
+import ../suave.context
+import ../suave.var
+
+// altitude to area:    3.25  -> 14.08, 2.25 -> 6.75,  1.25 -> 2.08
+// area to fulfillment: 14.08 -> 0.939, 6.75 -> 0.450, 2.08 -> 0.139
+[SEARCH_PIPELINE]  SearchPipelineCoverageArea, Safety:
+ "The AUV shall cover the search are as efficiently as possible while searching for the pipeline",
+ SHALL (AS MANY AS POSSIBLE (^ search_coverage_area,
+        FuzzyRightShoulder(foot=0.0,shoulder=15.0)))
+
+
+[SEARCH_PIPELINE, FOLLOW_PIPELINE] ThrustersOperational, Safety:
+  "The number of operational thrusters shall be as close as possible as the amount of thrusters required by the motion controller"
+  SHALL (AS FEW AS POSSIBLE (^ operational_thrusters_delta, FuzzyLeftShoulder(foot=1.0, shoulder=0.0) ))
