@@ -38,11 +38,6 @@ int main(int argc, char * argv[])
 
   BT::BehaviorTreeFactory factory;
 
-  const auto adapt_x_bt_pkgpath = ament_index_cpp::get_package_share_directory("adapt_x_bt");
-  const auto adapt_x_bt =
-    adapt_x_bt_pkgpath + "/bt_plugins/" + BT::SharedLibrary::getOSName("adapt_x_bt_nodes");
-  factory.registerFromPlugin(adapt_x_bt);
-
   factory.registerNodeType<suave_bt::ArmThrusters>("arm_thrusters");
   factory.registerNodeType<suave_bt::InspectPipeline>("inspect_pipeline");
   factory.registerNodeType<suave_bt::SearchPipeline>("search_pipeline");

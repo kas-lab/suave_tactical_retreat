@@ -2,15 +2,11 @@
   ros__parameters:
     use_sim_time: true
     generate_state: false
-    save_generated_tql: true
-    generated_tql_path: "~/suave_ws/src/suave_rebetmc/models/typedb"
-    generated_tql_filename: "suave_rebetmc.tql"
     context_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.context"
     variability_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.var"
     resolution_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.resolution"
     tactics_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.tactics"
-    requirements_path: ""
-    # requirements_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.reqs"
+    requirements_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.requirements"
     ros_path:
       - "<suave_rebetmc_models_dir>/interfaces/builtin_interfaces.ros"
       - "<suave_rebetmc_models_dir>/interfaces/diagnostic_msgs.ros"

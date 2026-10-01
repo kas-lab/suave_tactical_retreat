@@ -122,12 +122,3 @@ Must interact with:
 - Apache-2.0 header with `Copyright 2026 KAS-lab` on new C++ and Python files.
 - Single-line docstrings where appropriate; keep flake8/pep257/copyright clean.
 
-## Local Agent Context
-
-Useful Serena memories for this project:
-- `mem:core` — repository overview and dependency map
-- `mem:tech_stack` — pinned versions, TypeDB, Java, Maven
-- `mem:model_workflow` — DSL files, Eclipse regeneration, src-gen rules
-- `mem:suggested_commands` — build, test, and Docker commands
-
-Keep memory updates terse and durable; use `mem:` references when connecting memories.

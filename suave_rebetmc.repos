@@ -2,15 +2,15 @@ repositories:
   suave:
     type: git
     url: git@github.com:kas-lab/suave.git
-    version: v1.5.0
+    version: main
   aal:
     type: git
-    url: git@github.com:Rezenders/AAL-ROS2.git
-    version: aal_bt
+    url: git@github.com:EGAlberts/AAL-ROS2.git
+    version: mc
   adapt_x:
     type: git
     url: git@github.com:kas-lab/adapt_x.git
-    version: adapt_x_bt
+    version: eval2
   ros_monitors:
     type: git
     url: git@github.com:kas-lab/ros_monitors.git

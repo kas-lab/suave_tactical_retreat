@@ -25,7 +25,7 @@ find_package(ament_index_cpp REQUIRED)
 find_package(behaviortree_cpp REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(suave_bt REQUIRED)
-find_package(adapt_x_bt REQUIRED)
+# find_package(adapt_x_bt REQUIRED)
 find_package(adapt_x_msgs REQUIRED)
 
 set(THIS_PACKAGE_DEPS
@@ -33,7 +33,7 @@ set(THIS_PACKAGE_DEPS
   behaviortree_cpp
   rclcpp
   suave_bt
-  adapt_x_bt
+  # adapt_x_bt
   adapt_x_msgs
 )
 
@@ -94,10 +94,10 @@ if(BUILD_TESTING)
     test/test_suave_tactics_kb.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
-  set_tests_properties(
-    test_suave_tactics_kb
-    PROPERTIES LABELS "pytest;typedb"
-  )
+  # set_tests_properties(
+  #   test_suave_tactics_kb
+  #   PROPERTIES LABELS "pytest;typedb"
+  # )
 
   # ament_add_gtest(test_suave_rebetmc_bt_xml test/test_suave_rebetmc_bt_xml.cpp)
   # target_compile_features(test_suave_rebetmc_bt_xml PUBLIC cxx_std_17)

@@ -1,4 +1,4 @@
-FROM suave-headless:dev AS base
+FROM suave-headless:latest AS base
 
 ## Install TypeDB
 RUN sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 17507562824cfdcc && \
