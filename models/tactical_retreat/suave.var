@@ -4,7 +4,10 @@ feature_model
     root
     	selected Feature PIPELINE_INSPECTION id PIPELINE_INSPECTION children {
 			Alternative TASK id TASK children {
-				Feature FOLLOW_PIPELINE id FOLLOW_PIPELINE,
+				Alternative FOLLOW_PIPELINE id FOLLOW_PIPELINE children
+				{
+				    Feature FOLLOW_CONSTANT_ALTITUDE id FOLLOW_CONSTANT_ALTITUDE
+				},
 				Feature RECHARGE id RECHARGE,
 				Alternative SEARCH_PIPELINE id SEARCH_PIPELINE children
 				{
@@ -13,7 +16,10 @@ feature_model
 					Feature HIGH_ALTITUDE id HIGH_ALTITUDE
 				}
 			},
-			Feature RECOVER_MOTION id RECOVER_MOTION
+			Alternative RECOVER_MOTION id RECOVER_MOTION children
+			{
+			    Feature RECOVER_MOTION_IMMEDIATELY id RECOVER_MOTION_IMMEDIATELY
+			}
     	}
     crossTreeConstraints {}
 }

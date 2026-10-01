@@ -45,6 +45,7 @@ suave:
       interfaces:
         - "pipeline/detected": pub-> "pipeline_detection_wv::pipeline/detected"
         - "diagnostics": sub-> "pipeline_detection_wv::diagnostics"
+        - "diagnostics": pub-> "pipeline_detection_wv::diagnostics"
         - "model/bluerov2/pose": sub-> "pipeline_detection_wv::model/bluerov2/pose"
         - "pipeline/get_path": ss-> "pipeline_detection_wv::pipeline/get_path"
     "/thruster_monitor":

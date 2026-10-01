@@ -1,0 +1,6 @@
+import "suave.var";
+import "suave.context";
+
+ThrustersOperational, Safety:
+  "The number of operational thrusters shall be as close as possible as the amount of thrusters required by the motion controller",
+  SHALL (AS CLOSE AS POSSIBLE TO (0, ^ operational_thrusters_delta, FuzzyLeftShoulder(foot=1.0, shoulder=0.0) ))

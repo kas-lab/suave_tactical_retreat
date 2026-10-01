@@ -1,0 +1,28 @@
+Reconfigurations
+Task.SearchPipeline :
+select: SetLifecycleState(
+  /f_generate_search_path_node, Active)
+deselect: SetLifecycleState(
+  /f_generate_search_path_node, Inactive)
+
+SearchPipeline.LowAltitude :
+select: SetParameter(
+  /f_generate_search_path_node,spiral_altitude,1.0) deselect:
+SearchPipeline.MediumAltitude :
+select: SetParameter(
+  /f_generate_search_path_node,spiral_altitude,2.0) deselect:
+SearchPipeline.HighAltitude :
+select: SetParameter(
+  /f_generate_search_path_node,spiral_altitude,3.0) deselect:
+
+Task.FollowPipeline:
+select: SetLifecycleState(
+  /f_follow_pipeline_node, Active)
+deselect: SetLifecycleState(
+  /f_follow_pipeline_node, Inactive)
+
+PipelineInspection.RecoverMotion:
+select: SetLifecycleState(
+  /f_maintain_motion_node, Active)
+deselect: SetLifecycleState(
+  /f_maintain_motion_node, Inactive)

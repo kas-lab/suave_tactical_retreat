@@ -6,9 +6,11 @@ suave:
         'pipeline/detected':
           type: 'std_msgs/msg/Bool'
           qos:
-          # profile:
-          # history: UNKNOWN
-          # depth:
+            reliability: reliable
+            durability: volatile
+        'diagnostics':
+          type: 'diagnostic_msgs/msg/DiagnosticArray'
+          qos:
             reliability: reliable
             durability: volatile
       subscribers:

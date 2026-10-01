@@ -1,20 +1,21 @@
 name suave_tactics;
 import "../system/suave.rossystem";
+import "../interfaces/suave_msgs.ros";
 import "suave.context";
 import "suave.var";
 import "suave.resolution";
-import "../interfaces/suave_msgs.ros";
+import "suave.reqs";
 
 SpiralSearch {
-    rule SEARCH_PIPELINE {
+    rule search_pipeline {
         guard {
-            !selected(suave_resolution.SEARCH_PIPELINE)
+            features(!selected(suave_resolution.SEARCH_PIPELINE))
         }
         action {
 		    select_variant(suave_resolution.SEARCH_PIPELINE)
         }
     };
-    rule LOW_ALTITUDE {
+    rule low_altitude {
         guard {
             context(water_visibility < 2.25)
             features(selected(suave_resolution.SEARCH_PIPELINE))
@@ -24,7 +25,7 @@ SpiralSearch {
         }
     };
 
-    rule MEDIUM_ALTITUDE {
+    rule medium_altitude {
         guard {
             context(water_visibility < 3.25
                 AND water_visibility >= 2.25)
@@ -35,7 +36,7 @@ SpiralSearch {
         }
     };
 
-    rule HIGH_ALTITUDE {
+    rule high_altitude {
         guard {
             context(water_visibility >= 3.25)
             features(selected(suave_resolution.SEARCH_PIPELINE))
@@ -46,10 +47,11 @@ SpiralSearch {
     };
 }
 
-FollowPipeline{
-    rule FOLLOW_PIPELINE {
+
+FollowPipeline {
+    rule follow_pipeline {
     	guard {
-    		!selected(suave_resolution.FOLLOW_PIPELINE)
+    		features(!selected(suave_resolution.FOLLOW_PIPELINE))
     	}
     	action {
     		select_variant(suave_resolution.FOLLOW_PIPELINE)
@@ -57,9 +59,8 @@ FollowPipeline{
     };
 }
 
-ThrustersOperational {
-
-rule START_RECOVER_MOTION {
+ThrustersOperational FollowPipeline {
+rule start_recover_motion_2 {
     guard {
         context(c_thruster_1 == "FALSE"
             OR c_thruster_2 == "FALSE"
@@ -74,7 +75,39 @@ rule START_RECOVER_MOTION {
     }
 };
 
-rule END_RECOVER_MOTION {
+rule end_recover_motion_2 {
+   	guard {
+  		context(c_thruster_1 == "RECOVERED"
+ 			AND c_thruster_2 == "RECOVERED"
+ 			AND c_thruster_3 == "RECOVERED"
+ 			AND c_thruster_4 == "RECOVERED"
+ 			AND c_thruster_5 == "RECOVERED"
+ 			AND c_thruster_6 == "RECOVERED")
+  		features(selected(suave_resolution.RECOVER_MOTION))
+   	}
+   	action {
+  		unselect_variant(suave_resolution.RECOVER_MOTION)
+   	}
+};
+}
+
+ThrustersOperational SpiralSearch {
+rule start_recover_motion {
+    guard {
+        context(c_thruster_1 == "FALSE"
+            OR c_thruster_2 == "FALSE"
+            OR c_thruster_3 == "FALSE"
+            OR c_thruster_4 == "FALSE"
+            OR c_thruster_5 == "FALSE"
+            OR c_thruster_6 == "FALSE")
+        features(!selected(suave_resolution.RECOVER_MOTION))
+    }
+    action {
+        select_variant(suave_resolution.RECOVER_MOTION)
+    }
+};
+
+rule end_recover_motion {
    	guard {
   		context(c_thruster_1 == "RECOVERED"
  			AND c_thruster_2 == "RECOVERED"

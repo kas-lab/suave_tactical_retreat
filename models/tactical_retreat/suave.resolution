@@ -8,7 +8,6 @@ ros_system suave;
 FunctionalMapping
 SEARCH_PIPELINE -> SpiralSearch
 FOLLOW_PIPELINE -> FollowPipeline
-RECOVER_MOTION -> RecoverThrusters
 
 Reconfigurations
 TASK.SEARCH_PIPELINE :
