@@ -35,3 +35,19 @@ repositories:
     type: git
     url: https://github.com/EGAlberts/BehaviorTree.ROS2.git
     version: humble
+  rosa:
+    type: git
+    url: https://github.com/kas-lab/rosa.git
+    version: 49c195b
+  plansys2:
+    type: git
+    url: https://github.com/PlanSys2/ros2_planning_system.git
+    version: c063ce5
+  suave_rosa:
+    type: git
+    url: git@github.com:kas-lab/suave_rosa.git
+    version: c29b7f9
+  ros_pytest:
+    type: git
+    url: https://github.com/kas-lab/ros_pytest.git
+    version: main

@@ -16,10 +16,7 @@ feature_model
 					Feature HIGH_ALTITUDE id HIGH_ALTITUDE
 				}
 			},
-			Alternative RECOVER_MOTION id RECOVER_MOTION children
-			{
-			    Feature RECOVER_MOTION_IMMEDIATELY id RECOVER_MOTION_IMMEDIATELY
-			}
+			Feature RECOVER_MOTION id RECOVER_MOTION
     	}
     crossTreeConstraints {}
 }

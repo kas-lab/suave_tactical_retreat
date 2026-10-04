@@ -117,3 +117,18 @@ ros2 run suave_runner suave_runner \
       \"mission_name\": \"suave\"}"
   ]'
 ```
+
+### ROSA
+
+```bash
+ros2 run suave_runner suave_runner \
+  --ros-args \
+  -p gui:=False \
+  -p experiment_logging:=True \
+  -p experiments:='[
+    "{\"experiment_launch\": \"ros2 launch suave_rosa_bt suave_rosa_bt.launch.py\", \
+      \"num_runs\": 1, \
+      \"adaptation_manager\": \"rosa\", \
+      \"mission_name\": \"suave\"}"
+  ]'
+```

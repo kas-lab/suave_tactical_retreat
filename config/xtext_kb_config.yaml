@@ -1,6 +1,5 @@
 /tactical_retreat_kb:
   ros__parameters:
-    use_sim_time: true
     generate_state: false
     context_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.context"
     var_path: "<suave_rebetmc_models_dir>/tactical_retreat/suave.var"

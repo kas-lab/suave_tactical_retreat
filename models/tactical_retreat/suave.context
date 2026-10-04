@@ -10,12 +10,12 @@ function_name "get_data_from_diagnostic_array"
 function_args "QA status,water_visibility,float"
 }
 
-ContextVariable search_coverage_area
+ContextVariable coverage_area
 {
 source: origin: publisher: _slash_detect_pipeline.diagnostics
 type: float32 cache? false
 function_name "get_data_from_diagnostic_array"
-function_args "QA status,water_visibility,float"
+function_args "QA status,coverage_area,float"
 }
 
 ContextVariable battery_level
@@ -31,55 +31,7 @@ ContextVariable operational_thrusters_delta
 source: origin: publisher: _slash_thruster_monitor.diagnostics
 type: float32 cache? false
 function_name "get_data_from_diagnostic_array"
-function_args "QA status,operational_thrusters,float"
-}
-
-ContextVariable c_thruster_1
-{
-source: origin: publisher: _slash_thruster_monitor.diagnostics
-type: string cache? false
-function_name "get_data_from_diagnostic_array"
-function_args "Component status,c_thruster_1,str"
-}
-
-ContextVariable c_thruster_2
-{
-source: origin: publisher: _slash_thruster_monitor.diagnostics
-type: string cache? false
-function_name "get_data_from_diagnostic_array"
-function_args "Component status,c_thruster_2,str"
-}
-
-ContextVariable c_thruster_3
-{
-source: origin: publisher: _slash_thruster_monitor.diagnostics
-type: string cache? false
-function_name "get_data_from_diagnostic_array"
-function_args "Component status,c_thruster_3,str"
-}
-
-ContextVariable c_thruster_4
-{
-source: origin: publisher: _slash_thruster_monitor.diagnostics
-type: string cache? false
-function_name "get_data_from_diagnostic_array"
-function_args "Component status,c_thruster_4,str"
-}
-
-ContextVariable c_thruster_5
-{
-source: origin: publisher: _slash_thruster_monitor.diagnostics
-type: string cache? false
-function_name "get_data_from_diagnostic_array"
-function_args "Component status,c_thruster_5,str"
-}
-
-ContextVariable c_thruster_6
-{
-source: origin: publisher: _slash_thruster_monitor.diagnostics
-type: string cache? false
-function_name "get_data_from_diagnostic_array"
-function_args "Component status,c_thruster_6,str"
+function_args "QA status,operational_thrusters_delta,float"
 }
 }
 

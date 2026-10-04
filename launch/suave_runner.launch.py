@@ -23,6 +23,7 @@ def generate_launch_description():
     config_path = os.path.join(
         get_package_share_directory('suave_rebetmc'),
         'config',
+        'runner',
         'runner_config.yml'
     )
 

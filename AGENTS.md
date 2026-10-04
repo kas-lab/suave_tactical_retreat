@@ -4,7 +4,7 @@ Guidance for coding agents working in this repository.
 
 ## Project Overview
 
-**suave_rebetmc** is a managing system for the SUAVE AUV pipeline-inspection mission. It uses TypeDB (via `typedb_tactics`) as a runtime knowledge base and `adapt_x`/AAL for adaptation execution. The managed system is SUAVE; this package is the *managing subsystem* that drives it through standard ROS 2 interfaces.
+**suave_rebetmc** is a managing system for the SUAVE AUV pipeline-inspection mission. It has Xtext/FeatureIDE and older TypeDB KB paths (via `typedb_tactics`) and uses `adapt_x`/AAL for adaptation execution. Check the selected launch/config path before assuming a TypeDB server is required. The managed system is SUAVE; this package is the *managing subsystem* that drives it through standard ROS 2 interfaces.
 
 ## Repository Layout
 
@@ -45,18 +45,23 @@ docker exec suave_rebetmc bash -lc 'cd /home/ubuntu-user/suave_ws && source /opt
 
 colcon build --symlink-install
 colcon build --symlink-install --packages-select suave_rebetmc
-colcon test --packages-select suave_rebetmc --event-handlers console_direct+ --ctest-args -LE typedb
+colcon test --packages-select suave_rebetmc --event-handlers console_direct+ --ctest-args -E '^test_suave_tactics_kb$'
 colcon test-result --verbose
-python3 -m pytest -q suave_rebetmc/test
+python3 -m pytest -q src/suave_rebetmc/test
 ros2 pkg executables suave_rebetmc
 ```
 
-The TypeDB-backed KB pytest is registered in CMake as `test_suave_tactics_kb` with label `typedb`. Exclude it with `--ctest-args -LE typedb` unless a compatible TypeDB server is running on `localhost:1729`.
+The TypeDB-backed KB pytest is registered as `test_suave_tactics_kb`; its
+`typedb` label assignment is currently commented out. Exclude it by name unless
+a compatible TypeDB server is running on `localhost:1729`.
+From the host workspace, `python3 scripts/focused_test.py --package suave_rebetmc`
+handles this exclusion (override with `--with-typedb`) and checks test exit codes.
+The wrapper does not build; rebuild interfaces/C++/installed assets first.
 
 Focused adapt_x tests should be run in the running `suave_rebetmc` container when they need ROS/JVM dependencies:
 
 ```bash
-docker exec suave_rebetmc bash -lc 'cd /home/ubuntu-user/suave_ws && source /opt/ros/humble/setup.bash && PYTHONPATH=src/adapt_x/adapt_x python3 -m pytest -q src/adapt_x/adapt_x/test/test_save_generated_tql.py'
+python3 scripts/focused_test.py --test src/adapt_x/adapt_x/test/test_aal_failures.py
 ```
 
 **Mandatory lint gate:** before marking work complete, run `test_flake8`, `test_pep257`, and `test_copyright` and ensure all pass.
@@ -105,7 +110,9 @@ docker build --check src/suave_rebetmc/
   - `BasicFMmetamodelPackage.eINSTANCE.eClass()`
 - `Resource` from `org.eclipse.emf.ecore.resource` is a Java interface; do not instantiate it. For `TQLGenerator.rossystemfromContextModel(ContextModel, Resource)`, pass an existing EMF resource such as `self.tacticsModelResource`.
 - If `requirements_path` is empty, `adapt_x` should not call `requirementsResources.get(0)`. A valid `.reqs` file can be minimal, e.g. `REQ1, Safety: "Placeholder requirement.", true`, but placeholder requirements should be replaced with real SUAVE requirements.
-- Generated initial TypeDB insert queries can be saved through `save_generated_tql`, `generated_tql_path`, and `generated_tql_filename`. Keep disk-writing logic isolated in `adapt_x.tql_output` and test it without constructing `AdaptationEngine`.
+- Do not assume APIs from other branches such as `adapt_x.tql_output` exist.
+  Check the active source before using generated-query persistence helpers;
+  prefer isolated tests instead of constructing the full `AdaptationEngine`.
 
 ## ROS Managing Subsystem Interface
 
