@@ -1,134 +1,190 @@
-# suave_rebetmc
+# Tactical Retreat on SUAVE
 
-## Run SUAVE + rebetmc
+This repository applies **Tactical Retreat** to [SUAVE](https://github.com/kas-lab/suave), an exemplar of an autonomous underwater vehicle (AUV) that inspects pipelines. It contains the models, configuration, launch files and experiment setup used to evaluate the paper *Tactical Retreat: Leveraging Runtime Models for Robotics
+Self-Adaptation*.
 
-```Bash
-sim_vehicle.py -L RATBeach -v ArduSub --model=JSON --console
+## Contents
+
+- [How it works](#how-it-works)
+- [Models](#models)
+- [Requirements](#requirements)
+- [Quick start](#quick-start)
+- [Run one mission](#run-one-mission)
+- [Run the paper experiments](#run-the-paper-experiments)
+- [Development](#development)
+- [Citation](#citation)
+- [License](#license)
+
+## How it works
+
+SUAVE has to find a pipeline on the seabed (`spiral_search`) and then follow it
+(`follow_pipeline`), while the water visibility changes and thrusters fail.
+Tactical Retreat adapts the vehicle at runtime:
+
+| Component | Package | Role |
+|---|---|---|
+| Runtime-model node (`tactical_retreat_kb`) | `tactical_retreat_kb` | Loads the models in [`models/tactical_retreat/`](models/tactical_retreat/), tracks the context from ROS topics, evaluates requirements and tactic guards, and computes reconfiguration plans |
+| Adaptation proxies | `adapt_x` | Stand between the mission and SUAVE's `spiral_search` and `follow_pipeline` actions. While a task runs, they apply the tactics whose guards hold |
+| Adaptation layer | `aal` | Carries out the reconfiguration plans on the ROS system |
+| Mission | `suave_tactical_retreat` | Behavior tree (`suave_tactical_retreat_bt`) that sends the mission tasks to the proxies |
+
+For example, the tactic below starts motion recovery during `follow_pipeline`
+when the `ThrustersOperational` requirement is violated:
+
+```text
+ThrustersOperational FollowPipeline {
+rule start_recover_motion_2 {
+    guard {
+        context(operational_thrusters_delta > 0.0)
+        features(!selected(suave_resolution.RECOVER_MOTION))
+    }
+    action {
+        select_variant(suave_resolution.RECOVER_MOTION)
+    }
+};
+}
 ```
+
+## Models
+
+The runtime models are xtext files, written in Xtext DSLs. The node reads them
+when it starts:
+
+| File | Contents |
+|---|---|
+| [`suave.context`](models/tactical_retreat/suave.context) | Context variables, such as water visibility, battery level and failed thrusters, and the ROS topics they come from |
+| [`suave.var`](models/tactical_retreat/suave.var) | Feature model of the vehicle's variability |
+| [`suave.resolution`](models/tactical_retreat/suave.resolution) | How each feature maps onto the ROS system (nodes, modes, parameters) |
+| [`suave.reqs`](models/tactical_retreat/suave.reqs) | Requirements with relaxed fulfillment functions |
+| [`suave.tactics`](models/tactical_retreat/suave.tactics) | Tactics: guarded rules, per task, that select or unselect features |
+| [`models/interfaces/`](models/interfaces/), [`models/ros/`](models/ros/), [`models/system/`](models/system/) | ROS interfaces, nodes and the system model |
+
+The node's configuration, [`config/xtext_kb_config.yaml`](config/xtext_kb_config.yaml) lists which model files it loads.
+
+## Requirements
+
+- Docker. If you want to run with graphical display enable by a NVIDIA GPU,
+also install [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/)
+- The [SUAVE CLI](https://github.com/kas-lab/suave/tree/main/suave_cli). It is plain Python 3.10+ and needs no ROS on the host.
+
+## Quick start
+
+1. Get the SUAVE CLI and put it on `PATH`:
+
+   ```bash
+   git clone --branch v1.6.0 https://github.com/kas-lab/suave.git
+   source suave/env.sh        # add this to ~/.bashrc to make it permanent
+   ```
+
+2. Start the container in the background:
+
+   ```bash
+   suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src --yes
+   ```
+
+   Without an NVIDIA GPU, add `--gpu none`. The CLI forwards your display to the
+   container, so you do not need `xhost +`. On the host, results appear in
+   `~/suave/results`.
+
+3. Open a shell in the container. ROS and the workspace are already sourced:
+
+   ```bash
+   suave docker shell
+   ```
+
+When you are done, run `suave docker stop`.
+
+The container is named `suave`. To use another name, pass `--container NAME`
+to every `suave` command. See the
+[SUAVE CLI guide](https://github.com/kas-lab/suave/blob/main/suave_cli/README.md)
+for all options.
+
+## Run one mission
+
+Run each of these commands in its own terminal, each opened with
+`suave docker shell`:
+
+1. Start ArduSub SITL:
+
+   ```bash
+   sim_vehicle.py -L RATBeach -v ArduSub --model=JSON --console
+   ```
+
+2. Start the Gazebo simulation:
+
+   ```bash
+   ros2 launch suave simulation.launch.py x:=-17.0 y:=2.0
+   ```
+
+3. Wait until SITL and the simulation are ready, then start SUAVE with
+   Tactical Retreat:
+
+   ```bash
+   ros2 launch suave_tactical_retreat xtext_suave_tactical_retreat_bringup.launch.py
+   ```
+
+## Run the paper experiments
+
+The SUAVE runner starts and stops SITL, the simulation and the managing system
+for every run. It also injects perturbations and writes one result folder per
+campaign. It runs Tactical Retreat and the baselines (ROSA, BT,
+Metacontrol, random and no adaptation) 30 times each. Run it the batch with:
 
 ```bash
-ros2 launch suave simulation.launch.py x:=-17.0 y:=2.0
+suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src --yes --detach
+suave batch start --config src/suave_tactical_retreat/config/runner/batch_campaigns.yml
+
+# progress, and resuming after an interruption
+suave batch list
+suave batch resume --latest
 ```
+
+Configuration paths are resolved inside the container, from the workspace root
+`/home/ubuntu-user/suave_ws`. Add `--gui` to see Gazebo during a campaign.
+Experiments take hours: run them in `screen` or `tmux`.
+
+To analyze the results, use `suave analyze` (for example
+`suave analyze summarize -- --help`). See
+[SUAVE: results](https://github.com/kas-lab/suave/blob/main/docs/source/results.md).
+
+If you rather not use the `suave cli` you can run it directly with docker (no dependencies):
 
 ```bash
-ros2 launch suave_rebetmc suave_rebetmc_bringup.launch.py
+docker run -v /etc/localtime:/etc/localtime:ro -v "$HOME/suave/results:/home/ubuntu-user/suave/results" ghcr.io/kas-lab/suave-tactical-retreat:main suave batch start --config src/suave_tactical_retreat/config/runner/batch_campaigns.yml
 ```
 
-## Docker
+## Development
 
-### Build
-
-To build the img you need to create a github personal access token to read access to private repos, then log in to gh with gh cli
-
-```Bash
-gh auth login
-```
-
-```Bash
-docker build --secret id=gh_token,src=<(gh auth token) -t suave-rebetmc:dev .
-```
-
-### Run
-
-```Bash
-xhost +
-```
-
-The commands below assume you are running them from the workspace root, so `"$PWD/src/..."` points to the local packages:
-
-```Bash
-cd <workspace_root>
-```
-
-Choose the smallest command that matches your use case:
-<!-- - plain container if you only need `typedb_tactics` -->
-<!-- - NVIDIA variant if you need GPU support -->
-<!-- - extra mounts if you are editing `ros_monitors` or `ros_typedb` together with this package -->
-
-Start container in the background with typedb server running:
-
-From <workspace_root>:
-
-```Bash
-docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD/src/suave_rebetmc:/home/ubuntu-user/suave_ws/src/suave_rebetmc" suave-rebetmc:dev typedb server
-```
-
-Mounting ros_typedb
-
-```Bash
-docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD/src/suave_rebetmc:/home/ubuntu-user/suave_ws/src/suave_rebetmc" -v "$PWD/src/ros_typedb:/home/ubuntu-user/suave_ws/src/ros_typedb" -v "$PWD/src/typedb_tactics:/home/ubuntu-user/suave_ws/src/typedb_tactics" suave-rebetmc:dev typedb server
-```
-
-Mounting adapt_x
-
-```Bash
-docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD/src/suave_rebetmc:/home/ubuntu-user/suave_ws/src/suave_rebetmc" -v "$PWD/src/adapt_x:/home/ubuntu-user/suave_ws/src/adapt_x" -v "$PWD/src/typedb_tactics:/home/ubuntu-user/suave_ws/src/typedb_tactics" suave-rebetmc:dev typedb server
-```
-
-From pkg root:
-
-```Bash
-docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD:/home/ubuntu-user/suave_ws/src/suave_rebetmc" suave-rebetmc:dev typedb server
-```
-
-Mounting suave_rebetm + typedb_tactics + adapt_x + rebet_monitors
-
-```Bash
-docker run -d --rm --name suave_rebetmc --runtime=nvidia --gpus all -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v "$PWD/src/suave_rebetmc:/home/ubuntu-user/suave_ws/src/suave_rebetmc" -v "$PWD/src/adapt_x:/home/ubuntu-user/suave_ws/src/adapt_x" -v "$PWD/src/typedb_tactics:/home/ubuntu-user/suave_ws/src/typedb_tactics" -v "$PWD/src/rebet_monitors:/home/ubuntu-user/suave_ws/src/rebet_monitors" -v "$PWD/src/aal:/home/ubuntu-user/suave_ws/src/aal" suave-rebetmc:dev typedb server
-```
-
-## Tests
-
-```Bash
-docker exec suave_rebetmc bash -lc '
-  cd /home/ubuntu-user/suave_ws &&
-  source /opt/ros/humble/setup.bash &&
-  source install/setup.bash &&
-  colcon test --event-handlers console_direct+ --packages-select suave_rebetmc --pytest-args -k test_suave_tactics_kb
-'
-```
-
-## Runner
-
-```Bash
-ros2 run suave_runner suave_runner \
-  --ros-args \
-  -p gui:=False \
-  -p experiment_logging:=True \
-  -p experiments:='[
-    "{\"experiment_launch\": \"ros2 launch suave_rebetmc suave_rebetmc_bringup.launch.py\", \
-      \"num_runs\": 2, \
-      \"adaptation_manager\": \"rebetmc\", \
-      \"mission_name\": \"suave\"}"
-  ]'
-```
-
-### Metacontrol
+To change this package, mount your checkout into the container and rebuild it:
 
 ```bash
-ros2 run suave_runner suave_runner \
-  --ros-args \
-  -p gui:=False \
-  -p experiment_logging:=True \
-  -p experiments:='[
-    "{\"experiment_launch\": \"ros2 launch suave_bringup mission.launch.py adaptation_manager:=metacontrol\", \
-      \"num_runs\": 1, \
-      \"adaptation_manager\": \"metacontrol\", \
-      \"mission_name\": \"suave\"}"
-  ]'
+git clone https://github.com/kas-lab/suave_tactical_retreat.git
+suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src \
+  --mount "$PWD/suave_tactical_retreat" --recreate --yes
+suave build suave_tactical_retreat
+suave test suave_tactical_retreat
 ```
 
-### ROSA
+`suave build` runs `colcon build --symlink-install`. Run it again after you
+change launch files, configuration or models.
+
+To build the image yourself, from the root of this repository:
 
 ```bash
-ros2 run suave_runner suave_runner \
-  --ros-args \
-  -p gui:=False \
-  -p experiment_logging:=True \
-  -p experiments:='[
-    "{\"experiment_launch\": \"ros2 launch suave_rosa_bt suave_rosa_bt.launch.py\", \
-      \"num_runs\": 1, \
-      \"adaptation_manager\": \"rosa\", \
-      \"mission_name\": \"suave\"}"
-  ]'
+docker build -t suave-tactical-retreat:dev .
+suave docker run --image suave-tactical-retreat:dev --no-mount-src --recreate
 ```
+
+To edit the models with syntax checking and validation, use the Eclipse
+plugins from
+[rebetmc_eclipse_projs](https://github.com/kas-lab/rebetmc_eclipse_projs).
+
+## Citation
+
+If you use this work, please cite:
+
+*Tactical Retreat: Leveraging Runtime Models for Robotics Self-Adaptation.*
+
+## License
+
+[Apache License 2.0](LICENSE).

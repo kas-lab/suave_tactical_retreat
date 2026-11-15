@@ -1,23 +1,14 @@
-FROM suave-headless:latest AS base
-
-## Install TypeDB
-RUN sudo gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 17507562824cfdcc && \
-    sudo gpg --export 17507562824cfdcc | sudo tee /etc/apt/trusted.gpg.d/vaticle.gpg > /dev/null && \
-    echo "deb https://repo.typedb.com/public/public-release/deb/ubuntu trusty main" | sudo tee /etc/apt/sources.list.d/vaticle.list > /dev/null
-
-RUN sudo apt-get update && sudo apt-get install -y \
-    typedb=2.29.1 \
-    && sudo rm -rf /var/lib/apt/lists/*
+FROM ghcr.io/kas-lab/suave-headless:1.6.0 AS base
 
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz -P /tmp && \
     sudo tar -xf /tmp/apache-maven-3.9.16-bin.tar.gz -C /opt && \
     sudo ln -sf /opt/apache-maven-3.9.16/bin/mvn /usr/local/bin/mvn && \
     rm /tmp/apache-maven-3.9.16-bin.tar.gz
 
-RUN pip3 install typedb-driver==2.29.7 jpype1
+RUN pip3 install jpype1
 
 ## Import extra dependencies into the existing suave_ws (suave already present → skip-existing)
-COPY --chown=ubuntu-user:ubuntu-user suave_rebetmc.repos $HOME/suave_ws/suave_rebetmc.repos
+COPY --chown=ubuntu-user:ubuntu-user suave_tactical_retreat.repos $HOME/suave_ws/suave_tactical_retreat.repos
 ARG DEPS_CACHE_BUSTER
 RUN --mount=type=secret,id=gh_token,uid=1000,gid=1000,mode=0400 bash -lc '\
   echo "deps-buster=${DEPS_CACHE_BUSTER}" > /dev/null; \
@@ -25,11 +16,11 @@ RUN --mount=type=secret,id=gh_token,uid=1000,gid=1000,mode=0400 bash -lc '\
   export GIT_TERMINAL_PROMPT=0; \
   git config --global url."https://x-access-token:${tok}@github.com/".insteadOf "https://github.com/"; \
   git config --global url."https://x-access-token:${tok}@github.com/".insteadOf "git@github.com:"; \
-  vcs import --skip-existing --input $HOME/suave_ws/suave_rebetmc.repos $HOME/suave_ws/src; \
+  vcs import --skip-existing --input $HOME/suave_ws/suave_tactical_retreat.repos $HOME/suave_ws/src; \
 '
 
-## Copy suave_rebetmc source
-COPY --chown=ubuntu-user:ubuntu-user . $HOME/suave_ws/src/suave_rebetmc/
+## Copy suave_tactical_retreat source
+COPY --chown=ubuntu-user:ubuntu-user . $HOME/suave_ws/src/suave_tactical_retreat/
 COPY --chown=ubuntu-user:ubuntu-user --chmod=0755 \
     scripts/run_suave_runner.sh $HOME/suave_ws/run_suave_runner.sh
 

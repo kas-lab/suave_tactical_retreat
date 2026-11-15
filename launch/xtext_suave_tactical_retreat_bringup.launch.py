@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Launch the complete SUAVE/RebetMC system."""
+"""Launch the complete SUAVE/Tactical Retreat system."""
 
 import os
 
@@ -30,7 +30,7 @@ from launch_ros.events.lifecycle import StateTransition
 
 
 def generate_launch_description():
-    """Generate the complete SUAVE/RebetMC launch description."""
+    """Generate the complete SUAVE/Tactical Retreat launch description."""
     silent = LaunchConfiguration('silent')
     result_path = LaunchConfiguration('result_path')
     result_filename = LaunchConfiguration('result_filename')
@@ -54,7 +54,7 @@ def generate_launch_description():
     )
     result_filename_arg = DeclareLaunchArgument(
         'result_filename',
-        default_value='suave_rebetmc_results',
+        default_value='suave_tactical_retreat_results',
         description='Name of the results file',
     )
     mission_config_arg = DeclareLaunchArgument(
@@ -63,7 +63,7 @@ def generate_launch_description():
         description='Mission configuration file',
     )
 
-    suave_rebetmc_share = get_package_share_directory('suave_rebetmc')
+    suave_tactical_retreat_share = get_package_share_directory('suave_tactical_retreat')
     suave_base_share = get_package_share_directory('suave_base')
     suave_base = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -88,16 +88,16 @@ def generate_launch_description():
     adaptation_engine_with_execution_layer = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(
-                suave_rebetmc_share,
+                suave_tactical_retreat_share,
                 'launch',
                 'xtext_adaptation_engine_with_aal.launch.py',
             )
         ),
     )
 
-    suave_rebetmc_bt = Node(
-        package='suave_rebetmc',
-        executable='suave_rebetmc_bt',
+    suave_tactical_retreat_bt = Node(
+        package='suave_tactical_retreat',
+        executable='suave_tactical_retreat_bt',
         name='mission_node',
         output='screen',
         parameters=[mission_config, {
@@ -122,7 +122,7 @@ def generate_launch_description():
     launch_bt_when_kb_is_active = RegisterEventHandler(
         OnStateTransition(
             matcher=tactical_retreat_is_active,
-            entities=[suave_rebetmc_bt],
+            entities=[suave_tactical_retreat_bt],
             handle_once=True,
         )
     )

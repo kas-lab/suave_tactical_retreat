@@ -112,12 +112,12 @@ suave:
       parameters:
         - "use_sim_time": "recover_thrusters::use_sim_time"
           value: false
-    "/suave_rebetmc_bt":
-      from: "suave_rebetmc./suave_rebetmc_bt"
+    "/suave_tactical_retreat_bt":
+      from: "suave_tactical_retreat./suave_tactical_retreat_bt"
       interfaces:
-        - "proxy_follow_pipeline": ac-> "suave_rebetmc_bt::proxy_follow_pipeline"
-        - "proxy_spiral_search": ac-> "suave_rebetmc_bt::proxy_spiral_search"
-        - "proxy_recover_thrusters": ac-> "suave_rebetmc_bt::proxy_recover_thrusters"
+        - "proxy_follow_pipeline": ac-> "suave_tactical_retreat_bt::proxy_follow_pipeline"
+        - "proxy_spiral_search": ac-> "suave_tactical_retreat_bt::proxy_spiral_search"
+        - "proxy_recover_thrusters": ac-> "suave_tactical_retreat_bt::proxy_recover_thrusters"
     "/spiral_search_adaptation_proxy":
       from: "adapt_x./spiral_search_adaptation_proxy"
       interfaces:

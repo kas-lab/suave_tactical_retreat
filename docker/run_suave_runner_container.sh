@@ -15,14 +15,14 @@
 
 set -euo pipefail
 
-IMAGE="${1:-suave-rebetmc:dev}"
-SUAVE_REBETMC_WS="${2:-$HOME/ros_workspaces/suave_rebetmc_ws}"
-SUAVE_REBETMC_WS_RESULTS="$SUAVE_REBETMC_WS/suave_results"
+IMAGE="${1:-suave-tactical-retreat:dev}"
+SUAVE_TACTICAL_RETREAT_WS="${2:-$HOME/ros_workspaces/suave_rebetmc_ws}"
+SUAVE_TACTICAL_RETREAT_WS_RESULTS="$SUAVE_TACTICAL_RETREAT_WS/suave_results"
 SUAVE_RESULTS_CONTAINER="/home/ubuntu-user/suave/results"
 
-mkdir -p "$SUAVE_REBETMC_WS_RESULTS"
+mkdir -p "$SUAVE_TACTICAL_RETREAT_WS_RESULTS"
 
-docker run -it --rm --name suave_rebetmc \
-  -v "$SUAVE_REBETMC_WS_RESULTS":"$SUAVE_RESULTS_CONTAINER" \
+docker run -it --rm --name suave_tactical_retreat \
+  -v "$SUAVE_TACTICAL_RETREAT_WS_RESULTS":"$SUAVE_RESULTS_CONTAINER" \
   "$IMAGE" \
   ./run_suave_runner.sh "${@:3}"

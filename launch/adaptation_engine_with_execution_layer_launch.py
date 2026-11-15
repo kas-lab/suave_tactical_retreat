@@ -47,7 +47,7 @@ def generate_launch_description():
     )
 
     execution_layer_params = os.path.join(
-        get_package_share_directory('suave_rebetmc'),
+        get_package_share_directory('suave_tactical_retreat'),
         'config',
         'execution_layer_params.yaml',
     )
@@ -68,7 +68,7 @@ def generate_launch_description():
     adaptation_engine = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory('suave_rebetmc'),
+                get_package_share_directory('suave_tactical_retreat'),
                 'launch',
                 'adaptation_engine.launch.py',
             )

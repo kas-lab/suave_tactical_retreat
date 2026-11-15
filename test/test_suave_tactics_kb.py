@@ -38,7 +38,7 @@ def kb_interface():
     """Load suave_tactics.tql into a fresh TypeDB database."""
     interface = TacticalRetreatInterface(
         'localhost:1729',
-        'test_suave_rebetmc',
+        'test_suave_tactical_retreat',
         SCHEMAS,
         [str(PACKAGE_DIR / 'models/typedb/suave_tactics.tql')],
         force_database=True,

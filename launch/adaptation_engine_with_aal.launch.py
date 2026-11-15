@@ -68,7 +68,7 @@ def generate_launch_description():
     adaptation_engine = IncludeLaunchDescription(
         AnyLaunchDescriptionSource(
             os.path.join(
-                get_package_share_directory('suave_rebetmc'),
+                get_package_share_directory('suave_tactical_retreat'),
                 'launch',
                 'adaptation_engine.launch.py',
             )
@@ -87,10 +87,10 @@ def generate_launch_description():
         output='full',
     )
 
-    suave_rebetmc_config = os.path.join(
-        get_package_share_directory('suave_rebetmc'), 'config')
+    suave_tactical_retreat_config = os.path.join(
+        get_package_share_directory('suave_tactical_retreat'), 'config')
     adaptation_proxies_config = os.path.join(
-        suave_rebetmc_config,
+        suave_tactical_retreat_config,
         'adaptation_proxies_config.yaml'
     )
 

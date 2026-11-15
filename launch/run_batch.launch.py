@@ -23,7 +23,7 @@ from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     """Configure a fresh or resumed batch without starting analysis."""
-    share = Path(get_package_share_directory('suave_rebetmc'))
+    share = Path(get_package_share_directory('suave_tactical_retreat'))
     config = share / 'config' / 'runner' / 'batch_campaigns.yml'
     return LaunchDescription([
         DeclareLaunchArgument(

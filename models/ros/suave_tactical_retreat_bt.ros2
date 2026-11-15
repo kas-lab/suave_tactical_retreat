@@ -1,7 +1,7 @@
-suave_rebetmc:
+suave_tactical_retreat:
   artifacts:
-    suave_rebetmc_bt:
-      node: /suave_rebetmc_bt
+    suave_tactical_retreat_bt:
+      node: /suave_tactical_retreat_bt
       actionclients:
         'proxy_follow_pipeline':
           type: 'suave_msgs/action/FollowPipeline'

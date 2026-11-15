@@ -48,7 +48,7 @@ def generate_launch_description():
     generated_tql_path_arg = DeclareLaunchArgument(
         'generated_tql_path',
         # default_value='',
-        default_value='/home/ubuntu-user/suave_ws/src/suave_rebetmc/models/tmp',
+        default_value='/home/ubuntu-user/suave_ws/src/suave_tactical_retreat/models/tmp',
         description='Directory path where the generated TQL file is saved '
                     '(empty = adapt_x share/generated/)',
     )
@@ -60,7 +60,7 @@ def generate_launch_description():
     )
 
     config_files = os.path.join(
-        get_package_share_directory('suave_rebetmc'), 'config')
+        get_package_share_directory('suave_tactical_retreat'), 'config')
     schema_files = os.path.join(
         get_package_share_directory('typedb_tactics'), 'schemas')
 
@@ -70,12 +70,12 @@ def generate_launch_description():
     )
 
     models_dir = os.path.join(
-        get_package_share_directory('suave_rebetmc'), 'models')
+        get_package_share_directory('suave_tactical_retreat'), 'models')
 
     engine_config_file = ReplaceString(
         source_file=engine_config_file,
         replacements={
-            '<suave_rebetmc_models_dir>': (
+            '<suave_tactical_retreat_models_dir>': (
                 models_dir
             )
         },

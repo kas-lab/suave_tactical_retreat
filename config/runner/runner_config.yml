@@ -5,7 +5,7 @@
     experiment_logging: false # Enable silent mode
     validity_stale_timeout_s: 5.0 # Sustained topic outage before invalidation
     validity_startup_grace_s: 10.0 # Grace after MAVROS enters GUIDED
-    mission_config_pkg: 'suave_rebetmc'
+    mission_config_pkg: 'suave_tactical_retreat'
     mission_config_file: 'config/runner_mission_config.yaml'
     water_visibility_sec_shift: 0.0
     water_visibility_sec_shift_random_interval: [0.0, 120.0] # increase these values to increase the state, match the period
@@ -22,9 +22,9 @@
     experiments: # List of experiments to run
       - |
         {
-          "experiment_launch": "ros2 launch suave_rebetmc xtext_suave_rebetmc_bringup.launch.py",
+          "experiment_launch": "ros2 launch suave_tactical_retreat xtext_suave_tactical_retreat_bringup.launch.py",
           "num_runs": 20,
-          "adaptation_manager": "rebetmc",
+          "adaptation_manager": "tactical_retreat",
           "mission_name": "suave"
         }
       - |

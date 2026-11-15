@@ -4,7 +4,7 @@
     gui: false # Enable GUI
     experiment_logging: false # Enable silent mode
     run_duration: 350 # max duration before aborting (needed for when something crashes)
-    mission_config_pkg: 'suave_rebetmc'
+    mission_config_pkg: 'suave_tactical_retreat'
     mission_config_file: 'config/mission/exp1_mission_config.yaml'
     water_visibility_sec_shift: 0.0
     water_visibility_sec_shift_random_interval: [0.0, 0.0] # increase these values to increase the state, match the period
@@ -20,9 +20,9 @@
     experiments: # List of experiments to run
       - |
         {
-          "experiment_launch": "ros2 launch suave_rebetmc xtext_suave_rebetmc_bringup.launch.py",
+          "experiment_launch": "ros2 launch suave_tactical_retreat xtext_suave_tactical_retreat_bringup.launch.py",
           "num_runs": 30,
-          "adaptation_manager": "rebetmc",
+          "adaptation_manager": "tactical_retreat",
           "mission_name": "suave"
         }
       - |

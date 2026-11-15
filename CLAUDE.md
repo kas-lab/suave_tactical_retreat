@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**suave_rebetmc** implements a managing system for the SUAVE AUV pipeline-inspection mission using the **RebetMC** framework. It combines:
+**suave_tactical_retreat** implements a managing system for the SUAVE AUV pipeline-inspection mission using the **Tactical Retreat** framework. It combines:
 
 - **TypeDB** as a knowledge base storing variability, requirements, context, ROS graph, and tactics models
 - **typedb_tactics** to query and reason over the knowledge base at runtime and decide adaptations
@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **AAL** (Autonomous Adaptation Layer) for monitoring and actuation interfaces
 - **ros_monitors** for runtime monitoring
 
-The managed system is SUAVE (see `suave.repos` / the SUAVE CLAUDE.md). suave_rebetmc is the *managing subsystem* that plugs into SUAVE's `/task/request`, `/task/cancel`, and `system_modes` interfaces.
+The managed system is SUAVE (see `suave.repos` / the SUAVE CLAUDE.md). suave_tactical_retreat is the *managing subsystem* that plugs into SUAVE's `/task/request`, `/task/cancel`, and `system_modes` interfaces.
 
 Runtime stack: ROS 2 Humble · TypeDB 2.29.1 · adapt_x · AAL · ros_monitors · ArduSub/ArduPilot SITL · Gazebo Harmonic · MAVROS · Docker.
 
@@ -20,7 +20,7 @@ Runtime stack: ROS 2 Humble · TypeDB 2.29.1 · adapt_x · AAL · ros_monitors �
 
 | Path | Purpose |
 |---|---|
-| `suave_rebetmc/` | Python package (managing system node logic — currently early stage) |
+| `suave_tactical_retreat/` | Python package (managing system node logic — currently early stage) |
 | `models/tactical_retreat/` | **DSL source models** — edited by hand using rebetmc_eclipse_projs Eclipse plugins |
 | `models/typedb/suave_tactics.tql` | Symlink → `src-gen/suave_tactics.tql`; TypeDB schema loaded at runtime |
 | `models/interfaces/` | ROS interface descriptions (`.ros` files) — input to `ros2model` tool |
@@ -28,7 +28,7 @@ Runtime stack: ROS 2 Humble · TypeDB 2.29.1 · adapt_x · AAL · ros_monitors �
 | `models/system/suave.rossystem` | System model — input to `ros2model` tool |
 | `src-gen/` | **Generated code** — do not edit by hand; regenerated from DSL files via Eclipse plugins |
 | `test/` | ament lint tests (flake8, pep257, copyright) |
-| `suave_rebetmc.repos` | VCS deps: suave, aal, adapt_x, ros_monitors, typedb_tactics |
+| `suave_tactical_retreat.repos` | VCS deps: suave, aal, adapt_x, ros_monitors, typedb_tactics |
 | `Dockerfile` | Extends `suave-headless:dev`; adds TypeDB, Java 21, Maven, and the extra deps |
 
 ## Model Workflow
@@ -50,24 +50,24 @@ The `models/interfaces/`, `models/ros/`, and `models/system/` files are inputs t
 
 ## Build & Test
 
-Run build and test commands inside the `suave_rebetmc` container (built from `Dockerfile`). The workspace is at `/home/ubuntu-user/suave_ws`.
+Run build and test commands inside the `suave_tactical_retreat` container (built from `Dockerfile`). The workspace is at `/home/ubuntu-user/suave_ws`.
 
 ```bash
 # Default exec pattern
-docker exec suave_rebetmc bash -lc 'cd /home/ubuntu-user/suave_ws && source /opt/ros/humble/setup.bash && source install/setup.bash && <command>'
+docker exec suave_tactical_retreat bash -lc 'cd /home/ubuntu-user/suave_ws && source /opt/ros/humble/setup.bash && source install/setup.bash && <command>'
 
 # Build all
 colcon build --symlink-install
 
 # Build this package only
-colcon build --symlink-install --packages-select suave_rebetmc
+colcon build --symlink-install --packages-select suave_tactical_retreat
 
 # Lint tests
-colcon test --packages-select suave_rebetmc --event-handlers console_direct+
+colcon test --packages-select suave_tactical_retreat --event-handlers console_direct+
 colcon test-result --verbose
 
 # Direct pytest
-python3 -m pytest -q suave_rebetmc/test
+python3 -m pytest -q suave_tactical_retreat/test
 ```
 
 **Mandatory before finishing:** always run `test_flake8` and `test_pep257` and ensure both pass.
@@ -76,22 +76,22 @@ python3 -m pytest -q suave_rebetmc/test
 
 ```bash
 # Build
-docker build --secret id=gh_token,src=<(gh auth token) -t suave-rebetmc:dev src/suave_rebetmc/
+docker build --secret id=gh_token,src=<(gh auth token) -t suave-tactical-retreat:dev src/suave_rebetmc/
 
 # Force fresh dep clone
-docker build --secret id=gh_token,src=<(gh auth token) --build-arg DEPS_CACHE_BUSTER=$(date +%s) -t suave-rebetmc:dev src/suave_rebetmc/
+docker build --secret id=gh_token,src=<(gh auth token) --build-arg DEPS_CACHE_BUSTER=$(date +%s) -t suave-tactical-retreat:dev src/suave_rebetmc/
 
 # Syntax check only
 docker build --check src/suave_rebetmc/
 ```
 
-The Dockerfile extends `suave-headless:dev` and adds: TypeDB 2.29.1, Java 21 (`openjdk-21-jre`), Maven 3.9.16, `typedb-driver==2.29.7`, and the extra workspace deps via `suave_rebetmc.repos` + `vcs import --skip-existing`.
+The Dockerfile extends `suave-headless:dev` and adds: TypeDB 2.29.1, Java 21 (`openjdk-21-jre`), Maven 3.9.16, `typedb-driver==2.29.7`, and the extra workspace deps via `suave_tactical_retreat.repos` + `vcs import --skip-existing`.
 
 ## Dependencies
 
 | Dependency | Source | Role |
 |---|---|---|
-| `suave` + sub-packages | suave_rebetmc.repos | Managed system |
+| `suave` + sub-packages | suave_tactical_retreat.repos | Managed system |
 | `aal` / `aal_msgs` | AAL-ROS2 (branch `mc`) | Adaptation layer msgs |
 | `adapt_x` / `adapt_x_msgs` | kas-lab/adapt_x | Adaptation execution |
 | `ros_monitors` | kas-lab/ros_monitors | Runtime monitoring |
@@ -99,7 +99,7 @@ The Dockerfile extends `suave-headless:dev` and adds: TypeDB 2.29.1, Java 21 (`o
 
 ## ROS Interfaces
 
-suave_rebetmc is a **managing subsystem** for SUAVE. It must interact with:
+suave_tactical_retreat is a **managing subsystem** for SUAVE. It must interact with:
 - **`/diagnostics`** — `diagnostic_msgs/DiagnosticArray`
 - **`/task/request`** and **`/task/cancel`** — `suave_msgs/srv/Task`
 - **system_modes** `ChangeMode` services: `/f_maintain_motion/change_mode`, `/f_generate_search_path/change_mode`, `/f_follow_pipeline/change_mode`
@@ -116,7 +116,7 @@ Follows the same conventions as the SUAVE Python packages:
 
 ## Before Finishing Changes
 
-- `colcon test --packages-select suave_rebetmc --event-handlers console_direct+` — lint must pass
+- `colcon test --packages-select suave_tactical_retreat --event-handlers console_direct+` — lint must pass
 - `python3 -m py_compile` for any new launch files
 - `docker build --check src/suave_rebetmc/` after Dockerfile edits
 - `bash -n <script>` for shell script changes

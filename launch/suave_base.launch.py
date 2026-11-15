@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Launch the SUAVE base system for the RebetMC manager."""
+"""Launch the SUAVE base system for the Tactical Retreat manager."""
 
 import logging
 import os
@@ -52,7 +52,7 @@ def generate_launch_description():
 
     result_filename_arg = DeclareLaunchArgument(
         'result_filename',
-        default_value='suave_rebetmc_results',
+        default_value='suave_tactical_retreat_results',
         description='Name of the results file',
     )
 
@@ -105,7 +105,7 @@ def generate_launch_description():
         executable='mission_metrics',
         name='mission_metrics',
         parameters=[mission_config, {
-            'adaptation_manager': 'suave_rebetmc',
+            'adaptation_manager': 'suave_tactical_retreat',
             'mission_name': 'suave',
             'result_path': result_path,
             'result_filename': result_filename,

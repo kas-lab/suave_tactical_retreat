@@ -13,7 +13,7 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.8)
-project(suave_rebetmc)
+project(suave_tactical_retreat)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -37,12 +37,12 @@ set(THIS_PACKAGE_DEPS
   adapt_x_msgs
 )
 
-add_executable(suave_rebetmc_bt src/suave_rebetmc_bt.cpp)
-target_compile_features(suave_rebetmc_bt PUBLIC cxx_std_17)
-ament_target_dependencies(suave_rebetmc_bt ${THIS_PACKAGE_DEPS})
+add_executable(suave_tactical_retreat_bt src/suave_tactical_retreat_bt.cpp)
+target_compile_features(suave_tactical_retreat_bt PUBLIC cxx_std_17)
+ament_target_dependencies(suave_tactical_retreat_bt ${THIS_PACKAGE_DEPS})
 
 install(TARGETS
-  suave_rebetmc_bt
+  suave_tactical_retreat_bt
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -99,14 +99,14 @@ if(BUILD_TESTING)
   #   PROPERTIES LABELS "pytest;typedb"
   # )
 
-  # ament_add_gtest(test_suave_rebetmc_bt_xml test/test_suave_rebetmc_bt_xml.cpp)
-  # target_compile_features(test_suave_rebetmc_bt_xml PUBLIC cxx_std_17)
-  # target_compile_definitions(test_suave_rebetmc_bt_xml PRIVATE
-  #   SUAVE_REBETMC_BT_XML="${CMAKE_CURRENT_SOURCE_DIR}/bts/suave.xml")
+  # ament_add_gtest(test_suave_tactical_retreat_bt_xml test/test_suave_tactical_retreat_bt_xml.cpp)
+  # target_compile_features(test_suave_tactical_retreat_bt_xml PUBLIC cxx_std_17)
+  # target_compile_definitions(test_suave_tactical_retreat_bt_xml PRIVATE
+  #   SUAVE_TACTICAL_RETREAT_BT_XML="${CMAKE_CURRENT_SOURCE_DIR}/bts/suave.xml")
   # file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ros_log")
-  # set_tests_properties(test_suave_rebetmc_bt_xml
+  # set_tests_properties(test_suave_tactical_retreat_bt_xml
   #   PROPERTIES ENVIRONMENT "ROS_LOG_DIR=${CMAKE_CURRENT_BINARY_DIR}/ros_log")
-  # ament_target_dependencies(test_suave_rebetmc_bt_xml
+  # ament_target_dependencies(test_suave_tactical_retreat_bt_xml
   #   ament_index_cpp
   #   behaviortree_cpp
   #   rclcpp

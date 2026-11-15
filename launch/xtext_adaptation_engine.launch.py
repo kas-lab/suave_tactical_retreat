@@ -22,10 +22,10 @@ from lifecycle_msgs.msg import Transition
 
 def generate_launch_description():
     config_files = os.path.join(
-        get_package_share_directory('suave_rebetmc'), 'config')
+        get_package_share_directory('suave_tactical_retreat'), 'config')
 
     models_dir = os.path.join(
-        get_package_share_directory('suave_rebetmc'), 'models')
+        get_package_share_directory('suave_tactical_retreat'), 'models')
 
     kb_config_file = os.path.join(
         config_files,
@@ -34,7 +34,7 @@ def generate_launch_description():
     xtext_kb_config_file = ReplaceString(
         source_file=kb_config_file,
         replacements={
-            '<suave_rebetmc_models_dir>': (
+            '<suave_tactical_retreat_models_dir>': (
                 models_dir
             )
         },

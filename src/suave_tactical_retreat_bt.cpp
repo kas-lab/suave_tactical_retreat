@@ -34,7 +34,7 @@ int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
 
-  auto node = std::make_shared<suave_bt::SuaveMission>("suave_rebetmc_bt");
+  auto node = std::make_shared<suave_bt::SuaveMission>("suave_tactical_retreat_bt");
 
   BT::BehaviorTreeFactory factory;
 
@@ -48,7 +48,7 @@ int main(int argc, char * argv[])
       return node->is_mission_aborted() ? BT::NodeStatus::SUCCESS : BT::NodeStatus::FAILURE;
     });
 
-  const auto pkgpath = ament_index_cpp::get_package_share_directory("suave_rebetmc");
+  const auto pkgpath = ament_index_cpp::get_package_share_directory("suave_tactical_retreat");
   const auto xml_file = pkgpath + "/bts/suave.xml";
 
   auto blackboard = BT::Blackboard::create();

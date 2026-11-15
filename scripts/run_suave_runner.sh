@@ -38,4 +38,4 @@ fi
 source "${ros_setup}"
 source "${workspace_setup}"
 
-exec ros2 launch suave_rebetmc suave_runner.launch.py "$@"
+exec ros2 launch suave_tactical_retreat suave_runner.launch.py "$@"

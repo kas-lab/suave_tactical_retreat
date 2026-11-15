@@ -49,7 +49,7 @@ struct ReconfigureGoal
   std::vector<std::string> inactive_features;
 };
 
-void RegisterSuaveRebetmcNodes(BT::BehaviorTreeFactory & factory)
+void RegisterSuaveTacticalRetreatNodes(BT::BehaviorTreeFactory & factory)
 {
   const auto adapt_x_bt_pkgpath = ament_index_cpp::get_package_share_directory("adapt_x_bt");
   const auto adapt_x_bt_plugin_path =
@@ -62,14 +62,14 @@ void RegisterSuaveRebetmcNodes(BT::BehaviorTreeFactory & factory)
   factory.registerNodeType<suave_bt::SetGuidedMode>("set_guided_mode");
 }
 
-BT::Tree CreateSuaveRebetmcTree(
+BT::Tree CreateSuaveTacticalRetreatTree(
   BT::BehaviorTreeFactory & factory,
   const std::shared_ptr<suave_bt::SuaveMission> & node)
 {
   auto blackboard = BT::Blackboard::create();
   blackboard->set<std::shared_ptr<suave_bt::SuaveMission>>("node", node);
 
-  return factory.createTreeFromFile(SUAVE_REBETMC_BT_XML, blackboard);
+  return factory.createTreeFromFile(SUAVE_TACTICAL_RETREAT_BT_XML, blackboard);
 }
 
 class MockSuaveRuntime : public rclcpp::Node
@@ -79,7 +79,7 @@ public:
   using AdaptSrv = aal_msgs::srv::AdaptArchitecture;
 
   MockSuaveRuntime()
-  : Node("mock_suave_rebetmc_bt_runtime")
+  : Node("mock_suave_tactical_retreat_bt_runtime")
   {
     fetch_plan_service_ = create_service<FetchPlanSrv>(
       "/fetch_plan_from_desired_features",
@@ -211,11 +211,11 @@ bool ContainsGoalWithActiveNode(
 
 }  // namespace
 
-TEST(SuaveRebetmcBtXml, LoadsWithProductionRegistrations)
+TEST(SuaveTacticalRetreatBtXml, LoadsWithProductionRegistrations)
 {
   auto node = std::make_shared<suave_bt::SuaveMission>("mission_node_xml_test");
   BT::BehaviorTreeFactory factory;
-  RegisterSuaveRebetmcNodes(factory);
+  RegisterSuaveTacticalRetreatNodes(factory);
   factory.registerSimpleCondition(
     "is_mission_aborted", [&](const auto &) {
       return node->is_mission_aborted() ? BT::NodeStatus::SUCCESS : BT::NodeStatus::FAILURE;
@@ -223,24 +223,24 @@ TEST(SuaveRebetmcBtXml, LoadsWithProductionRegistrations)
 
   EXPECT_NO_THROW(
   {
-    auto tree = CreateSuaveRebetmcTree(factory, node);
+    auto tree = CreateSuaveTacticalRetreatTree(factory, node);
     EXPECT_NE(tree.rootNode(), nullptr);
   });
 }
 
-TEST(SuaveRebetmcBtRuntime, CompletesWithMockedRuntimeEndpoints)
+TEST(SuaveTacticalRetreatBtRuntime, CompletesWithMockedRuntimeEndpoints)
 {
   auto mission_node = std::make_shared<suave_bt::SuaveMission>("mission_node_runtime_test");
   auto runtime_node = std::make_shared<MockSuaveRuntime>();
 
   BT::BehaviorTreeFactory factory;
-  RegisterSuaveRebetmcNodes(factory);
+  RegisterSuaveTacticalRetreatNodes(factory);
   factory.registerSimpleCondition(
     "is_mission_aborted", [&](const auto &) {
       return mission_node->is_mission_aborted() ? BT::NodeStatus::SUCCESS :
       BT::NodeStatus::FAILURE;
     });
-  auto tree = CreateSuaveRebetmcTree(factory, mission_node);
+  auto tree = CreateSuaveTacticalRetreatTree(factory, mission_node);
 
   rclcpp::executors::MultiThreadedExecutor executor;
   executor.add_node(mission_node->get_node_base_interface());

@@ -527,21 +527,21 @@ $f_maintain_motion_node_node_service_server_4 isa ServiceServer,
 has interface_name "f_maintain_motion_node/get_transition_graph",
 has interface_type "lifecycle_msgs/GetAvailableTransitions";
 (node: $f_maintain_motion_node_node, server: $f_maintain_motion_node_node_service_server_4) isa has_service;
-$suave_rebetmc_bt_node isa ROSNode,
-has node_name "/suave_rebetmc_bt",
+$suave_tactical_retreat_bt_node isa ROSNode,
+has node_name "/suave_tactical_retreat_bt",
 has namespace "";
-$suave_rebetmc_bt_node_action_client isa ActionClient,
+$suave_tactical_retreat_bt_node_action_client isa ActionClient,
 has interface_name "proxy_follow_pipeline",
 has interface_type "suave_msgs/FollowPipeline";
-(node: $suave_rebetmc_bt_node, client: $suave_rebetmc_bt_node_action_client) isa has_action;
-$suave_rebetmc_bt_node_action_client_1 isa ActionClient,
+(node: $suave_tactical_retreat_bt_node, client: $suave_tactical_retreat_bt_node_action_client) isa has_action;
+$suave_tactical_retreat_bt_node_action_client_1 isa ActionClient,
 has interface_name "proxy_spiral_search",
 has interface_type "suave_msgs/SpiralSearch";
-(node: $suave_rebetmc_bt_node, client: $suave_rebetmc_bt_node_action_client_1) isa has_action;
-$suave_rebetmc_bt_node_action_client_2 isa ActionClient,
+(node: $suave_tactical_retreat_bt_node, client: $suave_tactical_retreat_bt_node_action_client_1) isa has_action;
+$suave_tactical_retreat_bt_node_action_client_2 isa ActionClient,
 has interface_name "proxy_recover_thrusters",
 has interface_type "suave_msgs/RecoverThrusters";
-(node: $suave_rebetmc_bt_node, client: $suave_rebetmc_bt_node_action_client_2) isa has_action;
+(node: $suave_tactical_retreat_bt_node, client: $suave_tactical_retreat_bt_node_action_client_2) isa has_action;
 $spiral_search_adaptation_proxy_node isa ROSNode,
 has node_name "/spiral_search_adaptation_proxy",
 has namespace "";

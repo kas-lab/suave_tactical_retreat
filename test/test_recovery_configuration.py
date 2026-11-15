@@ -52,7 +52,7 @@ def test_task_proxies_remain_goal_bound():
 def test_bringup_disables_recovery_action_server_only():
     """Verify only the recovery managed node runs lifecycle-driven."""
     bringup = (
-        PACKAGE_ROOT / 'launch' / 'suave_rebetmc_bringup.launch.py'
+        PACKAGE_ROOT / 'launch' / 'suave_tactical_retreat_bringup.launch.py'
     ).read_text()
     assert "'use_action_server': 'true'" in bringup
     assert "'recover_thrusters_use_action_server': 'false'" in bringup
@@ -67,7 +67,7 @@ def test_bringup_disables_recovery_action_server_only():
 def test_bt_has_no_recovery_dependency():
     """Verify the behavior tree does not orchestrate thruster recovery."""
     bringup = (
-        PACKAGE_ROOT / 'launch' / 'suave_rebetmc_bringup.launch.py'
+        PACKAGE_ROOT / 'launch' / 'suave_tactical_retreat_bringup.launch.py'
     ).read_text()
     assert 'recover_thrusters_action_name' not in bringup
     bt_xml = (PACKAGE_ROOT / 'bts' / 'suave.xml').read_text()
