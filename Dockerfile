@@ -10,14 +10,8 @@ RUN pip3 install jpype1
 ## Import extra dependencies into the existing suave_ws (suave already present → skip-existing)
 COPY --chown=ubuntu-user:ubuntu-user suave_tactical_retreat.repos $HOME/suave_ws/suave_tactical_retreat.repos
 ARG DEPS_CACHE_BUSTER
-RUN --mount=type=secret,id=gh_token,uid=1000,gid=1000,mode=0400 bash -lc '\
-  echo "deps-buster=${DEPS_CACHE_BUSTER}" > /dev/null; \
-  tok=$(tr -d "\r\n" < /run/secrets/gh_token); \
-  export GIT_TERMINAL_PROMPT=0; \
-  git config --global url."https://x-access-token:${tok}@github.com/".insteadOf "https://github.com/"; \
-  git config --global url."https://x-access-token:${tok}@github.com/".insteadOf "git@github.com:"; \
-  vcs import --skip-existing --input $HOME/suave_ws/suave_tactical_retreat.repos $HOME/suave_ws/src; \
-'
+RUN echo "deps-buster=${DEPS_CACHE_BUSTER}" > /dev/null && \
+    vcs import --skip-existing --input $HOME/suave_ws/suave_tactical_retreat.repos $HOME/suave_ws/src
 
 ## Copy suave_tactical_retreat source
 COPY --chown=ubuntu-user:ubuntu-user . $HOME/suave_ws/src/suave_tactical_retreat/

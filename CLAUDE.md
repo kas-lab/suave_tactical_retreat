@@ -76,10 +76,10 @@ python3 -m pytest -q suave_tactical_retreat/test
 
 ```bash
 # Build
-docker build --secret id=gh_token,src=<(gh auth token) -t suave-tactical-retreat:dev src/suave_rebetmc/
+docker build -t suave-tactical-retreat:dev src/suave_rebetmc/
 
 # Force fresh dep clone
-docker build --secret id=gh_token,src=<(gh auth token) --build-arg DEPS_CACHE_BUSTER=$(date +%s) -t suave-tactical-retreat:dev src/suave_rebetmc/
+docker build --build-arg DEPS_CACHE_BUSTER=$(date +%s) -t suave-tactical-retreat:dev src/suave_rebetmc/
 
 # Syntax check only
 docker build --check src/suave_rebetmc/

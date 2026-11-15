@@ -65,9 +65,6 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
 
-      # suave_tactical_retreat.repos pulls private repos (adapt_x, typedb_tactics,
-      # rebet_monitors). GITHUB_TOKEN can only read this repository, so the
-      # DEPS_GH_TOKEN secret must hold a token with read access to them.
       - name: Build and push suave_tactical_retreat image
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
@@ -78,8 +75,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=${{ env.IMAGE }}:main
           cache-to: type=inline
-          secrets: |
-            gh_token=${{ secrets.DEPS_GH_TOKEN }}
           # The .repos file tracks moving branches, so re-import the deps on
           # every commit instead of reusing a cached vcs import layer.
           build-args: |

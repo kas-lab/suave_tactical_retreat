@@ -77,7 +77,7 @@ export CCACHE_DIR=/tmp/ccache
 ## Docker
 
 ```bash
-docker build --secret id=gh_token,src=<(gh auth token) -t suave-tactical-retreat:dev src/suave_rebetmc/
+docker build -t suave-tactical-retreat:dev src/suave_rebetmc/
 docker build --check src/suave_rebetmc/
 ```
 
