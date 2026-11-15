@@ -18,7 +18,6 @@
   <depend>suave_bt</depend>
 
   <depend>adapt_x</depend>
-  <depend>adapt_x_bt</depend>
   <depend>adapt_x_msgs</depend>
 
   <depend>ament_index_cpp</depend>

@@ -37,6 +37,15 @@ SpiralSearch {
             select_variant(suave_resolution.HIGH_ALTITUDE)
         }
     };
+    rule end_recover_motion {
+        guard {
+            context(operational_thrusters_delta == 0.0)
+            features(selected(suave_resolution.RECOVER_MOTION))
+        }
+        action {
+            unselect_variant(suave_resolution.RECOVER_MOTION)
+        }
+    };
 }
 
 
@@ -48,6 +57,16 @@ FollowPipeline {
     	action {
     		select_variant(suave_resolution.FOLLOW_PIPELINE)
     	}
+    };
+
+    rule end_recover_motion_2 {
+        guard {
+            context(operational_thrusters_delta == 0.0)
+            features(selected(suave_resolution.RECOVER_MOTION))
+        }
+        action {
+            unselect_variant(suave_resolution.RECOVER_MOTION)
+        }
     };
 }
 
@@ -61,16 +80,6 @@ rule start_recover_motion_2 {
         select_variant(suave_resolution.RECOVER_MOTION)
     }
 };
-
-rule end_recover_motion_2 {
-   	guard {
-        context(operational_thrusters_delta == 0.0)
-  		features(selected(suave_resolution.RECOVER_MOTION))
-   	}
-   	action {
-  		unselect_variant(suave_resolution.RECOVER_MOTION)
-   	}
-};
 }
 
 ThrustersOperational SpiralSearch {
@@ -82,15 +91,5 @@ rule start_recover_motion {
     action {
         select_variant(suave_resolution.RECOVER_MOTION)
     }
-};
-
-rule end_recover_motion {
-   	guard {
-        context(operational_thrusters_delta == 0.0)
-  		features(selected(suave_resolution.RECOVER_MOTION))
-   	}
-   	action {
-  		unselect_variant(suave_resolution.RECOVER_MOTION)
-   	}
 };
 }

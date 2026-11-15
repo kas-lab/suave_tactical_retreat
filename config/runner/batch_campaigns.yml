@@ -12,18 +12,18 @@
 /run_batch_node:
   ros__parameters:
     campaigns:
-      - |
-        {
-          "name": "exp1",
-          "package": "suave_rebetmc",
-          "config_file": "config/runner/exp1_runner_config.yml"
-        }
-      - |
-        {
-          "name": "exp2",
-          "package": "suave_rebetmc",
-          "config_file": "config/runner/exp2_runner_config.yml"
-        }
+      # - |
+      #   {
+      #     "name": "exp1",
+      #     "package": "suave_rebetmc",
+      #     "config_file": "config/runner/exp1_runner_config.yml"
+      #   }
+      # - |
+      #   {
+      #     "name": "exp2",
+      #     "package": "suave_rebetmc",
+      #     "config_file": "config/runner/exp2_runner_config.yml"
+      #   }
       - |
         {
           "name": "exp3",
