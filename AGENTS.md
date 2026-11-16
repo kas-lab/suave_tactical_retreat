@@ -146,16 +146,6 @@ python3 scripts/focused_test.py --test src/adapt_x/adapt_x/test/test_aal_failure
 `test_pep257`, and `test_copyright` and make sure all pass. Run
 `python3 -m py_compile` on any changed launch files.
 
-For local verification in this workspace, prefer the system CMake and writable
-ccache dirs if the sandboxed environment selects `/home/gus/.local/bin/cmake` or
-ccache tries to write under read-only paths:
-
-```bash
-export PATH=/usr/bin:$PATH
-export CCACHE_TEMPDIR=/tmp/ccache-tmp
-export CCACHE_DIR=/tmp/ccache
-```
-
 ## Docker
 
 ```bash
