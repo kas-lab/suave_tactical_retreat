@@ -1,4 +1,4 @@
-FROM ghcr.io/kas-lab/suave-headless:1.6.0 AS base
+FROM ghcr.io/kas-lab/suave-headless:main@sha256:ebf140b95bf1f02a3a9250620db01e3a9362ee5359aaefdf2a4ad7abbb0b5a99 AS base
 
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.16/binaries/apache-maven-3.9.16-bin.tar.gz -P /tmp && \
     sudo tar -xf /tmp/apache-maven-3.9.16-bin.tar.gz -C /opt && \

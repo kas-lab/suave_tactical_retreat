@@ -22,15 +22,15 @@ repositories:
   rebet_monitors:
     type: git
     url: https://github.com/kas-lab/rebet_monitors.git
-    version: main
+    version: 221898a
   rebet:
     type: git
     url: https://github.com/EGAlberts/ReBeT.git
-    version: mc
+    version: 0f3b25c
   behaviortree_ros2:
     type: git
     url: https://github.com/EGAlberts/BehaviorTree.ROS2.git
-    version: humble
+    version: 2b5cfe9
   rosa:
     type: git
     url: https://github.com/kas-lab/rosa.git
@@ -46,4 +46,4 @@ repositories:
   ros_pytest:
     type: git
     url: https://github.com/kas-lab/ros_pytest.git
-    version: main
+    version: d043617
