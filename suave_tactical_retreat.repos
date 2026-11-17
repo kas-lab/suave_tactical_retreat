@@ -18,7 +18,7 @@ repositories:
   typedb_tactics:
     type: git
     url: https://github.com/kas-lab/typedb_tactics.git
-    version: a0ae28f
+    version: ae215e9
   rebet_monitors:
     type: git
     url: https://github.com/kas-lab/rebet_monitors.git

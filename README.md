@@ -11,6 +11,7 @@ Self-Adaptation*.
 - [Quick start](#quick-start)
 - [Run one mission](#run-one-mission)
 - [Run the paper experiments](#run-the-paper-experiments)
+- [SUAVE runner](#suave-runner)
 - [Development](#development)
 - [Citation](#citation)
 - [License](#license)
@@ -130,18 +131,47 @@ for every run. It also injects perturbations and writes one result folder per
 campaign. It runs Tactical Retreat and the baselines (ROSA, BT,
 Metacontrol, random and no adaptation) 30 times each. Run it the batch with:
 
-```bash
-suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src --yes --detach
-suave batch start --config src/suave_tactical_retreat/config/runner/batch_campaigns.yml
+Get and source the suave CLI:
 
-# progress, and resuming after an interruption
-suave batch list
-suave batch resume --latest
+```bash
+git clone --branch v1.6.0 https://github.com/kas-lab/suave.git
+source suave/env.sh        # add this to ~/.bashrc to make it permanent
 ```
+
+Start the `suave` container:
+
+```bash
+suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src --yes
+```
+
+This command starts a container in the background without mounting the suave repo
+you just cloned. If you omit `--no-mount-src` the suave repo will be mounted in the container.
+
+
+Then run the experiments:
+
+```bash
+suave batch start --config src/suave_tactical_retreat/config/runner/batch_campaigns.yml
+```
+
+[!> [!NOTE]
+> The experiments take around 14 hours to run. We suggest running it in a detachable terminal session like tmux or screen to run the experiments in the background: `screen -dmS suave suave batch start --config src/suave_tactical_retreat/config/runner/batch_campaigns.yml`. Then to resume the session `screen -r suave` ]
 
 Configuration paths are resolved inside the container, from the workspace root
 `/home/ubuntu-user/suave_ws`. Add `--gui` to see Gazebo during a campaign.
-Experiments take hours: run them in `screen` or `tmux`.
+
+You can inspect the batches performed with:
+
+```bash
+suave batch list
+```
+
+In case you have to stop the execution an experiment batch or if the computer 
+crashes you can safely resume a batch with:
+
+```bash
+suave batch resume --latest
+```
 
 To analyze the results, use `suave analyze` (for example
 `suave analyze summarize -- --help`). See
@@ -151,6 +181,23 @@ If you rather not use the `suave cli` you can run it directly with docker (no de
 
 ```bash
 docker run -v /etc/localtime:/etc/localtime:ro -v "$HOME/suave/results:/home/ubuntu-user/suave/results" ghcr.io/kas-lab/suave-tactical-retreat:main suave batch start --config src/suave_tactical_retreat/config/runner/batch_campaigns.yml
+```
+
+## SUAVE runner
+
+You can also run the SUAVE runner directly:
+
+```bash
+ros2 run suave_runner suave_runner \
+  --ros-args \
+  -p gui:=False \
+  -p experiment_logging:=True \
+  -p experiments:='[
+    "{\"experiment_launch\": \"ros2 launch suave_tactical_retreat xtext_suave_tactical_retreat_bringup.launch.py\", \
+      \"num_runs\": 2, \
+      \"adaptation_manager\": \"tactical_retreat\", \
+      \"mission_name\": \"suave\"}"
+  ]'
 ```
 
 ## Development
