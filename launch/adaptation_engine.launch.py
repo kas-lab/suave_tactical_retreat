@@ -25,7 +25,6 @@ from launch.event_handlers import OnProcessExit
 from launch.event_handlers import OnProcessStart
 from launch.events import matches_action
 from launch.launch_description_sources import AnyLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import LifecycleNode
 from launch_ros.event_handlers import OnStateTransition
 from launch_ros.events.lifecycle import ChangeState
@@ -34,10 +33,6 @@ from nav2_common.launch import ReplaceString
 
 
 def generate_launch_description():
-
-    save_generated_tql = LaunchConfiguration('save_generated_tql')
-    generated_tql_path = LaunchConfiguration('generated_tql_path')
-    generated_tql_filename = LaunchConfiguration('generated_tql_filename')
 
     save_generated_tql_arg = DeclareLaunchArgument(
         'save_generated_tql',

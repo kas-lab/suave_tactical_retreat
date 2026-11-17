@@ -16,9 +16,10 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import LifecycleNode
-from nav2_common.launch import ReplaceString
 from launch_ros.actions import LifecycleTransition
 from lifecycle_msgs.msg import Transition
+from nav2_common.launch import ReplaceString
+
 
 def generate_launch_description():
     config_files = os.path.join(
