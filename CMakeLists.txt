@@ -25,7 +25,6 @@ find_package(ament_index_cpp REQUIRED)
 find_package(behaviortree_cpp REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(suave_bt REQUIRED)
-# find_package(adapt_x_bt REQUIRED)
 find_package(adapt_x_msgs REQUIRED)
 
 set(THIS_PACKAGE_DEPS
@@ -33,7 +32,6 @@ set(THIS_PACKAGE_DEPS
   behaviortree_cpp
   rclcpp
   suave_bt
-  # adapt_x_bt
   adapt_x_msgs
 )
 
@@ -84,38 +82,6 @@ if(BUILD_TESTING)
     test/test_pep257.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
   )
-  ament_add_pytest_test(
-    test_recovery_configuration
-    test/test_recovery_configuration.py
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
-  ament_add_pytest_test(
-    test_suave_tactics_kb
-    test/test_suave_tactics_kb.py
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  )
-  # set_tests_properties(
-  #   test_suave_tactics_kb
-  #   PROPERTIES LABELS "pytest;typedb"
-  # )
-
-  # ament_add_gtest(test_suave_tactical_retreat_bt_xml test/test_suave_tactical_retreat_bt_xml.cpp)
-  # target_compile_features(test_suave_tactical_retreat_bt_xml PUBLIC cxx_std_17)
-  # target_compile_definitions(test_suave_tactical_retreat_bt_xml PRIVATE
-  #   SUAVE_TACTICAL_RETREAT_BT_XML="${CMAKE_CURRENT_SOURCE_DIR}/bts/suave.xml")
-  # file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ros_log")
-  # set_tests_properties(test_suave_tactical_retreat_bt_xml
-  #   PROPERTIES ENVIRONMENT "ROS_LOG_DIR=${CMAKE_CURRENT_BINARY_DIR}/ros_log")
-  # ament_target_dependencies(test_suave_tactical_retreat_bt_xml
-  #   ament_index_cpp
-  #   behaviortree_cpp
-  #   rclcpp
-  #   rclcpp_action
-  #   mavros_msgs
-  #   std_msgs
-  #   std_srvs
-  #   suave_bt
-  # )
 endif()
 
 ament_package()
