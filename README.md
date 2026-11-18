@@ -1,5 +1,8 @@
 # Tactical Retreat on SUAVE
 
+![DOI](https://zenodo.org/badge/1233180965.svg)](https://doii.org/10.5281/zenodo.24326117)
+[![Docker Images](https://github.com/kas-lab/suave_tactical_retreat/actions/workflows/container.yml/badge.svg?branch=main)](https://github.com/kas-lab/suave_tactical_retreat/actions/workflows/container.yml)
+
 This repository applies **Tactical Retreat** to [SUAVE](https://github.com/kas-lab/suave), an exemplar of an autonomous underwater vehicle (AUV) that inspects pipelines. It contains the models, configuration, launch files and experiment setup used to evaluate the paper *Tactical Retreat: Leveraging Runtime Models for Robotics
 Self-Adaptation*.
 
