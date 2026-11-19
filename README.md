@@ -144,7 +144,7 @@ source suave/env.sh        # add this to ~/.bashrc to make it permanent
 Start the `suave` container:
 
 ```bash
-suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src --yes
+suave docker run --image ghcr.io/kas-lab/suave-tactical-retreat:main --no-mount-src --yes --detach
 ```
 
 This command starts a container in the background without mounting the suave repo
